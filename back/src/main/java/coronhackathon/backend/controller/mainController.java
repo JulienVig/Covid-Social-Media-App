@@ -23,7 +23,8 @@ public class mainController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/api/addUser")
+    @CrossOrigin
+    @PostMapping("/addUser")
     public void addUser(@RequestBody User user) {
         userService.insert(user);
     }
