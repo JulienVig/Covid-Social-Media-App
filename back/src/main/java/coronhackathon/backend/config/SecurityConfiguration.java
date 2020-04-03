@@ -8,6 +8,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
+    /**
+     * csrf() is Ben's magic to allow post requests
+     * Cross-site request forgery is a type of attack. See wikipedia page for more detail.
+     * https://en.wikipedia.org/wiki/Cross-site_request_forgery
+     */
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().
                 authorizeRequests().antMatchers("/**").permitAll();

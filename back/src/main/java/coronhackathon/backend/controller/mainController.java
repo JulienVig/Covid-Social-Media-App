@@ -23,8 +23,13 @@ public class mainController {
         return userService.getAllUsers();
     }
 
-    @CrossOrigin
-    @PostMapping("/addUser")
+    @PostMapping("/api/addUser")
+    /**
+     * test with
+     * curl -X POST localhost:8080/api/addUser -H 'Content-type:application/json' -d '{"username": "John Doe"}'
+     *
+     * security config modifications were needed to allow post requests. See dedicated file.
+     */
     public void addUser(@RequestBody User user) {
         userService.insert(user);
     }
