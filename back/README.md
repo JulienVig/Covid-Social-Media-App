@@ -1,4 +1,4 @@
-How to run the server : 
+Comment lancer le serveur : 
 
 -Je recommande fortement d'utiliser Intellij IDEA pour le développement Spring (excellente intégration de Gradle/Maven, permet d'éditer une base de données directement grâce à un GUI dans l'IDE, facilité d'import).
 Pour importer le projet : "import project" et cherchez le "build.gradle". A partir de ce fichier Intellij retrouve tout le projet et sa config.
