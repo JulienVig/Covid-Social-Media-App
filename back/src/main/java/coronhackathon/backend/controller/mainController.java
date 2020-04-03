@@ -4,10 +4,7 @@ import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +23,8 @@ public class mainController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("api/addUser")
+    @CrossOrigin
+    @PostMapping("/addUser")
     public void addUser(@RequestBody User user) {
         userService.insert(user);
     }

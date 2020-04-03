@@ -11,6 +11,19 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    //add getters and setters
+    public long getId() {
+        return Id;
+    }
 
+    public void setId(long id) {
+        Id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
