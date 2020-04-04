@@ -13,9 +13,9 @@
     title="Entrez seulement"
     color="#EEAAEE"
     accessibility-label="Learn more about this purple button"/>
-  <view>
+</view>
 </template>
-            
+
 <style>
 .container {
   background-color: white;
@@ -31,7 +31,7 @@
 </style>
 
 <script>
-import {API} from './api.js';
+import {API} from '../api.js';
 import { Alert } from 'react-native';
 export default {
   data: function() {
