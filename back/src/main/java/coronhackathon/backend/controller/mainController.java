@@ -4,7 +4,9 @@ import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,15 +37,23 @@ public class mainController {
         userService.insert(user);
     }
 
-    @PostMapping("/api/user/login")
+   /* @PostMapping("/api/user/login")
     /**
      * curl -X POST localhost:8080/api/user/login -F 'username=MatMat' -F 'hash=1234'
      */
-    public Optional<User> login(@RequestParam String username, @RequestParam long hash){
+   /* public Optional<User> login(@RequestParam String username, @RequestParam long hash){
 
         return userService.login(username, hash);
             // renvoyer user
 
-    }
+    }*/
+
+   @PostMapping("/register")
+   public Optional<User> showRegistrationForm(@RequestParam String username,
+                                      @RequestParam String hashPwd,
+                                      @RequestParam String hashPwd2) {
+
+        return userService.register(username, hashPwd, hashPwd2);
+   }
 
 }
