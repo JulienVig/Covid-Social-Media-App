@@ -1,6 +1,7 @@
 <template>
   <view class="container">
     <text class="text-color-primary">My Vue Native App</text>
+    <my-login/>
   </view>
 </template>
 
@@ -15,3 +16,13 @@
   color: blue;
 }
 </style>
+
+<script>
+import Login from "./login_page.vue";
+export default {
+  name: 'login',
+  components: {
+    'my-login': Login
+  }
+}
+</script>
