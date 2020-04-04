@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "hackathonfrontend",
-    "slug": "hackathonfrontend",
+    "name": "front",
+    "slug": "front",
     "platforms": [
       "ios",
       "android",
