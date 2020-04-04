@@ -84,7 +84,7 @@ export default {
   components: { 'loginPage' : loginPage },
   data: function() {
     return {
-      
+
     };
   }
 };
