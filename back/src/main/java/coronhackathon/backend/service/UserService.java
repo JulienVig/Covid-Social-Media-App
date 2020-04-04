@@ -26,4 +26,12 @@ public class UserService {
     public void insert(User user) {
         userRepository.save(user);
     }
+
+
+    public Optional<User> login(String username, long hash) {
+        return userRepository.findAll()
+                .filter(user -> username == user.getUsername() && hash == user.getPwdHash()).findFirst();
+        // should be unique anyway because username is unique
+        // TODO add internal behavior, at least register that this user is logged in
+    }
 }

@@ -11,13 +11,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    public long getId() {
-        return Id;
-    }
-
-    public void setId(long id) {
-        Id = id;
-    }
+    @Column(nullable = false)
+    private long pwdHash;
 
     public String getUsername() {
         return username;
@@ -25,5 +20,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public long getPwdHash() {
+        return pwdHash;
+    }
+
+    public void setPwdHash(long pwdHash) {
+        this.pwdHash = pwdHash;
     }
 }
