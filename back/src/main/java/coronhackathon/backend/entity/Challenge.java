@@ -1,6 +1,7 @@
 package coronhackathon.backend.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Challenge {
@@ -16,6 +17,16 @@ public class Challenge {
 
     @Column(nullable = false)
     private String description;
+
+    @ManyToMany(mappedBy = "hasCompleted")
+    Set<User> completers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "isA",
+            joinColumns = @JoinColumn(name = "challenge_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    Set<Challenge> isA;
 
     private String logo;     //the link to the logo
 

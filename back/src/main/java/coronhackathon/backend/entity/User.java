@@ -1,6 +1,7 @@
 package coronhackathon.backend.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -10,6 +11,13 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String username;
+
+    @ManyToMany
+    @JoinTable(
+            name = "has_completed",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "challenge_id"))
+    Set<Challenge> completedChallenges;
 
     public long getId() {
         return Id;
