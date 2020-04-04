@@ -40,8 +40,6 @@ public class mainController {
      * curl -X POST localhost:8080/api/user/login -F 'username=MatMat' -F 'hash=1234'
      */
     public Optional<User> login(@RequestParam String username, @RequestParam long hash){
-        System.out.println(username);
-        System.out.println(hash);
 
         return userService.login(username, hash);
             // renvoyer user

@@ -29,8 +29,12 @@ public class UserService {
 
 
     public Optional<User> login(String username, long hash) {
-        return userRepository.findAll()
-                .filter(user -> username == user.getUsername() && hash == user.getPwdHash()).findFirst();
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()){
+            if(user.get().getPwdHash() == hash) return user;
+            else return Optional.empty();
+        }
+        else return Optional.empty();
         // should be unique anyway because username is unique
         // TODO add internal behavior, at least register that this user is logged in
     }
