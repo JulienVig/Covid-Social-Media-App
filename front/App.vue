@@ -79,7 +79,7 @@
 </style>
 
 <script>
-import loginPage from "./loginPage";
+import loginPage from "./components/loginPage";
 export default {
   components: { 'loginPage' : loginPage },
   data: function() {
