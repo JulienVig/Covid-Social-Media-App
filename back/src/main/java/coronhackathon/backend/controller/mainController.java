@@ -32,7 +32,7 @@ public class mainController {
 
     @GetMapping("/api/getUserByName")
     public Optional<User> getUserByName(@RequestParam String username){
-        return userService.getUserByName(username);
+        return Optional.empty(); //userService.getUserByName(username);
     }
 
     @PostMapping("/api/addUser")
