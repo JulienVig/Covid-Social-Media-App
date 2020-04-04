@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class mainController {
@@ -33,4 +34,18 @@ public class mainController {
     public void addUser(@RequestBody User user) {
         userService.insert(user);
     }
+
+    @PostMapping("/api/user/login")
+    /**
+     * curl -X POST localhost:8080/api/user/login -F 'username=MatMat' -F 'hash=1234'
+     */
+    public Optional<User> login(@RequestParam String username, @RequestParam long hash){
+        System.out.println(username);
+        System.out.println(hash);
+
+        return userService.login(username, hash);
+            // renvoyer user
+
+    }
+
 }
