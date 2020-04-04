@@ -5,7 +5,6 @@ import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,13 +14,23 @@ import java.util.Optional;
 public class mainController {
     @Autowired
     private UserService userService;
-
-    @Autowired
     private ChallengeService challengeService;
 
-    @GetMapping("/")
-    public String hello(@RequestParam(defaultValue = "Moi") String name) { //Ajouter ?name=Votreprenom à la fin de l'URL
-        return "Vous êtes bien sur l'application Spring de " + name;
+    //TODO delete this test method when not needed anymore
+    @GetMapping("/ping")
+    public String ping(){ return "pong!"; }
+
+    @PostMapping("/register")
+    public Optional<User> showRegistrationForm(@RequestParam String username,
+                                               @RequestParam String hashPwd,
+                                               @RequestParam String hashPwd2) {
+        return userService.register(username, hashPwd, hashPwd2);
+    }
+
+    //TODO delete this test method when not needed anymore
+    @GetMapping("/api/ping")
+    public String fancyPing(){
+        return "authenticated pong!";
     }
 
     /* ---Users ----*/
@@ -46,8 +55,7 @@ public class mainController {
      * curl -X POST localhost:8080/api/addUser -H 'Content-type:application/json' -d '{"username": "John Doe"}'
      * security config modifications were needed to allow post requests. See dedicated file.
      */
-    public void addUser(@RequestBody User user) {
-        userService.insert(user);
+    public void addUser(@RequestBody User user) { userService.insert(user);
     }
 
     //TODO age

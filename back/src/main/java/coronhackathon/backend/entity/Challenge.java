@@ -20,6 +20,7 @@ public class Challenge {
 
     private String logo;     //the link to the logo
 
+    /* ---- Relations ---- */
 
     @ManyToMany(mappedBy = "has_completed")
     Set<User> has_completed;
@@ -31,7 +32,7 @@ public class Challenge {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     Set<Tag> is_A;
 
-    /* ----getters and setters---- */
+    /* ----Getters and Setters---- */
 
     public long getId() {
         return Id;
