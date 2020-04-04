@@ -11,7 +11,7 @@
   </view>
 </template>
 
-<<<<<<< Updated upstream
+
 <style>
 .container {
   background-color: white;
@@ -78,15 +78,13 @@
 }
 </style>
 
-=======
->>>>>>> Stashed changes
 <script>
 import loginPage from "./loginPage";
 export default {
   components: { 'loginPage' : loginPage },
   data: function() {
     return {
-      
+
     };
   }
 };
