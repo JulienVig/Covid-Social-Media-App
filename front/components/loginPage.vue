@@ -33,6 +33,7 @@
 <script>
 import {API} from '../api.js';
 import { Alert } from 'react-native';
+import axios from "axios";
 export default {
   data: function() {
     return {
