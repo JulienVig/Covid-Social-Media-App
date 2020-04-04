@@ -11,13 +11,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    public long getId() {
-        return Id;
-    }
+    @Column(nullable = false)
+    private String pwdHash;
 
-    public void setId(long id) {
-        Id = id;
-    }
+    public long getId(){ return Id;}
 
     public String getUsername() {
         return username;
@@ -25,5 +22,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPwdHash() {
+        return pwdHash;
+    }
+
+    public void setPwdHash(String pwdHash) {
+        this.pwdHash = pwdHash;
     }
 }
