@@ -6,16 +6,12 @@
     We also need to provide each component with a "key",
     which will be explained later.
   -->
-    <todo-item
-      class="text-container"
-      v-for="todo in todos"
-      :key="todo.text"
-      :item="todo"
+    <loginPage
     />
-    <text-input>It happened !!</text-input>
   </view>
 </template>
 
+<<<<<<< Updated upstream
 <style>
 .container {
   background-color: white;
@@ -82,17 +78,15 @@
 }
 </style>
 
+=======
+>>>>>>> Stashed changes
 <script>
-import TodoItem from "./todoItem";
+import loginPage from "./loginPage";
 export default {
-  components: { TodoItem },
+  components: { 'loginPage' : loginPage },
   data: function() {
     return {
-      todos: [
-        { id: 1, text: "Learn JavaScript" },
-        { id: 2, text: "Learn Vue" },
-        { id: 3, text: "Build something awesome" }
-      ]
+      
     };
   }
 };
