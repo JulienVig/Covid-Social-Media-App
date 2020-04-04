@@ -18,6 +18,8 @@ public class Challenge {
     @Column(nullable = false)
     private String description;
 
+    private String logo;     //the link to the logo
+
     @ManyToMany(mappedBy = "hasCompleted")
     Set<User> completers;
 
@@ -27,9 +29,6 @@ public class Challenge {
             joinColumns = @JoinColumn(name = "challenge_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     Set<Challenge> isA;
-
-    private String logo;     //the link to the logo
-
     /* ----getters and setters---- */
 
     public long getId() {

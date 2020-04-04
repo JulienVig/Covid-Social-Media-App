@@ -78,6 +78,22 @@ public class mainController {
     }
 
     /**
+     * Returns a list with all the challenges that are in a category
+     * @param category a category of challenges
+     * @return a list with all the challenge of a category
+     */
+    @GetMapping("/api/getChallengeByCategory")
+    public List<Challenge> getChallengeByCategory(@RequestParam String category){
+        return challengeService.getChallengeByCategory(category);
+    }
+
+    @GetMapping("/api/allCategories")
+    public List<String> allCategories(){
+        return challengeService.allCategories();
+    }
+
+
+    /**
      * Returns an Optional that contains a challenge with a specified name if it exists
      * otherwise returns an empty Optional
      * @param name the name of a challenge

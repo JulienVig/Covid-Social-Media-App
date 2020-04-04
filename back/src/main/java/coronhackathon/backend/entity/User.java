@@ -14,7 +14,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "has_completed",
+            name = "hasCompleted",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "challenge_id"))
     Set<Challenge> completedChallenges;
