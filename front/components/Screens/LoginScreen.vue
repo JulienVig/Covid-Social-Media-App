@@ -1,0 +1,90 @@
+<template>
+    <view class="real-container">
+      <view class ="container">
+        <text>Enter username :</text>
+        <text-input>{{username}}</text-input>
+        <text>Enter password :</text>
+        <text-input>{{password}}</text-input>
+        <button :on-press="onPressEvent"
+        title="LE bouton a presser"
+        color="#841584"
+        accessibility-label="Learn more about this purple button"/>
+
+        <button :on-press="login" title="Entrez seulement" color="#EEAAEE"/>
+        <button title="Change page" @press="goToPage2"/>
+
+        <button title="View tabs" @press="goToTabNavigator"/>
+
+      </view>
+  </view>
+</template>
+
+<script>
+import {API} from '../../api.js';
+import { Alert } from 'react-native';
+import axios from "axios";
+
+export default {
+    props: {
+      navigation: {
+        type: Object
+      }
+    },
+  data: function() {
+    return {
+        username:'',
+        password:''
+    }
+  },
+  methods: {
+    onPressEvent () {
+      this.password = this.username;
+      Alert.alert('oui', 'oui')
+      console.log('test clicked')
+    },
+    login : function() {
+        console.log("Login !")
+      var bodyFormData = new FormData();
+        bodyFormData.append('username', this.username);
+        bodyFormData.append('password', this.password);
+       API({
+        method: 'post',
+        url: '/login',
+        data: bodyFormData,
+        headers: {'Content-Type': 'multipart/form-data' }
+        }).then(function(response){
+          console.log(response)
+        })
+    },
+    goToPage2 (){
+        this.navigation.navigate("Settings");
+    },
+    goToTabNavigator() {
+      this.navigation.navigate("Tabs")
+    },
+    mounted: function() {
+      this.username = 'user'
+      this.password = 'userPass'
+    }
+  },
+};
+</script>
+
+<style>
+.real-container {
+    align-items: center;
+    justify-content: center;
+    flex:1;
+}
+.container {
+  background-color: white;
+  display: flex;
+}
+.text-container {
+  color: blue;
+  font-size: 22;
+  width: 300;
+  height:100;
+  margin: auto;
+}
+</style>

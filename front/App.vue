@@ -1,46 +1,37 @@
 <template>
-  <view class="container">
-  <!--
-    Now we provide each todo-item with the todo object
-    it's representing, so that its content can be dynamic.
-    We also need to provide each component with a "key",
-    which will be explained later.
-  -->
-    <loginPage
-    />
-  </view>
+      <app-navigator></app-navigator>
 </template>
 
-
-<style>
-.container {
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-.text-container {
-  color: blue;
-  padding: 2;
-  font-size: 22;
-}
-
-.text-input-container {
-  width: 300;
-  height: 40;
-  font-size: 22;
-  border-color: gray;
-}
-</style>
-
 <script>
-import loginPage from "./components/loginPage";
-export default {
-  components: { 'loginPage' : loginPage },
-  data: function() {
-    return {
+import LoginScreen from "./components/Screens/LoginScreen";
+import DetailsScreen from "./components/Screens/DetailsScreen";
+import SettingsScreen from "./components/Screens/SettingsScreen";
+import ChallengesScreen from "./components/Screens/ChallengesScreen";
 
-    };
+import {
+  createAppContainer,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+  createStackNavigator
+} from "vue-native-router";
+
+
+const Tabs = createBottomTabNavigator(
+  {
+
+    Challenges: ChallengesScreen,
+    Details: DetailsScreen,
+    Settings: SettingsScreen,
   }
-};
+);
+const StackNavigator = createStackNavigator(
+  {
+    Home: LoginScreen,
+    Tabs
+  }
+);
+const AppNavigator = createAppContainer(StackNavigator);
+export default {
+  components: { AppNavigator }
+}
 </script>
