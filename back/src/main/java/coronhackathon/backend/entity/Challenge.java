@@ -18,15 +18,15 @@ public class Challenge {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany(mappedBy = "hasCompleted")
-    Set<User> completers;
+    @ManyToMany(mappedBy = "has_completed")
+    Set<User> has_completed;
 
     @ManyToMany
     @JoinTable(
-            name = "isA",
+            name = "is_A",
             joinColumns = @JoinColumn(name = "challenge_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    Set<Challenge> isA;
+    Set<Tag> is_A;
 
     private String logo;     //the link to the logo
 
