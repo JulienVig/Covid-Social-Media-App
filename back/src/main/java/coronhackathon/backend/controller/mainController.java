@@ -14,6 +14,8 @@ import java.util.Optional;
 public class mainController {
     @Autowired
     private UserService userService;
+
+    @Autowired
     private ChallengeService challengeService;
 
     //TODO delete this test method when not needed anymore
