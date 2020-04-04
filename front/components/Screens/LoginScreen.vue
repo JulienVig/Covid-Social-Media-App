@@ -10,7 +10,7 @@
         color="#841584"
         accessibility-label="Learn more about this purple button"/>
 
-        <button :on-press="login" title="Entrez seulement" color="#EEAAEE"/>
+        <button @press="login" title="Entrez seulement" color="#EEAAEE"/>
         <button title="Change page" @press="goToPage2"/>
 
         <button title="View tabs" @press="goToTabNavigator"/>
@@ -42,8 +42,8 @@ export default {
       Alert.alert('oui', 'oui')
       console.log('test clicked')
     },
-    login : function() {
-        console.log("Login !")
+    login () {
+     console.log("Login !")
       var bodyFormData = new FormData();
         bodyFormData.append('username', this.username);
         bodyFormData.append('password', this.password);
