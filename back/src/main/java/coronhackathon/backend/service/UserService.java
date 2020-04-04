@@ -3,6 +3,7 @@ package coronhackathon.backend.service;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -18,7 +19,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(Long id){
+    public Optional<User> getUser(long id){
         return userRepository.findById(id);
     }
 
