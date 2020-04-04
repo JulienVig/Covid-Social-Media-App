@@ -47,15 +47,31 @@ export default {
       console.log('test clicked')
     },
     login : function() {
-        /* API({
-          method: 'post',
-          url: '/login',
-          data: {
-            'username': this.username,
-            'password': this.password
-          },
-          headers: {'Content-Type': 'multipart/form-data' }
-          })*/
+      /* API({
+        method: 'post',
+        url: '/login',
+        data: {
+          'username': this.username,
+          'password': this.password
+        },
+        headers: {'Content-Type': 'multipart/form-data' }
+        })*/
+      axios.get('http://192.168.1.17:8080/allUsers').then(function(response){
+        console.log('Response is : ')
+        console.log(response.data)
+        console.log('====================================')
+      })
+      .catch(function(error){
+        if (!error.response) {
+          console.log('No response from server')
+          console.log(error)
+          console.log('--------------------')
+        } else {
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        }
+      })
     }
   },
   mounted: function() {
