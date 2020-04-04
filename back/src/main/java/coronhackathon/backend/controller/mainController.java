@@ -1,10 +1,13 @@
 package coronhackathon.backend.controller;
 
 import coronhackathon.backend.entity.User;
+import coronhackathon.backend.entity.UserDto;
 import coronhackathon.backend.service.UserService;
+import coronhackathon.backend.service.UsernameExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
@@ -21,9 +24,54 @@ public class mainController {
         return "Vous êtes bien sur l'application Spring de "+name;
     }
 
+    @GetMapping("/user/registration")
+    public String showRegistrationForm(WebRequest request, Model model) {
+        UserDto userDto = new UserDto();
+        model.addAttribute("user", userDto);
+        return "registration";
+    }
+
+    private User createUserAccount(UserDto accountDto, BindingResult result) {
+        User registered = null;
+        try {
+            registered = userService.registerNewUserAccount(accountDto);
+        } catch (UsernameExistsException e) {
+            return null;
+        }
+        return registered;
+    }
+
+    @PostMapping("/user/registration")
+    public User registerUserAccount(
+            @ModelAttribute("user")  UserDto accountDto,
+            BindingResult result,
+            WebRequest request,
+            Errors errors) throws Exception {
+
+        User registered = new User();
+        if (!result.hasErrors()) {
+            registered = createUserAccount(accountDto, result);
+        }
+        else {
+            System.out.println("errors!");
+        }
+
+        return registered;
+    }
+
     @GetMapping("/api/allUsers")
     public List<User> allUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/ping")
+    public String ping(){
+        return "pong!";
+    }
+
+    @GetMapping("/api/ping")
+    public String fancyping(){
+        return "fancypong!";
     }
 
     @PostMapping("/api/addUser")

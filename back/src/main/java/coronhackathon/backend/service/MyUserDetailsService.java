@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,42 +24,34 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        Optional<User> o_user = userRepository.findByUsername(username);
-        if (!o_user.isPresent()) {
+        User user = userRepository.findByUsername(username).get();
+        if (user == null) {
             throw new UsernameNotFoundException(
-                    "No user found with username: " + username);
+                    "No user found with username: "+ username);
         }
-        User user = o_user.get();
 
-        /*boolean enabled = true;
+        boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
-        */
-        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-        auth.add(new SimpleGrantedAuthority("USER"));
 
+        List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+        auths.add(new SimpleGrantedAuthority("USER"));
         return  new org.springframework.security.core.userdetails.User
-                (user.getUsername(), user.getPwdHash(),
-                        //Long.toString(user.getPwdHash()), enabled, accountNonExpired,
-                        //credentialsNonExpired, accountNonLocked,
-                       auth
-                );
+                (user.getUsername(),user.getPwdHash().toLowerCase(),
+                        enabled, accountNonExpired,
+                        credentialsNonExpired, accountNonLocked,
+                        auths);
     }
-    /*
-    NOTE this is part of copypaste from baeldung. It is not necessary for our simple role system.
 
-    */
+    /*
     private static List<GrantedAuthority> getAuthorities (List<String> roles) {
-        /*
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
-         */
-        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-        auth.add(new SimpleGrantedAuthority("USER"));
-        return auth;
+        return authorities;
     }
+    */
 
 }
