@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -24,34 +25,29 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username).get();
-        if (user == null) {
+        Optional<User> ouser = userRepository.findByUsername(username);
+        if (!ouser.isPresent()) {
             throw new UsernameNotFoundException(
                     "No user found with username: "+ username);
         }
+        User user = ouser.get();
 
+        /*
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
+         */
 
         List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
         auths.add(new SimpleGrantedAuthority("USER"));
         return  new org.springframework.security.core.userdetails.User
-                (user.getUsername(),user.getPwdHash().toLowerCase(),
+                (user.getUsername(),user.getPwdHash(),
+                        /*
                         enabled, accountNonExpired,
                         credentialsNonExpired, accountNonLocked,
+                         */
                         auths);
     }
-
-    /*
-    private static List<GrantedAuthority> getAuthorities (List<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
-    }
-    */
 
 }
