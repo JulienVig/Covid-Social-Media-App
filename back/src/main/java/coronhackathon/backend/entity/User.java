@@ -14,6 +14,8 @@ public class User {
     @Column(nullable = false)
     private String pwdHash;
 
+    public long getId(){ return Id;}
+
     public String getUsername() {
         return username;
     }
