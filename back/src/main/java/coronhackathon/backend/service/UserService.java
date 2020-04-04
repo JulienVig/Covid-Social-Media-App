@@ -30,10 +30,10 @@ public class UserService {
     }
 
 
-    public Optional<User> login(String username, long hash) {
+    public Optional<User> login(String username, String hash) {
         Optional<User> user = userRepository.findByUsername(username);
         if(user.isPresent()){
-            if(user.get().getPwdHash() == hash) return user;
+            if(user.get().getPwdHash().equals(hash)) return user;
             else return Optional.empty();
         }
         else return Optional.empty();
@@ -48,9 +48,9 @@ public class UserService {
      * @param hashPwd2
      * @return
      */
-    public Optional<User> register(String username, long hashPwd, long hashPwd2) {
+    public Optional<User> register(String username, String hashPwd, String hashPwd2) {
         Optional<User> optUser;
-        if(hashPwd == hashPwd2) {
+        if(hashPwd.equals(hashPwd2)) {
             if (!userRepository.findByUsername(username).isPresent()) {
                 User user =  new User();
                 user.setUsername(username);

@@ -32,29 +32,35 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         User user = o_user.get();
 
-        boolean enabled = true;
+        /*boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
+        */
         List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
         auth.add(new SimpleGrantedAuthority("USER"));
 
         return  new org.springframework.security.core.userdetails.User
-                (user.getUsername(),
-                        Long.toString(user.getPwdHash()), enabled, accountNonExpired,
-                        credentialsNonExpired, accountNonLocked,
+                (user.getUsername(), user.getPwdHash(),
+                        //Long.toString(user.getPwdHash()), enabled, accountNonExpired,
+                        //credentialsNonExpired, accountNonLocked,
                        auth
                 );
     }
     /*
     NOTE this is part of copypaste from baeldung. It is not necessary for our simple role system.
 
+    */
     private static List<GrantedAuthority> getAuthorities (List<String> roles) {
+        /*
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
-        return authorities;
+         */
+        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        auth.add(new SimpleGrantedAuthority("USER"));
+        return auth;
     }
-    */
+
 }

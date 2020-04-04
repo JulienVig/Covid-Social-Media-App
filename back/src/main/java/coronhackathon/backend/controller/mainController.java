@@ -50,8 +50,8 @@ public class mainController {
 
    @PostMapping("/register")
    public Optional<User> showRegistrationForm(@RequestParam String username,
-                                      @RequestParam long hashPwd,
-                                      @RequestParam long hashPwd2) {
+                                      @RequestParam String hashPwd,
+                                      @RequestParam String hashPwd2) {
 
         return userService.register(username, hashPwd, hashPwd2);
    }

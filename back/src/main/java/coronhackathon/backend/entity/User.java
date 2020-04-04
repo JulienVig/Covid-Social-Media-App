@@ -12,7 +12,7 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    private long pwdHash;
+    private String pwdHash;
 
     public String getUsername() {
         return username;
@@ -22,11 +22,11 @@ public class User {
         this.username = username;
     }
 
-    public long getPwdHash() {
+    public String getPwdHash() {
         return pwdHash;
     }
 
-    public void setPwdHash(long pwdHash) {
+    public void setPwdHash(String pwdHash) {
         this.pwdHash = pwdHash;
     }
 }
