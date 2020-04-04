@@ -12,8 +12,8 @@ public class Tag {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "isA")
-    Set<User> challenges;
+    @ManyToMany(mappedBy = "is_A")
+    Set<Challenge> is_A;
 
     /* ----getters and setters---- */
 

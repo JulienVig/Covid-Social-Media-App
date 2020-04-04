@@ -17,7 +17,7 @@ public class User {
             name = "hasCompleted",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "challenge_id"))
-    Set<Challenge> completedChallenges;
+    Set<Challenge> has_completed;
 
     public long getId() {
         return Id;
