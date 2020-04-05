@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,4 +48,9 @@ public class ChallengeService {
         return challengeRepository.countByCategory(category);
     }
 
+    public List<Challenge> getNineChallenges() {
+        List<Challenge> all = getAllChallenges();
+        Collections.shuffle(all);
+        return all.subList(0,Math.min(9,all.size()));
+    }
 }

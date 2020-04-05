@@ -120,8 +120,8 @@ public class mainController {
 
     /**
      * Return a list with all the comment on a specified challenge
-     * @param challengeId
-     * @return
+     * @param challengeId the id of a challenge
+     * @return all the comment of a given challenge
      */
     @RequestMapping(path = "/api/getCommentsOfChallenge/{challengeId}", method = RequestMethod.GET)
     public List<String> getCommentsOfChallenge(@PathVariable long challengeId){
@@ -132,13 +132,22 @@ public class mainController {
 
     /**
      * Returns all the challenges stored in the database
-     * curl -X GET localhost:8080/api/allChallenges
      *
      * @return a list that contains all the challenges stored in the database
      */
     @GetMapping("/api/allChallenges")
     public List<Challenge> allChallenges() {
         return challengeService.getAllChallenges();
+    }
+
+    /**
+     * Returns all the challenges stored in the database
+     *
+     * @return a list that contains all the challenges stored in the database
+     */
+    @GetMapping("/api/nineChallenges")
+    public List<Challenge> nineChallenges() {
+        return challengeService.getNineChallenges();
     }
 
     /**
