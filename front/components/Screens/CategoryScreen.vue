@@ -1,22 +1,73 @@
 <template>
     <view class="real-container">
-      <view class ="container">
-          <view class="header"
-            <text class="title">Catégorie</text>
-          </view>
-        <text class="text-container">Enter username :</text>
-        <text-input class="input-container" v-model="username"/>
-        <text class="text-container">Enter password :</text>
-        <text-input class="input-container" v-model="password"/>
-        <view class="login-container">
-           <text  class="login-btn" :on-press="login">Login</text>
-           <text  class="login-btn" :on-press="goToTabNavigator">Bypass login</text>
+        <view class="container">
+            <view class="header"
+              <text class="title">Catégories</text>
+            </view>
+            <view class ="main">
+                <view class="categories">
+                    <view class="category" v-for="(category, id) in categories" :key="id">
+                        <view class="single-element-container">
+                            <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
+                            <text class="name">{{category.name}}</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
         </view>
-
-
-      </view>
   </view>
 </template>
+
+<style>
+
+.corona-icon {
+  height:80;
+  width:80;
+}
+
+.main {
+    justify-content: center;
+    align-items: center;
+}
+.categories{
+
+    /* margin: 10px; */
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 90%;
+}
+
+.single-element-container{
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    max-width: 100px;
+    width: 90%;
+}
+
+.name{
+    justify-content: center;
+    align-items: center;
+}
+
+.real-container {
+    /* align-items: center;
+    justify-content: center;
+    flex:1; */
+}
+.container {
+  background-color: white;
+  width:80%;
+}
+
+.title{
+    font-size: 40;
+    font-weight: 100;
+    margin-bottom: 100;
+}
+
+</style>
 
 <script>
 import {API} from '../../api.js';
@@ -31,8 +82,26 @@ export default {
     },
   data: function() {
     return {
-        username:'',
-        password:''
+        categories: [
+            {
+                name: "Jardinage de tulipe",
+            },
+            {
+                name: "Dessin",
+            },
+            {
+                name: "Bricolage",
+            },
+            {
+                name: "Musique",
+            },
+            {
+                name: "Entraide",
+            },
+            {
+                name: "Nettoyage",
+            }
+        ]
     }
   },
   methods: {
@@ -44,7 +113,7 @@ export default {
         const self = this;
        API({
         method: 'post',
-        url: '/login',
+        url: '/api/allCategories',
         data: bodyFormData,
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
@@ -61,55 +130,7 @@ export default {
     }
   },
   mounted: function() {
-      this.username = 'user'
-      this.password = 'user'
+
   }
 };
 </script>
-
-<style>
-.real-container {
-    align-items: center;
-    justify-content: center;
-    flex:1;
-}
-.container {
-  background-color: white;
-  width:80%;
-}
-
-.title{
-    font-size: 40;
-    font-weight: 100;
-    margin-bottom: 100;
-}
-.text-container{
-    font-size: 22;
-}
-.input-container {
-  border-style: solid;
-  border-color: #FFFFFF;
-  border-bottom-color: #888888;
-  border-width: 2;
-  font-size: 22;
-  padding: 10;
-  margin-bottom: 20;
-}
-
-.login-container{
-    margin-top: 10;
-    width: 100%;
-    border-radius: 10;
-    justify-content: space-between;
-    flex-direction: row;
-
-
-}
-
-.login-btn {
-    padding: 20;
-    font-size: 22;
-    background-color: #EEAAEE;
-color:white;
-}
-</style>
