@@ -20,6 +20,6 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     public Optional<Challenge> findByName(String name);
     public List<Challenge> findByCategory(long categoryId);
     public long count();
-    public Long countByCategory(Category category);
+    public Long countByCategoryId(long categoryId);
 
 }

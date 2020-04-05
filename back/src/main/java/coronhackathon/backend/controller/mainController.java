@@ -136,12 +136,22 @@ public class mainController {
 
     /**
      * Returns the number of challenges of a given category
-     * @param category the name of the category
+     * @param categoryId the name of the category
      * @return the number of challenges in the category
      */
     @RequestMapping(path = "/api/numberOfChallengesOfCategory/{category}", method = RequestMethod.GET)
-    public Long numberOfChallengesOfCategory(@PathVariable Category category) {
-        return challengeService.numberOfChallengesByCategory(category);
+    public Long numberOfChallengesOfCategory(@PathVariable long categoryId) {
+        return challengeService.numberOfChallengesByCategoryId(categoryId);
+    }
+
+    /**
+     * Returns the number of challenges of a given category
+     * @param category the name of the category
+     * @return the number of challenges in the category
+     */
+    @RequestMapping(path = "/api/numberOfChallengesByCategoryName/{category}", method = RequestMethod.GET)
+    public Long numberOfChallengesByCategoryName(@PathVariable String category) {
+        return challengeService.numberOfChallengesByCategoryName(category);
     }
 
     /**
