@@ -5,9 +5,12 @@
 
     <!--<text class="subTitle">{{this.defiTitle}}</text> <!-- récupérer le nom du challenge -->
 
-    <text class = "challenge-title">{{response.name}}</text>
-    <text class = "challenge-cat">{{response.category}}</text>
-    <text class = "challenge-desc">{{response.description}}</text>
+    <!--<text-input class = "challenge-title" v-model= "response.name"/>
+    <text-input class = "challenge-cat" v-model= "response.category"/>
+    <text-input class = "challenge-desc" v-model= "response.description"/>-->
+    <text class = "challenge-title">{{currentChallenge.name}}</text>
+    <text class = "challenge-cat">{{currentChallenge.category}}</text>
+    <text class = "challenge-desc">{{currentChallenge.description}}</text>
 
 
    <!--  Boutons pour importer ou prendre une photo + on les récupère pour les poster  -->
@@ -21,14 +24,13 @@
     />
 
     <!-- On affiche l'image qui a été sélectionnée   -->
-    <image :source="pic_trulli.jpg" alt="Italian Trulli"/> 
+    <image :source="require('/home/colbois/Documents/Lauzhack/Coronhackathon/front/assets/images/phone_black_192x192.png')"/> 
 
     
     
     <!-- Box "rajouter une description" + on la récupère pour la poster  -->
     <text class="box">Ajouter une description : </text>
-     <text-input class="insideBox">{{review}}</text-input>
-
+     <text-input class = "insideBox" v-model= "review"/>
     <!-- On confirme la validation + on poste les détails de la validation   -->
     <button :on-press="challengeValidation"
     title="Confirmer"
@@ -48,19 +50,41 @@ import React from 'react';
 import {Text} from 'react-native';
 
 export default {
-    data:  async function() {
+    data:   function() {
       return {
           defiTitle : "Nom du défi",
           uploading: false,
           image:null,
-          response:null,
-          review:null,
-          challengeId:null,
-          userId:null,
+          response:{
+            userId:1,
+            challengeId:1,
+            commentary:"",
+            picture:null,
+          },
+          review:"blabla",
+          currentChallenge:{
+            name:"nom",
+            category:"cuisine",
+            description:"croissant",
+          },
+          //challengeId:null,
+          //userId:null,
       }
     },
     methods:{
       
+      start: async function(){
+        const self=this;
+      API({ //on suppose qu'on a déjà l'id
+           method: 'get',
+           url: '/api/getChallenge?id=3',
+          }).then(function(response){
+          console.log(response)
+          self.currentChallenge.name = response.data.name; //contacter backend pour la structure de response
+          self.currentChallenge.category = response.data.category;
+          self.currentChallenge.description = response.data.description;
+        })
+      },
       challengeValidation: async function() {
           var bodyFormData = new FormData();
           bodyFormData.append('userId',this.userId);
@@ -70,17 +94,17 @@ export default {
           //valider le défi?
           API({
             method: 'post',
-            url : '/api/completeChallenge', //à discuter avec la team backend
+            url : '/api/completeChallenge',
             data : bodyFormData,
             headers: {'Content-Type':'multipart/form-data-'}
-          }).then(function(reponse)){
+          }).then(function(reponse){
             //try{
              console.log(response)
             //}catch(e){
             // Alert.alert('Oupsi');
             //}
 
-          }
+          })
         },
         pickImage :  async function () {
             const {
@@ -135,12 +159,12 @@ export default {
             let uploadResponse, uploadResult;
 
             try {
-              this.uploading = true;
+             // this.uploading = true;
 
               if (!pickerResult.cancelled) {
                 uploadResponse = await uploadImageAsync(pickerResult.uri);
-                // uploadResult = await uploadResponse.json();
-                // image = uploadResult.location
+                 uploadResult = await uploadResponse.json();
+                 image = uploadResult.location
               }
             } catch (e) {
               console.log({ uploadResponse });
@@ -148,7 +172,7 @@ export default {
               console.log({ e });
               Alert.alert('Upload failed, sorry :(');
             } finally {
-              this.uploading= false;
+             // this.uploading= false;
             }
           }
         // postPhoto: async function() {
@@ -255,12 +279,7 @@ export default {
     },
 
     mounted: function(){
-      API({ //on suppose qu'on a déjà l'id
-           method: 'get',
-           url: '/getChallenge?id=1',
-          }).then(function(response){
-          console.log(response)
-        }) //response cêst mon challenge? 
+       this.start();
     }
 }
 
