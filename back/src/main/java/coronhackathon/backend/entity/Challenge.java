@@ -1,7 +1,12 @@
 package coronhackathon.backend.entity;
 
+import sun.reflect.generics.tree.Tree;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 public class Challenge {
@@ -22,15 +27,7 @@ public class Challenge {
 
     /* ---- Relations ---- */
 
-    @ManyToMany(mappedBy = "has_completed")
-    Set<User> has_completed;
 
-    @ManyToMany
-    @JoinTable(
-            name = "is_A",
-            joinColumns = @JoinColumn(name = "challenge_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    Set<Tag> is_A;
 
     /* ----Getters and Setters---- */
 
