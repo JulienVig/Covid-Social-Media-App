@@ -114,7 +114,7 @@ export default {
       const self = this;
        API({
         method: 'get',
-        url: '/api/getChallenge?id='+this.navigation.state.params.challengeId
+        url: '/api/getChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
           self.titre = response.data.name;
           self.description = response.data.description;

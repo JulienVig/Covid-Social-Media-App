@@ -77,7 +77,7 @@ export default {
         const self=this;
       API({ //on suppose qu'on a déjà l'id
            method: 'get',
-           url: '/api/getChallenge?id=3',
+           url: '/api/getChallenge?id=3', //ATTENTION vérifier si l'API n'a pas changé et mettre getChallenge/3 à la place
           }).then(function(response){
           console.log(response)
           self.currentChallenge.name = response.data.name; //contacter backend pour la structure de response
