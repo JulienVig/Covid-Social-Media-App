@@ -142,7 +142,6 @@ import axios from "axios";
                         headers: {'Content-Type': 'multipart/form-data' }
                         }).then(function(response){
                             console.log(response)
-                            
                         })
             }
         },

@@ -8,8 +8,8 @@
         <text-input class="input-container" v-model="password"/>
         <view class="login-container">
            <text  class="login-btn" :on-press="login">Login</text>
-           <text  class="login-btn" :on-press="login">Register</text>
-       </view>
+           <text  class="login-btn" :on-press="goToTabNavigator">Bypass login</text>
+        </view>
 
 
       </view>
@@ -54,6 +54,9 @@ export default {
            console.log(error)
         })
     },
+    goToTabNavigator() {
+      this.navigation.navigate("Challenges")
+    }
   },
   mounted: function() {
       this.username = 'user'
