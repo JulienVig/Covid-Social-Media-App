@@ -8,12 +8,20 @@
 
     <!-- importer un fichier c'est de la grosse merde <-->
 
-    <button :on-press="onPressEvent"
+    <!-- <button :on-press="onPressEvent"
     title="Importer une photo"
     color="#841584"
-    accessibility-label="Importer une photo depuis l'appareil"/>
+    accessibility-label="Importer une photo depuis l'appareil"/> -->
 
-  
+   <button
+    :on-press="() => pickImage()"
+    title="Importer une image depuis l'appareil"
+    />
+    <button
+    :on-press="() => takePhoto()"
+    title="Prendre une photo avec l'appareil"
+    />
+
     <text class="box">Ajouter une description : </text>
      <text-input class="insideBox">{{description}}</text-input>
 
@@ -76,10 +84,56 @@ export default {
   },
   methods: {
       onPressEvent : function() {
-      this.password = this.username;
-      Alert.alert('oui', 'oui')
-      console.log('test clicked')
-    }
+      Alert.alert('Là on confirme', 'à implémenter')
+    },
+    pickImage : async () => {
+            const {
+              status: cameraRollPerm
+            } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+            // only if user allows permission to camera roll
+            if (cameraRollPerm === 'granted') {
+              let pickerResult = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [4, 3],
+              });
+
+              // handleImagePicked(pickerResult);
+            }
+        },
+        takePhoto : async () => {
+           const {
+             status: cameraPerm
+           } = await Permissions.askAsync(Permissions.CAMERA);
+
+           const {
+             status: cameraRollPerm
+           } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+           // only if user allows permission to camera AND camera roll
+           if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
+             let pickerResult = await ImagePicker.launchCameraAsync({
+               allowsEditing: true,
+               aspect: [4, 3],
+             });
+
+             // handleImagePicked(pickerResult);
+           }
+       },
+       login : function() {
+          var bodyFormData = new FormData();
+            bodyFormData.append('username', this.username);
+            bodyFormData.append('password', this.password);
+          API({
+            method: 'post',
+            url: '/login',
+            data: bodyFormData,
+            headers: {'Content-Type': 'multipart/form-data' }
+          }).then(function(response){
+            console.log(response)
+        })
+    },
+  
   },
 
 };

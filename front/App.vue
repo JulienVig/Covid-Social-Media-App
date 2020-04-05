@@ -7,6 +7,7 @@ import LoginScreen from "./components/Screens/LoginScreen";
 import DetailsScreen from "./components/Screens/DetailsScreen";
 import SettingsScreen from "./components/Screens/SettingsScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
+import ValidationChallenge from "./components/Screens/ValidationChallenge";//temporary
 
 import {
   createAppContainer,
@@ -22,6 +23,7 @@ const Tabs = createBottomTabNavigator(
     Challenges: ChallengesScreen,
     Details: DetailsScreen,
     Settings: SettingsScreen,
+    Validation: ValidationChallenge, //temporary
   }
 );
 const StackNavigator = createStackNavigator(
