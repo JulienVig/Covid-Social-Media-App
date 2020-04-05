@@ -2,9 +2,12 @@ package coronhackathon.backend.service;
 
 import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.repository.CategoryRepository;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +16,10 @@ import java.util.Optional;
 public class ChallengeService {
     @Autowired
     private ChallengeRepository challengeRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     public void addChallenge(Challenge challenge) {
         challengeRepository.save(challenge);
@@ -26,8 +33,12 @@ public class ChallengeService {
         return challengeRepository.findById(id);
     }
 
-    public List<Challenge> getChallengeByCategory(Category category) {
-        return challengeRepository.findByCategory(category);
+    public List<Challenge> getChallengeByCategory(long categoryId) {
+        return challengeRepository.findByCategory(categoryId);
+    }
+
+    public List<Challenge> getChallengeByCategory(String name) {
+        return challengeRepository.findByCategory(categoryService.getIdFromName(name));
     }
     
     public Optional<Challenge> getChallengeByName(String name) {

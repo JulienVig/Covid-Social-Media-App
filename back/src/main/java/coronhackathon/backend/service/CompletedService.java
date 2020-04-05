@@ -25,6 +25,8 @@ public class CompletedService {
     private ChallengeRepository challengeRepository;
     @Autowired
     private CompletedRepository completedRepository;
+    @Autowired
+    private CategoryService categoryService;
 
 
     public List<Challenge> getCompletedChallenges(long userId) {
@@ -70,16 +72,20 @@ public class CompletedService {
         return "User " + user.getUsername() + " has completed " + challenge.getName();
     }
 
-    public List<Challenge> getCompletedChallengesByCategory(long userId, Category category) {
-        List<Challenge> l = new ArrayList<Challenge>();
+    public List<Challenge> getCompletedChallengesByCategory(long userId, long categoryId) {
+        List<Challenge> l = new ArrayList<>();
         Optional<User> ou = userRepository.findById(userId);
         if(!ou.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : "+ userId+" not found");
 
         for(HasCompleted hc : completedRepository.findByUser(ou.get())){
-            if(hc.getChallenge().getCategory().equals(category))
+            if(hc.getChallenge().getCategoryId() == categoryId)
             l.add(hc.getChallenge());
         }
         return l;
+    }
+
+    public List<Challenge> getCompletedChallengesByCategory(long userId, String name) {
+        return getCompletedChallengesByCategory(userId, categoryService.getIdFromName(name));
     }
 }

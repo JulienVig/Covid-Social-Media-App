@@ -157,12 +157,22 @@ public class mainController {
 
     /**
      * Returns a list with all the challenges that are in a category
-     * @param category a category of challenges
+     * @param categoryId a category of challenges
      * @return a list with all the challenge of a category
      */
-    @RequestMapping(path = "/api/getChallengeByCategory/{category}", method = RequestMethod.GET)
-    public List<Challenge> getChallengeByCategory(@PathVariable Category category){
-        return challengeService.getChallengeByCategory(category);
+    @RequestMapping(path = "/api/getChallengeByCategory/{categoryId}", method = RequestMethod.GET)
+    public List<Challenge> getChallengeByCategory(@PathVariable long categoryId){
+        return challengeService.getChallengeByCategory(categoryId);
+    }
+
+    /**
+     * Returns a list with all the challenges that are in a category
+     * @param categoryId a category of challenges
+     * @return a list with all the challenge of a category
+     */
+    @RequestMapping(path = "/api/getChallengeByCategoryName/{name}", method = RequestMethod.GET)
+    public List<Challenge> getChallengeByCategory(@PathVariable String name){
+        return challengeService.getChallengeByCategory(name);
     }
 
     /**
@@ -246,9 +256,20 @@ public class mainController {
      * @param category category of the challenges completed by the user
      * @return completed challenges of a certain category as a list
      */
-    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{category}", method = RequestMethod.GET)
-    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable Category category){
-        return completedService.getCompletedChallengesByCategory(userId,category);
+    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{categoryId}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable long categoryId){
+        return completedService.getCompletedChallengesByCategory(userId,categoryId);
+    }
+
+    /**
+     * Returns all challenges completed by User in a certain category
+     * @param userId Id of User
+     * @param category category of the challenges completed by the user
+     * @return completed challenges of a certain category as a list
+     */
+    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{name}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable String name){
+        return completedService.getCompletedChallengesByCategory(userId,name);
     }
 
 
