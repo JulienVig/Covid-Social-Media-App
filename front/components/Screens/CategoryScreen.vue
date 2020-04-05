@@ -24,6 +24,12 @@
 
 .header{
     background-color: #DDDDDD;
+    width: 100%;
+    height:100%;
+}
+
+.title{
+    background-color: #888888;
 }
 
 .icon {
@@ -68,8 +74,8 @@
     flex:1; */
 }
 .container {
-  background-color: white;
-  width:80%;
+  background-color: grey;
+  width:100%;
 }
 
 .title{
@@ -97,38 +103,47 @@ export default {
             {
                 name: "Jardinage de tulipe",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Dessin",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Bricolage",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Musique",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Entraide",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Nettoyage",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Jardinage de tulipe",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Dessin",
                 logo:"",
+                logoPath:"",
             },
             {
                 name: "Bricolage",
                 logo:"",
+                logoPath:"",
             },
 
         ]
@@ -144,6 +159,7 @@ export default {
         }).then(function(response){
             self.categories = response.data;
             this.setLogos();
+
         }).catch(function(error){
            console.log(error)
         })
