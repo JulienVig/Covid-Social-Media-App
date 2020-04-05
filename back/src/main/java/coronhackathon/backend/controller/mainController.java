@@ -4,6 +4,7 @@ import coronhackathon.backend.entity.Challenge;
 
 import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
+import coronhackathon.backend.repository.TagOfChallengeRepository;
 import coronhackathon.backend.service.*;
 import coronhackathon.backend.service.ChallengeService;
 import coronhackathon.backend.service.UserService;
@@ -24,7 +25,7 @@ public class mainController {
     @Autowired
     private TagService tagService;
     @Autowired
-    private IsAService isAService;
+    private TagOfChallengeService tagOfChallengeService;
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -227,15 +228,15 @@ public class mainController {
         return tagService.allTags();
     }
 
-    /* ---- IsA ---- */
+    /* ---- Tag of Challenge ---- */
 
     /**
-     * Retrieve all Challenges that have tht tag Tag
+     * Retrieve all Challenges that have the tag Tag
      * @param tagId the id of the tag
      * @return challenges as a list
      */
-    @GetMapping("/api/getChallengesByTag")
-    public List<Challenge> getChallengesByTag(@RequestParam long tagId){
-        return isAService.getChallengesOfTag(tagId);
+    @RequestMapping(path = "/api/getChallengesByTag/{tagId}", method = RequestMethod.GET)
+    public List<Challenge> getChallengesByTag(@PathVariable long tagId){
+        return tagOfChallengeService.getChallengesOfTag(tagId);
     }
 }
