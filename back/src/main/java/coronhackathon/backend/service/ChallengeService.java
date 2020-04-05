@@ -49,8 +49,12 @@ public class ChallengeService {
         return challengeRepository.count();
     }
 
-    public Long numberOfChallengesByCategory(Category category) {
-        return challengeRepository.countByCategory(category);
+    public Long numberOfChallengesByCategoryId(long category) {
+        return challengeRepository.countByCategoryId(category);
+    }
+
+    public Long numberOfChallengesByCategoryName(String name) {
+        return challengeRepository.countByCategoryId((categoryService.getIdFromName(name)));
     }
 
 
