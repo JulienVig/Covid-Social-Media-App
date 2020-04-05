@@ -13,7 +13,7 @@
         <button @press="login" title="Entrez seulement" color="#EEAAEE"/>
         <button title="Change page" @press="goToPage2"/>
 
-        <button title="View tabs" @press="goToTabNavigator"/>
+        <button title="Bypass login" @press="goToTabNavigator"/>
 
       </view>
   </view>
@@ -64,6 +64,7 @@ export default {
         alert('Please login');
     },
     goToTabNavigator() {
+      this.navigation.navigate("Challenges")
       alert('Please login');
     }
   },
