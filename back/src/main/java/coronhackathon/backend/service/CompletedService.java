@@ -1,5 +1,6 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
@@ -24,6 +25,8 @@ public class CompletedService {
     private ChallengeRepository challengeRepository;
     @Autowired
     private CompletedRepository completedRepository;
+    @Autowired
+    private CategoryService categoryService;
 
 
     public List<Challenge> getCompletedChallenges(long userId) {
@@ -66,18 +69,51 @@ public class CompletedService {
         hc.setCommentary(commentary);
         hc.setPicture(picture);
         completedRepository.save(hc);
+        // TODO return such that front can easily send image
         return "User " + user.getUsername() + " has completed " + challenge.getName();
     }
 
-    public List<Challenge> getCompletedChallengesByCategory(long userId, String category) {
-        List<Challenge> l = new ArrayList<Challenge>();
+    public List<Challenge> getCompletedChallengesByCategory(long userId, long categoryId) {
+        List<Challenge> l = new ArrayList<>();
         Optional<User> ou = userRepository.findById(userId);
         if(!ou.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : "+ userId+" not found");
 
         for(HasCompleted hc : completedRepository.findByUser(ou.get())){
-            if(hc.getChallenge().getCategory().equals(category))
+            if(hc.getChallenge().getCategoryId() == categoryId)
             l.add(hc.getChallenge());
+        }
+        return l;
+    }
+
+    public void setPath(long userId, long challengeId, String destinationPath) {
+        Optional<User> ou = userRepository.findById(userId);
+        Optional<Challenge> oc = challengeRepository.findById(challengeId);
+        if(!ou.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : "+ userId+" not found");
+        if( !oc.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : "+challengeId+" not found");
+
+        User user = ou.get();
+        Challenge challenge = oc.get();
+        Optional<HasCompleted> ohc = completedRepository.findByUserAndChallenge(user,challenge);
+        if (! ohc.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "has completed not found");
+
+        else ohc.get().setPicture(destinationPath);
+    }
+
+    public List<Challenge> getCompletedChallengesByCategory(long userId, String name) {
+        return getCompletedChallengesByCategory(userId, categoryService.getIdFromName(name));
+    }
+
+    public List<String> getCommentsOfChallenge(long challengeId) {
+        List<String> l = new ArrayList<>();
+        Optional<Challenge> oc = challengeRepository.findById(challengeId);
+        if(!oc.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : "+challengeId+" not found");
+        for(HasCompleted hc : completedRepository.findByChallenge(oc.get())){
+            l.add(hc.getCommentary());
         }
         return l;
     }

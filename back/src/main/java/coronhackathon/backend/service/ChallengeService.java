@@ -1,11 +1,13 @@
 package coronhackathon.backend.service;
 
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.repository.CategoryRepository;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +15,10 @@ import java.util.Optional;
 public class ChallengeService {
     @Autowired
     private ChallengeRepository challengeRepository;
-
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     public void addChallenge(Challenge challenge) {
         challengeRepository.save(challenge);
@@ -27,24 +32,33 @@ public class ChallengeService {
         return challengeRepository.findById(id);
     }
 
-    public List<Challenge> getChallengeByCategory(String category) {
-        return challengeRepository.findByCategory(category);
+    public List<Challenge> getChallengeByCategory(long categoryId) {
+        return null;
+    }
+
+    public List<Challenge> getChallengeByCategory(String name) {
+        return null;
     }
     
     public Optional<Challenge> getChallengeByName(String name) {
         return challengeRepository.findByName(name);
     }
 
-    public List<String> allCategories() {
-        return challengeRepository.findDistinctByNameNotIn(getAllChallenges());
-    }
-
     public long numberOfChallenges() {
         return challengeRepository.count();
     }
 
-    public Long numberOfChallengesByCategory(String category) {
-        return challengeRepository.countByCategory(category);
+    public Long numberOfChallengesByCategoryId(long category) {
+        return challengeRepository.countByCategoryId(category);
     }
 
+    public Long numberOfChallengesByCategoryName(String name) {
+        return challengeRepository.countByCategoryId((categoryService.getIdFromName(name)));
+    }
+
+    public List<Challenge> getNineChallenges() {
+        List<Challenge> all = getAllChallenges();
+        Collections.shuffle(all);
+        return all.subList(0,Math.min(9,all.size()));
+    }
 }

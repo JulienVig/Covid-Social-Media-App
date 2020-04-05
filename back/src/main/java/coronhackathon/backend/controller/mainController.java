@@ -1,5 +1,6 @@
 package coronhackathon.backend.controller;
 
+import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
 
 import coronhackathon.backend.entity.Tag;
@@ -9,8 +10,16 @@ import coronhackathon.backend.service.*;
 import coronhackathon.backend.service.ChallengeService;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +34,10 @@ public class mainController {
     @Autowired
     private TagService tagService;
     @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private TagOfChallengeService tagOfChallengeService;
+
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -42,6 +54,77 @@ public class mainController {
     @GetMapping("/api/ping")
     public String fancyPing(){
         return "authenticated pong!";
+    }
+
+    // TODO remove this test method when not needed anymore
+    @GetMapping(
+            value = "/banana",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] getImageWithMediaType() throws IOException {
+        String path = "src/main/resources/banana.jpg";
+        return Files.readAllBytes(Paths.get(path));
+    }
+
+    /**
+     * Get an image from path
+     * @param path : should start with 'resources/'
+     * @return the image data as byte arraygit reset
+     * @use ip:8080/api/image?<path> where <path> was received from a previous query
+     * @throws IOException
+     */
+    @GetMapping(
+            value = "/api/image",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] getImageWithMediaType(@RequestParam String path) throws IOException {
+        return Files.readAllBytes(Paths.get("src/main/" + path));
+    }
+
+    /*
+    TODO remove when unecessary
+    use it as test method
+
+     */
+    @PostMapping(
+            value = "/uploadImage",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody String uploadImageTest(@RequestBody byte[] imgData) throws IOException {
+        String destinationPath = "src/main/resources/upload.jpg";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "jpg", new File(destinationPath));
+
+        return destinationPath;
+    }
+
+    /**
+     * Receive an image illustrating a completion, save it and set path in hasCompleted entity
+     * @param imgData: the uploaded image as byte array. see https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
+     * @param id: the id of hasCompleted entity received from a previous query
+     * @return the path to find the image
+     * @use ip:8080/api/uploadImage/hasCompletedID where <path> was received from a previous query
+     * @throws IOException
+     */
+    @RequestMapping(
+            value = "/api/uploadImage/{userId}-{challengeId}",
+            method = RequestMethod.POST,
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody String uploadImage(
+            @RequestBody byte[] imgData,
+            @PathVariable("userId") long userId,
+            @PathVariable("challengeId") long challengeId) throws IOException {
+        String destinationPath = "resources/completedImage/hasCompleted_"
+                + Long.toString(userId)
+                + "_"
+                + Long.toString(challengeId)+".jpg";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "jpg", new File("src/main/"+destinationPath) );
+        completedService.setPath(userId, challengeId, destinationPath);
+        return destinationPath;
     }
 
     /* ---Users ----*/
@@ -97,16 +180,6 @@ public class mainController {
         return completedService.getCompletedChallenges(userId);
     }
 
-    /**
-     * Returns all challenges completed by User in a certain category
-     * @param userId Id of User
-     * @param category category of the challenges completed by the user
-     * @return completed challenges of a certain category as a list
-     */
-    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{category}", method = RequestMethod.GET)
-    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable String category){
-        return completedService.getCompletedChallengesByCategory(userId,category);
-    }
 
     /**
      * Retrieve all users that complete challenge Challenge
@@ -118,18 +191,36 @@ public class mainController {
         return completedService.getCompletersOfChallenge(challengeId);
     }
 
+    /**
+     * Return a list with all the comment on a specified challenge
+     * @param challengeId the id of a challenge
+     * @return all the comment of a given challenge
+     */
+    @RequestMapping(path = "/api/getCommentsOfChallenge/{challengeId}", method = RequestMethod.GET)
+    public List<String> getCommentsOfChallenge(@PathVariable long challengeId){
+        return completedService.getCommentsOfChallenge(challengeId);
+    }
 
     /* ----Challenge---- */
 
     /**
      * Returns all the challenges stored in the database
-     * curl -X GET localhost:8080/api/allChallenges
      *
      * @return a list that contains all the challenges stored in the database
      */
     @GetMapping("/api/allChallenges")
     public List<Challenge> allChallenges() {
         return challengeService.getAllChallenges();
+    }
+
+    /**
+     * Returns all the challenges stored in the database
+     *
+     * @return a list that contains all the challenges stored in the database
+     */
+    @GetMapping("/api/nineChallenges")
+    public List<Challenge> nineChallenges() {
+        return challengeService.getNineChallenges();
     }
 
     /**
@@ -144,25 +235,24 @@ public class mainController {
     }
 
     /**
-     * Returns a list with all the challenges that are in a category
-     * @param category a category of challenges
-     * @return a list with all the challenge of a category
+     * Returns the number of challenges of a given category
+     * @param categoryId the name of the category
+     * @return the number of challenges in the category
      */
-    @RequestMapping(path = "/api/getChallengeByCategory/{category}", method = RequestMethod.GET)
-    public List<Challenge> getChallengeByCategory(@PathVariable String category){
-        return challengeService.getChallengeByCategory(category);
+    @RequestMapping(path = "/api/numberOfChallengesOfCategory/{category}", method = RequestMethod.GET)
+    public Long numberOfChallengesOfCategory(@PathVariable long categoryId) {
+        return challengeService.numberOfChallengesByCategoryId(categoryId);
     }
 
     /**
-     * Returns a list with all the categories
-     * @param
-     * @return a list with all the categories
+     * Returns the number of challenges of a given category
+     * @param category the name of the category
+     * @return the number of challenges in the category
      */
-    @GetMapping("/api/allCategories")
-    public List<String> allCategories(){
-        return challengeService.allCategories();
+    @RequestMapping(path = "/api/numberOfChallengesByCategoryName/{category}", method = RequestMethod.GET)
+    public Long numberOfChallengesByCategoryName(@PathVariable String category) {
+        return challengeService.numberOfChallengesByCategoryName(category);
     }
-
 
     /**
      * Returns an Optional that contains a challenge with a specified name if it exists
@@ -176,22 +266,32 @@ public class mainController {
     }
 
     /**
+     * Returns a list with all the challenges that are in a category
+     * @param categoryId a category of challenges
+     * @return a list with all the challenge of a category
+     */
+    @RequestMapping(path = "/api/getChallengeByCategory/{categoryId}", method = RequestMethod.GET)
+    public List<Challenge> getChallengeByCategory(@PathVariable long categoryId){
+        return challengeService.getChallengeByCategory(categoryId);
+    }
+
+    /**
+     * Returns a list with all the challenges that are in a category
+     * @param categoryId a category of challenges
+     * @return a list with all the challenge of a category
+     */
+    @RequestMapping(path = "/api/getChallengeByCategoryName/{name}", method = RequestMethod.GET)
+    public List<Challenge> getChallengeByCategory(@PathVariable String name){
+        return challengeService.getChallengeByCategory(name);
+    }
+
+    /**
      * Returns the number of challenges
      * @return the number of challenges
      */
     @GetMapping("/api/numberOfChallenges")
     public long numberOfChallenges() {
         return challengeService.numberOfChallenges();
-    }
-
-    /**
-     * Returns the number of challenges of a given category
-     * @param category the name of the category
-     * @return the number of challenges in the category
-     */
-    @RequestMapping(path = "/api/numberOfChallengesOfCategory/{category}", method = RequestMethod.GET)
-    public Long numberOfChallengesOfCategory(@PathVariable String category) {
-        return challengeService.numberOfChallengesByCategory(category);
     }
 
 
@@ -202,6 +302,83 @@ public class mainController {
     @RequestMapping(path = "/api/addChallenge/{challenge}", method = RequestMethod.GET)
     public void addChallenge(@PathVariable Challenge challenge) {
         challengeService.addChallenge(challenge);
+    }
+
+
+    /* ----Category---- */
+
+    /**
+     *
+     * @param id of the category
+     * @return the category corresponding to the id
+     */
+    @RequestMapping(path = "/api/getCategory/{id}", method = RequestMethod.GET)
+    public Optional<Category> getCategory(@PathVariable long id) {
+        return categoryService.getCategory(id);
+    }
+
+    /**
+     *
+     * @param name of the category
+     * @return the category corresponding to the name
+     */
+    @RequestMapping(path = "/api/getCategoryByName/{name}", method = RequestMethod.GET)
+    public Optional<Category> getCategoryByName(@PathVariable String name) {
+        return categoryService.getCategoryByName(name);
+    }
+
+    /**
+     *  Adds a category to the database
+     * @param category
+     * @return
+     */
+    @PostMapping("/api/addCategory")
+    public void addCategory(@RequestBody Category category) {
+        categoryService.addCategory(category);
+    }
+
+    /**
+     * Returns a list with all the categories
+     * @param
+     * @return a list with all the categories
+     */
+    @GetMapping("/api/allCategories")
+    public List<Category> allCategories(){
+        return categoryService.allCategories();
+    }
+
+    /**
+     * Returns the number of categories
+     * @param
+     * @return a long, the number of categories
+     */
+    @GetMapping("/api/numberOfCategories")
+    public long numberOfCategories(){
+        return categoryService.numberOfCategories();
+    }
+
+
+
+    /**
+     * Returns all challenges completed by User in a certain category
+     * @param userId Id of User
+     * @param categoryId category of the challenges completed by the user
+     * @return completed challenges of a certain category as a list
+     */
+    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{categoryId}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable long categoryId){
+        return completedService.getCompletedChallengesByCategory(userId,categoryId);
+    }
+
+    /**
+     * Returns all challenges completed by User in a certain category
+     * @param userId Id of User
+     * @param name category of the challenges completed by the user
+     * @return completed challenges of a certain category as a list
+     */
+    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{name}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable String name){
+        return completedService.getCompletedChallengesByCategory(userId,name);
     }
 
 
