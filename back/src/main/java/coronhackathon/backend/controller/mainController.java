@@ -92,6 +92,17 @@ public class mainController {
     }
 
     /**
+     * Returns all challenges completed by User in a certain category
+     * @param userId Id of User
+     * @param category category of the challenges completed by the user
+     * @return completed challenges of a certain category as a list
+     */
+    @GetMapping("/api/getCompletedByCat")
+    public List<Challenge> getCompletedChallenges(@RequestParam long userId, @RequestParam String category){
+        return completedService.getCompletedChallengesByCategory(userId,category);
+    }
+
+    /**
      * Retrieve all users that complete challenge Challenge
      * @param challengeId the id of Challenge
      * @return completers as a list
