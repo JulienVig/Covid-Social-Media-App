@@ -5,16 +5,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class IsAId implements Serializable {
+public class TagOfChallengeId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private long challengeId;
     private long tagId;
 
-    public IsAId(){}
+    public TagOfChallengeId(){}
 
-    public IsAId(long challengeId, long tagId){
+    public TagOfChallengeId(long challengeId, long tagId){
         super();
         this.tagId = tagId;
         this.challengeId = challengeId;
@@ -39,8 +39,8 @@ public class IsAId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IsAId)) return false;
-        IsAId that = (IsAId) o;
+        if (!(o instanceof TagOfChallengeId)) return false;
+        TagOfChallengeId that = (TagOfChallengeId) o;
         return tagId == that.tagId &&
                 challengeId == that.challengeId;
     }
