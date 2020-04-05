@@ -4,9 +4,13 @@ import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.ChallengeRepository;
+import coronhackathon.backend.repository.CompletedRepository;
 import coronhackathon.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +22,15 @@ public class CompletedService {
     private UserRepository userRepository;
     @Autowired
     private ChallengeRepository challengeRepository;
+    @Autowired
+    private CompletedRepository completedRepository;
 
 
     public List<Challenge> getCompletedChallenges(long userId) {
         List<Challenge> l = new ArrayList<Challenge>();
         Optional<User> ou = userRepository.findById(userId);
         if(!ou.isPresent())
-            return l;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : "+ userId+" not found");
         for(HasCompleted hc : ou.get().getHasCompleted()){
             l.add(hc.getChallenge());
         }
@@ -35,7 +41,7 @@ public class CompletedService {
         List<User> l = new ArrayList<User>();
         Optional<Challenge> oc = challengeRepository.findById(challengeId);
         if(!oc.isPresent())
-            return l;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : "+challengeId+" not found");
         for(HasCompleted hc : oc.get().getHasCompleted()){
             l.add(hc.getUser());
         }
@@ -43,16 +49,22 @@ public class CompletedService {
     }
 
     // TODO return type? (python c'est cool pour le packing)
-    public String addCompletedChallenge(long challengeId, long userId, String commentary, String picture){
-        User user = userRepository.findById(userId).get();
-        Challenge challenge = challengeRepository.findById(challengeId).get();
+    public String addCompletedChallenge(long userId, long challengeId, String commentary, String picture){
+        Optional<User> ou = userRepository.findById(userId);
+        Optional<Challenge> oc = challengeRepository.findById(challengeId);
+        if(!ou.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : "+ userId+" not found");
+        if( !oc.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : "+challengeId+" not found");
+
+        User user = ou.get();
+        Challenge challenge = oc.get();
         HasCompleted hc = new HasCompleted();
         hc.setChallenge(challenge);
         hc.setUser(user);
         hc.setCommentary(commentary);
         hc.setPicture(picture);
-        user.getHasCompleted().add(hc);
-        challenge.getHasCompleted().add(hc);
+        completedRepository.save(hc);
         return "User " + user.getUsername() + " has completed " + challenge.getName();
     }
 

@@ -177,15 +177,15 @@ public class mainController {
         return challengeService.numberOfChallengesByCategory(category);
     }
 
-    /**
-     * Returns the number of challenges with a given tag
-     * @param tag_id the id of the tag
-     * @return the list of challenges with the tag
-     */
-    @GetMapping("/api/challengesByTag")
-    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
-        return challengeService.findByIsA_tag_id(tag_id);
-    }
+//    /**
+//     * Returns the number of challenges with a given tag
+//     * @param tag_id the id of the tag
+//     * @return the list of challenges with the tag
+//     */
+//    @GetMapping("/api/challengesByTag")
+//    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
+//        return challengeService.findByIsA_tag_id(tag_id);
+//    }
 
 
 

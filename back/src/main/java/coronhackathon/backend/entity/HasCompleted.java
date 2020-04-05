@@ -7,7 +7,7 @@ import javax.persistence.MapsId;
 
 @Entity
 public class HasCompleted {
-    @EmbeddedId
+    @EmbeddedId()
     private HasCompletedId id = new HasCompletedId();
 
     @ManyToOne

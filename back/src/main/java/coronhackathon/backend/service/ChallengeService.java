@@ -3,7 +3,6 @@ package coronhackathon.backend.service;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,8 +46,8 @@ public class ChallengeService {
         return challengeRepository.countByCategory(category);
     }
 
-    public List<Challenge> findByIsA_tag_id(long tag_id) {
-        return challengeRepository.findByIsA_tag_id(tag_id);
-    }
+//    public List<Challenge> findByIsA_tag_id(long tag_id) {
+//        return challengeRepository.findByIsA_tag_id(tag_id);
+//    }
 
 }
