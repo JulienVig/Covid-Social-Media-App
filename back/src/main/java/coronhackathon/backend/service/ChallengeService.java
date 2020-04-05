@@ -46,8 +46,6 @@ public class ChallengeService {
         return challengeRepository.countByCategory(category);
     }
 
-//    public List<Challenge> findByIsA_tag_id(long tag_id) {
-//        return challengeRepository.findByIsA_tag_id(tag_id);
-//    }
+
 
 }

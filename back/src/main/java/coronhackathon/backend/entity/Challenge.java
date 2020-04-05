@@ -27,12 +27,7 @@ public class Challenge {
 
     /* ---- Relations ---- */
 
-    @ManyToMany
-    @JoinTable(
-            name = "is_A",
-            joinColumns = @JoinColumn(name = "challenge_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    Set<Tag> is_A;
+
 
     /* ----Getters and Setters---- */
 

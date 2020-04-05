@@ -1,10 +1,9 @@
 package coronhackathon.backend.controller;
 
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
-import coronhackathon.backend.service.ChallengeService;
-import coronhackathon.backend.service.CompletedService;
-import coronhackathon.backend.service.UserService;
+import coronhackathon.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +18,10 @@ public class mainController {
     private ChallengeService challengeService;
     @Autowired
     private CompletedService completedService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private IsAService isAService;
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -189,17 +192,6 @@ public class mainController {
         return challengeService.numberOfChallengesByCategory(category);
     }
 
-//    /**
-//     * Returns the number of challenges with a given tag
-//     * @param tag_id the id of the tag
-//     * @return the list of challenges with the tag
-//     */
-//    @GetMapping("/api/challengesByTag")
-//    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
-//        return challengeService.findByIsA_tag_id(tag_id);
-//    }
-
-
 
     /**
      * Add a challenge given as argument to the database
@@ -209,4 +201,39 @@ public class mainController {
     public void addChallenge(@PathVariable Challenge challenge) {
         challengeService.addChallenge(challenge);
     }
+
+
+    /* ----Tag---- */
+    /**
+     * Add a tag given as argument to the database
+     * @param tag a tag we want to add
+     */
+    @PostMapping("/api/addTag")
+    public void addTag(@RequestBody Tag tag) {
+        tagService.addTag(tag);
+    }
+
+    /**
+     * Returns a list with all the tags
+     * @param
+     * @return a list with all the tags
+     */
+    @GetMapping("/api/allTags")
+    public List<Tag> allTags(){
+        return tagService.allTags();
+    }
+
+    /* ---- IsA ---- */
+
+    /**
+     * Retrieve all Challenges that have tht tag Tag
+     * @param tagId the id of the tag
+     * @return challenges as a list
+     */
+    @GetMapping("/api/getChallengesByTag")
+    public List<Challenge> getChallengesByTag(@RequestParam long tagId){
+        return isAService.getChallengesOfTag(tagId);
+    }
+
+
 }
