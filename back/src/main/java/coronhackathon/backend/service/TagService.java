@@ -21,10 +21,9 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public Optional<Tag> getUser(long id){
+    public Optional<Tag> getTag(long id){
         return tagRepository.findById(id);
     }
-
 
     public void insert(Tag tag) {
         tagRepository.save(tag);

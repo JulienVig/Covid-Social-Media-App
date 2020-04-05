@@ -53,8 +53,6 @@ public class mainController {
 
     @PostMapping("/api/addUser")
     /**
-     * test with
-     * curl -X POST localhost:8080/api/addUser -H 'Content-type:application/json' -d '{"username": "John Doe"}'
      * security config modifications were needed to allow post requests. See dedicated file.
      */
     public void addUser(@RequestBody User user) { userService.insert(user);
@@ -67,13 +65,12 @@ public class mainController {
 
     /**
      * Returns all the challenges stored in the database
-     * curl -X GET localhost:8080/api/allChallenges
      *
      * @return a list that contains all the challenges stored in the database
      */
     @GetMapping("/api/allChallenges")
     public List<Challenge> allChallenges() {
-        return challengeService.allChallenges();
+        return challengeService.getAllChallenges();
     }
 
     /**
@@ -95,11 +92,6 @@ public class mainController {
     @GetMapping("/api/getChallengeByCategory")
     public List<Challenge> getChallengeByCategory(@RequestParam String category){
         return challengeService.getChallengeByCategory(category);
-    }
-
-    @GetMapping("/api/allCategories")
-    public List<String> allCategories(){
-        return challengeService.allCategories();
     }
 
 

@@ -19,7 +19,7 @@ public class ChallengeService {
         challengeRepository.save(challenge);
     }
 
-    public List<Challenge> allChallenges() {
+    public List<Challenge> getAllChallenges() {
         return challengeRepository.findAll();
     }
 
@@ -35,7 +35,4 @@ public class ChallengeService {
         return challengeRepository.findByName(name);
     }
 
-    public List<String> allCategories() {
-        return null;
-    }
 }
