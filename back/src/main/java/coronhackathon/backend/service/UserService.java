@@ -1,11 +1,14 @@
 package coronhackathon.backend.service;
 
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +56,10 @@ public class UserService {
                 insert(user);
                 return Optional.of(user);
             } else {
-                //TODO throw exception because username already exists
-                //for the moment return empty optional
-                return Optional.empty();
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "user with username : "+ username +" already exists");
             }
         } else {
-            //TODO throw exception because pwds are not the same
-            //for the moment return empty optional
-            return Optional.empty();
+            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "passwords are not the same");
         }
     }
 }

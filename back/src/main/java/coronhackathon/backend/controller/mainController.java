@@ -1,6 +1,7 @@
 package coronhackathon.backend.controller;
 
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
 import coronhackathon.backend.service.CompletedService;
@@ -27,6 +28,10 @@ public class mainController {
     private ChallengeService challengeService;
     @Autowired
     private CompletedService completedService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private IsAService isAService;
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -116,13 +121,13 @@ public class mainController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/api/getUser")
-    public Optional<User> getUser(@RequestParam long id) {
-        return userService.getUser(id);
+    @RequestMapping(path = "/api/getUser/{userId}", method = RequestMethod.GET)
+    public Optional<User> getUser(@PathVariable long userId) {
+        return userService.getUser(userId);
     }
 
-    @GetMapping("/api/getUserByName")
-    public Optional<User> getUserByName(@RequestParam String username) {
+    @RequestMapping(path = "/api/getUserByName/{username}", method = RequestMethod.GET)
+    public Optional<User> getUserByName(@PathVariable String username) {
         return userService.getUserByUsername(username);
     }
 
@@ -144,11 +149,14 @@ public class mainController {
      * Marks user and challenge as completed.
      * @param userId the completer's Id
      * @param challengeId the completed challenge's Id
+     * @param commentary a commentary on the realisation of the challenge
+     * @param picture a picture on the realisation of the challenge
      * @return a verification message
      */
     @PostMapping("/api/completeChallenge")
-    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId ){
-        return completedService.addCompletedChallenge(userId, challengeId);
+    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId,
+                                    @RequestParam String commentary, @RequestParam String picture){
+        return completedService.addCompletedChallenge(userId, challengeId, commentary, picture);
     }
 
     /**
@@ -156,9 +164,21 @@ public class mainController {
      * @param userId Id of User
      * @return completed challenges as a list
      */
-    @GetMapping("/api/getCompleted")
-    public List<Challenge> getCompletedChallenges(@RequestParam long userId){
+
+    @RequestMapping(path = "/api/getCompleted/{userId}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallenges(@PathVariable long userId){
         return completedService.getCompletedChallenges(userId);
+    }
+
+    /**
+     * Returns all challenges completed by User in a certain category
+     * @param userId Id of User
+     * @param category category of the challenges completed by the user
+     * @return completed challenges of a certain category as a list
+     */
+    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{category}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable String category){
+        return completedService.getCompletedChallengesByCategory(userId,category);
     }
 
     /**
@@ -166,8 +186,8 @@ public class mainController {
      * @param challengeId the id of Challenge
      * @return completers as a list
      */
-    @GetMapping("/api/getCompleters")
-    public List<User> getCompletersOfChallenge(@RequestParam long challengeId){
+    @RequestMapping(path = "/api/getCompleters/{challengeId}", method = RequestMethod.GET)
+    public List<User> getCompletersOfChallenge(@PathVariable long challengeId){
         return completedService.getCompletersOfChallenge(challengeId);
     }
 
@@ -188,12 +208,12 @@ public class mainController {
     /**
      * Returns an Optional that contains a challenge with a specified id if it exists
      * otherwise returns an empty Optional
-     * @param id the id of a challenge
+     * @param challengeId the id of a challenge
      * @return the challenge with the specified id
      */
-    @GetMapping("/api/getChallenge")
-    public Optional<Challenge> getChallenge(@RequestParam long id) {
-        return challengeService.getChallenge(id);
+    @RequestMapping(path = "/api/getChallenge/{challengeId}", method = RequestMethod.GET)
+    public Optional<Challenge> getChallenge(@PathVariable long challengeId) {
+        return challengeService.getChallenge(challengeId);
     }
 
     /**
@@ -201,8 +221,8 @@ public class mainController {
      * @param category a category of challenges
      * @return a list with all the challenge of a category
      */
-    @GetMapping("/api/getChallengeByCategory")
-    public List<Challenge> getChallengeByCategory(@RequestParam String category){
+    @RequestMapping(path = "/api/getChallengeByCategory/{category}", method = RequestMethod.GET)
+    public List<Challenge> getChallengeByCategory(@PathVariable String category){
         return challengeService.getChallengeByCategory(category);
     }
 
@@ -223,8 +243,8 @@ public class mainController {
      * @param name the name of a challenge
      * @return the challenge with the specified name
      */
-    @GetMapping("/api/getChallengeByName")
-    public Optional<Challenge> getChallengeByName(@RequestParam String name) {
+    @RequestMapping(path = "/api/getChallengeByName/{name}", method = RequestMethod.GET)
+    public Optional<Challenge> getChallengeByName(@PathVariable String name) {
         return challengeService.getChallengeByName(name);
     }
 
@@ -242,29 +262,53 @@ public class mainController {
      * @param category the name of the category
      * @return the number of challenges in the category
      */
-    @GetMapping("/api/numberOfChallengesOfCategory")
-    public Long numberOfChallengesOfCategory(@RequestParam String category) {
+    @RequestMapping(path = "/api/numberOfChallengesOfCategory/{category}", method = RequestMethod.GET)
+    public Long numberOfChallengesOfCategory(@PathVariable String category) {
         return challengeService.numberOfChallengesByCategory(category);
     }
-
-    /**
-     * Returns the number of challenges with a given tag
-     * @param tag_id the id of the tag
-     * @return the list of challenges with the tag
-    @GetMapping("/api/challengesByTag")
-    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
-        return challengeService.findByIsA_tag_id(tag_id);
-    }
-     */
-
 
 
     /**
      * Add a challenge given as argument to the database
      * @param challenge a challenge we want to add
      */
-    @PostMapping("/api/addChallenge")
-    public void addChallenge(@RequestBody Challenge challenge) {
+    @RequestMapping(path = "/api/addChallenge/{challenge}", method = RequestMethod.GET)
+    public void addChallenge(@PathVariable Challenge challenge) {
         challengeService.addChallenge(challenge);
     }
+
+
+    /* ----Tag---- */
+    /**
+     * Add a tag given as argument to the database
+     * @param tag a tag we want to add
+     */
+    @PostMapping("/api/addTag")
+    public void addTag(@RequestBody Tag tag) {
+        tagService.addTag(tag);
+    }
+
+    /**
+     * Returns a list with all the tags
+     * @param
+     * @return a list with all the tags
+     */
+    @GetMapping("/api/allTags")
+    public List<Tag> allTags(){
+        return tagService.allTags();
+    }
+
+    /* ---- IsA ---- */
+
+    /**
+     * Retrieve all Challenges that have tht tag Tag
+     * @param tagId the id of the tag
+     * @return challenges as a list
+     */
+    @GetMapping("/api/getChallengesByTag")
+    public List<Challenge> getChallengesByTag(@RequestParam long tagId){
+        return isAService.getChallengesOfTag(tagId);
+    }
+
+
 }
