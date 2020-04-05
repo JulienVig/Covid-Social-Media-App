@@ -1,8 +1,13 @@
 E<template>
   <view class="container">
     <view class ="topbar">
+      <view>
       <text class="heading">Challenges</text>
       <text>This is the Challenge screen</text>
+      </view>
+      <touchable-opacity class = "corona-touchable" :on-press="() => goToCorona()">
+        <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
+      </touchable-opacity>
     </view>
     <scroll-view class = "myScrollView">
       <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
@@ -27,11 +32,22 @@ E<template>
   justify-content: center;
   align-items: center;
   background-color: #FFC107;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .container {
   background-color: #ffecb3;
   flex: 1;
+}
+
+.corona-icon {
+  width: 40;
+  height: 40;
+}
+
+.corona-touchable {
+  text-align: right;
 }
 
 .heading {
@@ -237,21 +253,6 @@ export default {
         </View>
       )
     },
-    /*login : function() {
-      var bodyFormData = new FormData();
-        bodyFormData.append('username', 'user');
-        bodyFormData.append('password', 'user');
-        const self = this;
-       API({
-        method: 'post',
-        url: '/login',
-        data: bodyFormData,
-        headers: {'Content-Type': 'multipart/form-data' }
-        }).then(function(response){
-          console.log(response)
-          self.fetch();
-        })
-    },*/
 
     fetch : function() {
       const self = this;
@@ -266,6 +267,10 @@ export default {
 
     goToChallenge : function(challenge) {
       this.navigation.navigate("ChallengeDetail", {challengeId:challenge.id})
+    },
+
+    goToCorona : function() {
+      this.navigation.navigate("Corona")
     }
   },
   mounted: function() {

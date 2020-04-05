@@ -4,6 +4,7 @@
 
 <script>
 import LoginScreen from "./components/Screens/LoginScreen";
+import CoronaScreen from "./components/Screens/CoronaScreen";
 import DetailsScreen from "./components/Screens/DetailsScreen";
 import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
@@ -29,6 +30,7 @@ const StackNavigator = createStackNavigator(
   {
     Home: LoginScreen,
     ChallengeDetail : ChallengeDetailScreen,
+    Corona: CoronaScreen,
     Tabs
   }
 );
