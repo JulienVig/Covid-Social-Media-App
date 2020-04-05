@@ -16,11 +16,6 @@ public class User {
     @Column(nullable = false)
     private String pwdHash;
 
-    /* ---- Relations ---- */
-
-    @OneToMany(mappedBy = "user")
-    Set<HasCompleted> hasCompleted = new HashSet<>();
-
     /* ----Getters and Setters---- */
 
     public long getId() {
@@ -42,17 +37,4 @@ public class User {
     public void setPwdHash(String pwdHash) {
         this.pwdHash = pwdHash;
     }
-
-    public Set<HasCompleted> getHasCompleted() {
-        return this.hasCompleted;
-    }
-
-    /* REMOVE if unused
-    NOTE: when using this method, do not explicitly add the symmetric User to challenge.has_completed
-    public void addHas_completed(Challenge completedChallenge) {
-        this.has_completed.add(completedChallenge);
-        completedChallenge.getHas_completed().add(this);
-    }
-     */
-
 }
