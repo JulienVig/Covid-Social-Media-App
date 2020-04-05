@@ -1,11 +1,13 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,5 +63,4 @@ public class UserService {
             return Optional.empty();
         }
     }
-
 }

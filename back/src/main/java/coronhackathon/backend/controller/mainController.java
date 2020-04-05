@@ -3,6 +3,7 @@ package coronhackathon.backend.controller;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
+import coronhackathon.backend.service.CompletedService;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,10 @@ import java.util.Optional;
 public class mainController {
     @Autowired
     private UserService userService;
+    @Autowired
     private ChallengeService challengeService;
+    @Autowired
+    private CompletedService completedService;
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -58,8 +62,43 @@ public class mainController {
     public void addUser(@RequestBody User user) { userService.insert(user);
     }
 
+
     //TODO age
     //TODO Badge
+
+    /* ----Completed---- */
+
+    /**
+     * Marks user and challenge as completed.
+     * @param userId the completer's Id
+     * @param challengeId the completed challenge's Id
+     * @return a verification message
+     */
+    @PostMapping("/api/completeChallenge")
+    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId ){
+        return completedService.addCompletedChallenge(userId, challengeId);
+    }
+
+    /**
+     * Returns all challenges completed by User
+     * @param userId Id of User
+     * @return completed challenges as a list
+     */
+    @GetMapping("/api/getCompleted")
+    public List<Challenge> getCompletedChallenges(@RequestParam long userId){
+        return completedService.getCompletedChallenges(userId);
+    }
+
+    /**
+     * Retrieve all users that complete challenge Challenge
+     * @param challengeId the id of Challenge
+     * @return completers as a list
+     */
+    @GetMapping("/api/getCompleters")
+    public List<User> getCompletersOfChallenge(@RequestParam long challengeId){
+        return completedService.getCompletersOfChallenge(challengeId);
+    }
+
 
     /* ----Challenge---- */
 
