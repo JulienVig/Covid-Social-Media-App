@@ -57,7 +57,7 @@ public class mainController {
 
     /**
      * Get an image from path
-     * @param path : should start with '/resources'
+     * @param path : should start with 'resources/'
      * @return the image data as byte arraygit reset
      * @use ip:8080/api/image?<path> where <path> was received from a previous query
      * @throws IOException
@@ -70,6 +70,11 @@ public class mainController {
         return Files.readAllBytes(Paths.get("src/main/" + path));
     }
 
+    /*
+    TODO remove when unecessary
+    use it as test method
+
+     */
     @PostMapping(
             value = "/uploadImage",
             produces = MediaType.IMAGE_JPEG_VALUE
@@ -83,17 +88,25 @@ public class mainController {
         return destinationPath;
     }
 
+    /**
+     * Receive an image illustrating a completion, save it and set path in hasCompleted entity
+     * @param imgData: the uploaded image as byte array. see https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
+     * @param id: the id of hasCompleted entity received from a previous query
+     * @return the path to find the image
+     * @use ip:8080/api/uploadImage/hasCompletedID where <path> was received from a previous query
+     * @throws IOException
+     */
     @RequestMapping(
-            value = "/api/uploadImage/<id>",
+            value = "/api/uploadImage/{id}",
             method = RequestMethod.POST,
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     public @ResponseBody String uploadImage(@RequestBody byte[] imgData, @PathVariable("id") long id ) throws IOException {
-        String destinationPath = "src/main/resources/completedImage/" + Long.toString(id) + ".jpg";
+        String destinationPath = "resources/completedImage/hasCompleted_" + Long.toString(id) + ".jpg";
 
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
-        ImageIO.write(img, "jpg", new File(destinationPath) );
-
+        ImageIO.write(img, "jpg", new File("src/main/"+destinationPath) );
+        // TODO hasCompletedService.setPath(path)
         return destinationPath;
     }
 
