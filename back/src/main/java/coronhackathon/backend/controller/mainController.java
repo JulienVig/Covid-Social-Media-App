@@ -97,8 +97,8 @@ public class mainController {
      * @param category category of the challenges completed by the user
      * @return completed challenges of a certain category as a list
      */
-    @GetMapping("/api/getCompletedByCat")
-    public List<Challenge> getCompletedChallengesByCategory(@RequestParam long userId, @RequestParam String category){
+    @RequestMapping(path = "/api/getCompletedByCat/{userId}/{category}", method = RequestMethod.GET)
+    public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable String category){
         return completedService.getCompletedChallengesByCategory(userId,category);
     }
 
