@@ -75,11 +75,14 @@ public class mainController {
      * Marks user and challenge as completed.
      * @param userId the completer's Id
      * @param challengeId the completed challenge's Id
+     * @param commentary a commentary on the realisation of the challenge
+     * @param picture a picture on the realisation of the challenge
      * @return a verification message
      */
     @PostMapping("/api/completeChallenge")
-    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId ){
-        return completedService.addCompletedChallenge(userId, challengeId);
+    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId,
+                                    @RequestParam String commentary, @RequestParam String picture){
+        return completedService.addCompletedChallenge(userId, challengeId, commentary, picture);
     }
 
     /**
@@ -90,6 +93,17 @@ public class mainController {
     @GetMapping("/api/getCompleted")
     public List<Challenge> getCompletedChallenges(@RequestParam long userId){
         return completedService.getCompletedChallenges(userId);
+    }
+
+    /**
+     * Returns all challenges completed by User in a certain category
+     * @param userId Id of User
+     * @param category category of the challenges completed by the user
+     * @return completed challenges of a certain category as a list
+     */
+    @GetMapping("/api/getCompletedByCat")
+    public List<Challenge> getCompletedChallengesByCategory(@RequestParam long userId, @RequestParam String category){
+        return completedService.getCompletedChallengesByCategory(userId,category);
     }
 
     /**
@@ -179,8 +193,6 @@ public class mainController {
     }
 
 
-
-
     /**
      * Add a challenge given as argument to the database
      * @param challenge a challenge we want to add
@@ -211,15 +223,6 @@ public class mainController {
         return tagService.allTags();
     }
 
-    /**
-     * Returns the number of challenges with a given tag
-     * @param tagId the id of the tag
-     * @return the list of challenges with the tag
-     */
-    @GetMapping("/api/getChallengesByTag")
-    public List<Challenge> getChallengesByTag(@RequestParam long tagId) {
-        return tagService.findByIsA(tagId);
-    }
 
 
 

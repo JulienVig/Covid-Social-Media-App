@@ -16,15 +16,6 @@ public class User {
     @Column(nullable = false)
     private String pwdHash;
 
-    /* ---- Relations ---- */
-
-    @ManyToMany
-    @JoinTable(
-            name = "has_Completed",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "challenge_id"))
-    private Set<Challenge> has_completed = new HashSet<Challenge>();
-
     /* ----Getters and Setters---- */
 
     public long getId() {
@@ -46,21 +37,4 @@ public class User {
     public void setPwdHash(String pwdHash) {
         this.pwdHash = pwdHash;
     }
-
-    public Set<Challenge> getHas_completed() {
-        return has_completed;
-    }
-
-    public void setHas_completed(Set<Challenge> has_completed) {
-        this.has_completed = has_completed;
-    }
-
-    /* REMOVE if unused
-    NOTE: when using this method, do not explicitly add the symmetric User to challenge.has_completed
-    public void addHas_completed(Challenge completedChallenge) {
-        this.has_completed.add(completedChallenge);
-        completedChallenge.getHas_completed().add(this);
-    }
-     */
-
 }
