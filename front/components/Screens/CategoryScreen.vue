@@ -1,7 +1,7 @@
 <template>
     <view class="real-container">
         <view class="container">
-            <view class="header"
+            <view class="header">
               <text class="title">Catégories</text>
             </view>
             <view class ="main">
@@ -25,7 +25,8 @@
 .header{
     background-color: #DDDDDD;
     width: 100%;
-    height:100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .title{
@@ -81,7 +82,7 @@
 .title{
     font-size: 40;
     font-weight: 100;
-    margin-bottom: 100;
+    margin-bottom: 10;
 }
 
 </style>
@@ -150,7 +151,7 @@ export default {
     }
   },
   methods: {
-    login () {
+    fetch () {
      console.log("Login !")
         const self = this;
        API({
@@ -158,9 +159,12 @@ export default {
         url: '/api/allCategories',
         }).then(function(response){
             self.categories = response.data;
-            this.setLogos();
+            // this.setLogos();
+            console.log("==================       GET ALL CATEGORIES       ==================");
+            console.log(response)
 
         }).catch(function(error){
+            console.log("==================      ERROR       ==================")
            console.log(error)
         })
     },
@@ -173,7 +177,7 @@ export default {
 
   },
   mounted: function() {
-
+      fetch();
   }
 };
 </script>
