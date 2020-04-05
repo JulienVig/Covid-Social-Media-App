@@ -8,7 +8,7 @@ import javax.persistence.MapsId;
 @Entity
 public class TagOfChallenge {
     @EmbeddedId()
-    private IsAId id = new IsAId();
+    private TagOfChallengeId id = new TagOfChallengeId();
 
     @ManyToOne
     @MapsId("challengeId")

@@ -20,7 +20,7 @@ public class Challenge {
     @Column(nullable = false)
     private String description;
 
-    //@Column(nullable = true)
+    @Column(nullable = false)
     private long categoryId;
 
     /* ---- Relations ---- */
