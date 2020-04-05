@@ -70,9 +70,6 @@ public class mainController {
     public void addUser(@RequestBody User user) { userService.insert(user);
     }
 
-    //TODO age
-    //TODO Badge
-
     /* ----Completed---- */
 
     /**
@@ -261,6 +258,11 @@ public class mainController {
         return tagOfChallengeService.getChallengesOfTag(tagId);
     }
 
+    /**
+     * Retrieve all the tag that has a Challenge
+     * @param challengeId the id of the challenge of interest
+     * @return a list of all the tags that are linked to this challenge
+     */
     @RequestMapping(path = "/api/getTagsOfChallenge/{challengeId}", method = RequestMethod.GET)
     public List<Tag> getTagsOfChallenge(@PathVariable long challengeId){
         return tagOfChallengeService.getTagsOfChallenge(challengeId);
