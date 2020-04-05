@@ -130,7 +130,6 @@ export default {
 
   mounted : function(){
       this.fetch();
-      console.log("je fetch et ça marche")
   }
 
 };
