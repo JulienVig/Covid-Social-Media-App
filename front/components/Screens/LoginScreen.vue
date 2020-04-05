@@ -1,20 +1,16 @@
 <template>
     <view class="real-container">
       <view class ="container">
+        <text class="title">Consvid la tête</text>
         <text class="text-container">Enter username :</text>
         <text-input class="input-container" v-model="username"/>
         <text class="text-container">Enter password :</text>
         <text-input class="input-container" v-model="password"/>
-        <!-- <button :on-press="onPressEvent"
-        title="Login"
-        color="#841584"
-        accessibility-label="Learn more about this purple button"/> -->
-        <touchable-opacity class="login-container">
+        <view class="login-container">
            <text  class="login-btn" :on-press="login">Login</text>
-        </touchable-opacity>
-        <!-- <button title="Change page" @press="goToPage2"/>
+           <text  class="login-btn" :on-press="login">Register</text>
+       </view>
 
-        <button title="View tabs" @press="goToTabNavigator"/> -->
 
       </view>
   </view>
@@ -38,11 +34,6 @@ export default {
     }
   },
   methods: {
-    onPressEvent () {
-      this.password = this.username;
-      Alert.alert('oui', 'oui')
-      console.log('test clicked')
-    },
     login () {
      console.log("Login !")
       var bodyFormData = new FormData();
@@ -55,20 +46,14 @@ export default {
         data: bodyFormData,
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
-          console.log(response)
-          if(response != undefined){
+           //console.log(response)
+          if(response != undefined && response.status == 200){
               self.navigation.navigate("Challenges")
           }
         }).catch(function(error){
-          console.log(error)
+           console.log(error)
         })
     },
-    goToPage2 (){
-        alert('Please login');
-    },
-    goToTabNavigator() {
-      alert('Please login');
-    }
   },
   mounted: function() {
       this.username = 'user'
@@ -87,6 +72,11 @@ export default {
   background-color: white;
   width:80%;
 }
+
+.title{
+    font-size: 30;
+    margin-bottom: 100;
+}
 .text-container{
     font-size: 22;
 }
@@ -102,13 +92,16 @@ export default {
 
 .login-container{
     margin-top: 10;
-    width: 30%;
+    width: 100%;
     border-radius: 10;
+    justify-content: space-between;
+    flex-direction: row;
+
+
 }
 
 .login-btn {
     padding: 20;
-    width:100%;
     font-size: 22;
     background-color: #EEAAEE;
 color:white;
