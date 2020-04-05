@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 public class Challenge {
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
 
