@@ -5,13 +5,13 @@ import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
 import coronhackathon.backend.service.CompletedService;
 import coronhackathon.backend.service.UserService;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,14 +41,29 @@ public class mainController {
         return "authenticated pong!";
     }
 
+    // TODO remove this test method when not needed anymore
     @GetMapping(
             value = "/banana",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     public @ResponseBody byte[] getImageWithMediaType() throws IOException {
-        InputStream in = getClass().getResourceAsStream("/src/main/java/resources/banana.jpg");
-        System.out.println("banana");
-        return IOUtils.toByteArray(in);
+        String path = "src/main/resources/banana.jpg";
+        return Files.readAllBytes(Paths.get(path));
+    }
+
+    /**
+     * Get an image from path
+     * @param path : should start with '/resources'
+     * @return the image data as byte arraygit reset
+     * @use ip:8080/api/image?<path> where <path> was received from a previous query
+     * @throws IOException
+     */
+    @GetMapping(
+            value = "/api/image",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] getImageWithMediaType(@RequestParam String path) throws IOException {
+        return Files.readAllBytes(Paths.get("src/main/" + path));
     }
 
     /* ---Users ----*/
