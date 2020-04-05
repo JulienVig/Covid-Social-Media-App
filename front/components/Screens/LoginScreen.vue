@@ -1,19 +1,20 @@
 <template>
     <view class="real-container">
       <view class ="container">
-        <text>Enter username :</text>
-        <text-input v-model="username"/>
-        <text>Enter password :</text>
-        <text-input v-model="password"/>
-        <button :on-press="onPressEvent"
-        title="LE bouton a presser"
+        <text class="text-container">Enter username :</text>
+        <text-input class="input-container" v-model="username"/>
+        <text class="text-container">Enter password :</text>
+        <text-input class="input-container" v-model="password"/>
+        <!-- <button :on-press="onPressEvent"
+        title="Login"
         color="#841584"
-        accessibility-label="Learn more about this purple button"/>
+        accessibility-label="Learn more about this purple button"/> -->
+        <touchable-opacity class="login-container">
+           <text  class="login-btn" :on-press="login">Login</text>
+        </touchable-opacity>
+        <!-- <button title="Change page" @press="goToPage2"/>
 
-        <button @press="login" title="Entrez seulement" color="#EEAAEE"/>
-        <button title="Change page" @press="goToPage2"/>
-
-        <button title="View tabs" @press="goToTabNavigator"/>
+        <button title="View tabs" @press="goToTabNavigator"/> -->
 
       </view>
   </view>
@@ -55,7 +56,9 @@ export default {
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
           console.log(response)
-          self.navigation.navigate("Challenges")
+          if(response != undefined){
+              self.navigation.navigate("Challenges")
+          }
         }).catch(function(error){
           console.log(error)
         })
@@ -82,13 +85,32 @@ export default {
 }
 .container {
   background-color: white;
-  display: flex;
+  width:80%;
 }
-.text-container {
-  color: blue;
+.text-container{
+    font-size: 22;
+}
+.input-container {
+  border-style: solid;
+  border-color: #FFFFFF;
+  border-bottom-color: #888888;
+  border-width: 2;
   font-size: 22;
-  width: 300;
-  height:100;
-  margin: auto;
+  padding: 10;
+  margin-bottom: 20;
+}
+
+.login-container{
+    margin-top: 10;
+    width: 30%;
+    border-radius: 10;
+}
+
+.login-btn {
+    padding: 20;
+    width:100%;
+    font-size: 22;
+    background-color: #EEAAEE;
+color:white;
 }
 </style>
