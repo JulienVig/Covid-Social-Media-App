@@ -5,9 +5,13 @@ import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
 import coronhackathon.backend.service.CompletedService;
 import coronhackathon.backend.service.UserService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +39,16 @@ public class mainController {
     @GetMapping("/api/ping")
     public String fancyPing(){
         return "authenticated pong!";
+    }
+
+    @GetMapping(
+            value = "/banana",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] getImageWithMediaType() throws IOException {
+        InputStream in = getClass().getResourceAsStream("/src/main/java/resources/banana.jpg");
+        System.out.println("banana");
+        return IOUtils.toByteArray(in);
     }
 
     /* ---Users ----*/
@@ -178,11 +192,11 @@ public class mainController {
      * Returns the number of challenges with a given tag
      * @param tag_id the id of the tag
      * @return the list of challenges with the tag
-     */
     @GetMapping("/api/challengesByTag")
     public List<Challenge> challengesByTag(@RequestParam long tag_id) {
         return challengeService.findByIsA_tag_id(tag_id);
     }
+     */
 
 
 

@@ -15,5 +15,5 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     public List<String> findDistinctByNameNotIn(List<Challenge> challenges);
     public long count();
     public Long countByCategory(String category);
-    public List <Challenge> findByIsA_tag_id(long tag_id);
+    //public List <Challenge> findByIsA_tag_id(long tag_id);
 }
