@@ -1,9 +1,12 @@
 package coronhackathon.backend.controller;
 
 import coronhackathon.backend.entity.Challenge;
+
 import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.*;
+import coronhackathon.backend.service.ChallengeService;
+import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,10 +44,12 @@ public class mainController {
     }
 
     /* ---Users ----*/
+
     @GetMapping("/api/allUsers")
     public List<User> allUsers() {
         return userService.getAllUsers();
     }
+
 
     @RequestMapping(path = "/api/getUser/{userId}", method = RequestMethod.GET)
     public Optional<User> getUser(@PathVariable long userId) {
@@ -53,13 +58,12 @@ public class mainController {
 
     @RequestMapping(path = "/api/getUserByName/{username}", method = RequestMethod.GET)
     public Optional<User> getUserByName(@PathVariable String username) {
+
         return userService.getUserByUsername(username);
     }
 
     @PostMapping("/api/addUser")
     /**
-     * test with
-     * curl -X POST localhost:8080/api/addUser -H 'Content-type:application/json' -d '{"username": "John Doe"}'
      * security config modifications were needed to allow post requests. See dedicated file.
      */
     public void addUser(@RequestBody User user) { userService.insert(user);
@@ -234,6 +238,4 @@ public class mainController {
     public List<Challenge> getChallengesByTag(@RequestParam long tagId){
         return isAService.getChallengesOfTag(tagId);
     }
-
-
 }
