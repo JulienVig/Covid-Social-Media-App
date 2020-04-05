@@ -1,7 +1,12 @@
 package coronhackathon.backend.entity;
 
+import sun.reflect.generics.tree.Tree;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 public class Challenge {
@@ -22,8 +27,8 @@ public class Challenge {
 
     /* ---- Relations ---- */
 
-    @OneToMany(mappedBy = "user")
-    Set<User> has_completed;
+    @OneToMany(mappedBy = "challenge")
+    Set<HasCompleted> completed = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -73,4 +78,17 @@ public class Challenge {
     public void setLogo(String logo) {
         this.logo = logo;
     }
+
+    public Set<HasCompleted> getHasCompleted() {
+        return new HashSet<HasCompleted>(this.completed);
+    }
+
+
+    /* REMOVE if unused
+    NOTE: when using this method, do not explicitly add the symmetric Challenge to user.has_completed
+    public void addHas_completed(User completer) {
+        this.has_completed.add(completer);
+        completer.getHas_completed().add(this);
+    }
+     */
 }

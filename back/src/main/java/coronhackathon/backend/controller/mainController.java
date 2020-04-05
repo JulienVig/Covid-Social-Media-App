@@ -14,9 +14,10 @@ import java.util.Optional;
 public class mainController {
     @Autowired
     private UserService userService;
-
     @Autowired
     private ChallengeService challengeService;
+    @Autowired
+    private CompletedService completedService;
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -53,6 +54,8 @@ public class mainController {
 
     @PostMapping("/api/addUser")
     /**
+     * test with
+     * curl -X POST localhost:8080/api/addUser -H 'Content-type:application/json' -d '{"username": "John Doe"}'
      * security config modifications were needed to allow post requests. See dedicated file.
      */
     public void addUser(@RequestBody User user) { userService.insert(user);
@@ -61,16 +64,51 @@ public class mainController {
     //TODO age
     //TODO Badge
 
+    /* ----Completed---- */
+
+    /**
+     * Marks user and challenge as completed.
+     * @param userId the completer's Id
+     * @param challengeId the completed challenge's Id
+     * @return a verification message
+     */
+    @PostMapping("/api/completeChallenge")
+    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId ){
+        return completedService.addCompletedChallenge(userId, challengeId);
+    }
+
+    /**
+     * Returns all challenges completed by User
+     * @param userId Id of User
+     * @return completed challenges as a list
+     */
+    @GetMapping("/api/getCompleted")
+    public List<Challenge> getCompletedChallenges(@RequestParam long userId){
+        return completedService.getCompletedChallenges(userId);
+    }
+
+    /**
+     * Retrieve all users that complete challenge Challenge
+     * @param challengeId the id of Challenge
+     * @return completers as a list
+     */
+    @GetMapping("/api/getCompleters")
+    public List<User> getCompletersOfChallenge(@RequestParam long challengeId){
+        return completedService.getCompletersOfChallenge(challengeId);
+    }
+
+
     /* ----Challenge---- */
 
     /**
      * Returns all the challenges stored in the database
+     * curl -X GET localhost:8080/api/allChallenges
      *
      * @return a list that contains all the challenges stored in the database
      */
     @GetMapping("/api/allChallenges")
     public List<Challenge> allChallenges() {
-        return challengeService.getAllChallenges();
+        return challengeService.allChallenges();
     }
 
     /**
@@ -94,6 +132,16 @@ public class mainController {
         return challengeService.getChallengeByCategory(category);
     }
 
+    /**
+     * Returns a list with all the categories
+     * @param
+     * @return a list with all the categories
+     */
+    @GetMapping("/api/allCategories")
+    public List<String> allCategories(){
+        return challengeService.allCategories();
+    }
+
 
     /**
      * Returns an Optional that contains a challenge with a specified name if it exists
@@ -105,6 +153,37 @@ public class mainController {
     public Optional<Challenge> getChallengeByName(@RequestParam String name) {
         return challengeService.getChallengeByName(name);
     }
+
+    /**
+     * Returns the number of challenges
+     * @return the number of challenges
+     */
+    @GetMapping("/api/numberOfChallenges")
+    public long numberOfChallenges() {
+        return challengeService.numberOfChallenges();
+    }
+
+    /**
+     * Returns the number of challenges of a given category
+     * @param category the name of the category
+     * @return the number of challenges in the category
+     */
+    @GetMapping("/api/numberOfChallengesOfCategory")
+    public Long numberOfChallengesOfCategory(@RequestParam String category) {
+        return challengeService.numberOfChallengesByCategory(category);
+    }
+
+    /**
+     * Returns the number of challenges with a given tag
+     * @param tag_id the id of the tag
+     * @return the list of challenges with the tag
+     */
+    @GetMapping("/api/challengesByTag")
+    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
+        return challengeService.findByIsA_tag_id(tag_id);
+    }
+
+
 
     /**
      * Add a challenge given as argument to the database

@@ -35,4 +35,20 @@ public class ChallengeService {
         return challengeRepository.findByName(name);
     }
 
+    public List<String> allCategories() {
+        return challengeRepository.findDistinctByNameNotIn(getAllChallenges());
+    }
+
+    public long numberOfChallenges() {
+        return challengeRepository.count();
+    }
+
+    public Long numberOfChallengesByCategory(String category) {
+        return challengeRepository.countByCategory(category);
+    }
+
+    public List<Challenge> findByIsA_tag_id(long tag_id) {
+        return challengeRepository.findByIsA_tag_id(tag_id);
+    }
+
 }
