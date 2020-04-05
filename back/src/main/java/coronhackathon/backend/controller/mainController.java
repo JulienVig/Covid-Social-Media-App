@@ -118,6 +118,37 @@ public class mainController {
     }
 
     /**
+     * Returns the number of challenges
+     * @return the number of challenges
+     */
+    @GetMapping("/api/numberOfChallenges")
+    public long numberOfChallenges() {
+        return challengeService.numberOfChallenges();
+    }
+
+    /**
+     * Returns the number of challenges of a given category
+     * @param category the name of the category
+     * @return the number of challenges in the category
+     */
+    @GetMapping("/api/numberOfChallengesOfCategory")
+    public Long numberOfChallengesOfCategory(@RequestParam String category) {
+        return challengeService.numberOfChallengesByCategory(category);
+    }
+
+    /**
+     * Returns the number of challenges with a given tag
+     * @param tag_id the id of the tag
+     * @return the list of challenges with the tag
+     */
+    @GetMapping("/api/challengesByTag")
+    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
+        return challengeService.findByIsA_tag_id(tag_id);
+    }
+
+
+
+    /**
      * Add a challenge given as argument to the database
      * @param challenge a challenge we want to add
      */
