@@ -26,6 +26,7 @@ public class Challenge {
     private String logo;     //the link to the logo
 
     /* ---- Relations ---- */
+
     @ManyToMany
     @JoinTable(
             name = "is_A",
