@@ -61,10 +61,10 @@ export default {
         })
     },
     goToPage2 (){
-        this.navigation.navigate("Settings");
+        alert('Please login');
     },
     goToTabNavigator() {
-      this.navigation.navigate("Tabs")
+      alert('Please login');
     }
   },
   mounted: function() {
