@@ -1,8 +1,10 @@
 package coronhackathon.backend.entity;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class HasCompletedId implements Serializable {
 
     private static final long serialVersionUID = 1L;

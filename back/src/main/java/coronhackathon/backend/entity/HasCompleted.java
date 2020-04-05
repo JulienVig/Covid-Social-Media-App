@@ -15,12 +15,12 @@ public class HasCompleted {
     private User user;
 
     @ManyToOne
-    @MapsId("publisherId")
+    @MapsId("challengeId")
     private Challenge challenge;
 
     private String picture;     //link to the picture
 
-    private String commentaire;
+    private String commentary;
 
     public User getUser() {
         return user;
@@ -38,12 +38,12 @@ public class HasCompleted {
         this.challenge = challenge;
     }
 
-    public String getCommentaire() {
-        return commentaire;
+    public String getCommentary() {
+        return commentary;
     }
 
-    public void setCommentaire(String commentaire) {
-        this.commentaire = commentaire;
+    public void setCommentary(String commentary) {
+        this.commentary = commentary;
     }
 
     public String getPicture() {
