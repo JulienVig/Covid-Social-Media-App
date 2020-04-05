@@ -12,7 +12,7 @@ E<template>
           <text class = "challenge-desc">{{challenge.description}}</text>
           </view>
           <view>
-          <image class = "challenge-icon" :source="require('../../assets/images/phone_black_192x192.png')"/>
+          <image class = "challenge-icon" :source="require('../../assets/images/challengescreen/phone_black_192x192.png')"/>
           </view>
         </touchable-opacity>
       </view>
@@ -72,6 +72,11 @@ import {API} from '../../api.js';
 import React from 'react';
 import {Text} from 'react-native';
 export default {
+  props: {
+      navigation: {
+        type: Object
+      }
+    },
   data: function() {
     return {
         challenges: [
@@ -222,15 +227,7 @@ export default {
         ]
     }
   },
-  /*
-  <view class ="challenges-container" v-for="challenge in challenges" :key="challenge.id">
-        <view class ="single-challenge">
-          <text class = "title-challenge">{{challenge.title}}</text>
-          <text class = "description-challenge">{{challenge.description}}</text>
-          <image :source="require('../../assets/phone_black_192x192.png')"/>
-        </view>
-    </view>
-    */
+
   methods: {
     renderList : function(item) {
       return(
@@ -240,19 +237,39 @@ export default {
         </View>
       )
     },
+    /*login : function() {
+      var bodyFormData = new FormData();
+        bodyFormData.append('username', 'user');
+        bodyFormData.append('password', 'user');
+        const self = this;
+       API({
+        method: 'post',
+        url: '/login',
+        data: bodyFormData,
+        headers: {'Content-Type': 'multipart/form-data' }
+        }).then(function(response){
+          console.log(response)
+          self.fetch();
+        })
+    },*/
+
     fetch : function() {
-      this.challenges = []
+      const self = this;
+       API({
+        method: 'get',
+        url: '/api/allChallenges'
+        }).then(function(response){
+          console.log(response)
+          self.challenges = response.data
+        })
     },
+
     goToChallenge : function(challenge) {
-      //console.log("pressed challenge")
-      //console.log(challenge.title)
-      //this.navigation.navigate("Tabs")
-      //send router param challenge id
+      this.navigation.navigate("ChallengeDetail", {challengeId:challenge.id})
     }
   },
   mounted: function() {
-    //uncomment when connected to the server
-    //this.fetch();
+    this.fetch();
   }
 };
 </script>

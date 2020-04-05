@@ -5,8 +5,9 @@
 <script>
 import LoginScreen from "./components/Screens/LoginScreen";
 import DetailsScreen from "./components/Screens/DetailsScreen";
-import SettingsScreen from "./components/Screens/SettingsScreen";
+import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
+import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
 
 import {
   createAppContainer,
@@ -21,12 +22,13 @@ const Tabs = createBottomTabNavigator(
 
     Challenges: ChallengesScreen,
     Details: DetailsScreen,
-    Settings: SettingsScreen,
+    Profile: ProfileScreen,
   }
 );
 const StackNavigator = createStackNavigator(
   {
     Home: LoginScreen,
+    ChallengeDetail : ChallengeDetailScreen,
     Tabs
   }
 );

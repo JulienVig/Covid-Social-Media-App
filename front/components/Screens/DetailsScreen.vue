@@ -14,7 +14,7 @@
 .container {
     background-color : #fedff2;
     min-height: 100%;
-    min-width: 1024px;
+    min-width: 100%;
 	
     /* Set up proportionate scaling */
     width: 100%;

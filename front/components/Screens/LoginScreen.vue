@@ -47,6 +47,7 @@ export default {
       var bodyFormData = new FormData();
         bodyFormData.append('username', this.username);
         bodyFormData.append('password', this.password);
+        const self = this;
        API({
         method: 'post',
         url: '/login',
@@ -54,6 +55,7 @@ export default {
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
           console.log(response)
+          self.navigation.navigate("Challenges")
         }).catch(function(error){
           console.log(error)
         })
