@@ -227,7 +227,10 @@ public class mainController {
         categoryService.addCategory(category);
     }
 
-
+    @PostMapping("api/changeCategory")
+    public void chagneCategoryId(@RequestParam long challengeId, @RequestParam long categoryId) {
+        challengeService.changeCategory(challengeId, categoryId);
+    }
     /**
      * Returns a list with all the categories
      * @param

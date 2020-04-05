@@ -34,11 +34,11 @@ public class ChallengeService {
     }
 
     public List<Challenge> getChallengeByCategory(long categoryId) {
-        return challengeRepository.findByCategory(categoryId);
+        return null;
     }
 
     public List<Challenge> getChallengeByCategory(String name) {
-        return challengeRepository.findByCategory(categoryService.getIdFromName(name));
+        return null;
     }
     
     public Optional<Challenge> getChallengeByName(String name) {
@@ -54,5 +54,7 @@ public class ChallengeService {
     }
 
 
-
+    public void changeCategory(long challengeId, long categoryId) {
+        getChallenge(challengeId).get().setCategoryId(categoryId);
+    }
 }
