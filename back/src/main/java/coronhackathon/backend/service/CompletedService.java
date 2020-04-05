@@ -1,5 +1,6 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
@@ -69,7 +70,7 @@ public class CompletedService {
         return "User " + user.getUsername() + " has completed " + challenge.getName();
     }
 
-    public List<Challenge> getCompletedChallengesByCategory(long userId, String category) {
+    public List<Challenge> getCompletedChallengesByCategory(long userId, Category category) {
         List<Challenge> l = new ArrayList<Challenge>();
         Optional<User> ou = userRepository.findById(userId);
         if(!ou.isPresent())

@@ -1,5 +1,6 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ChallengeService {
         return challengeRepository.findById(id);
     }
 
-    public List<Challenge> getChallengeByCategory(String category) {
+    public List<Challenge> getChallengeByCategory(Category category) {
         return challengeRepository.findByCategory(category);
     }
     
@@ -34,15 +35,11 @@ public class ChallengeService {
         return challengeRepository.findByName(name);
     }
 
-    public List<String> allCategories() {
-        return challengeRepository.findDistinctByNameNotIn(getAllChallenges());
-    }
-
     public long numberOfChallenges() {
         return challengeRepository.count();
     }
 
-    public Long numberOfChallengesByCategory(String category) {
+    public Long numberOfChallengesByCategory(Category category) {
         return challengeRepository.countByCategory(category);
     }
 

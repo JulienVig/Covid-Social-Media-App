@@ -18,12 +18,11 @@ public class Challenge {
     private String name;
 
     @Column(nullable = false)
-    private String category;
-
-    @Column(nullable = false)
     private String description;
 
-    private String logo;     //the link to the logo
+    @ManyToOne
+    @JoinColumn(name = "category")
+    private Category category;
 
     /* ---- Relations ---- */
 
@@ -39,16 +38,12 @@ public class Challenge {
         return name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public String getLogo() {
-        return logo;
     }
 
     public void setId(long id) {
@@ -59,7 +54,7 @@ public class Challenge {
         this.name = name;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -67,7 +62,5 @@ public class Challenge {
         this.description = description;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
+
 }

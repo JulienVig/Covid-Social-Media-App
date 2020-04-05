@@ -2493,3 +2493,10 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 >>>>>>> new-hasCompleted
+2020-04-05 18:36:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "cat1"
+Data conversion error converting "cat1"; SQL statement:
+alter table challenge add constraint FK9q0ko52tr4nfguhsw2dk1ec93 foreign key (category) references category [22018-200]
+2020-04-05 18:47:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "tres dur"
+Data conversion error converting "tres dur" [22018-200]
