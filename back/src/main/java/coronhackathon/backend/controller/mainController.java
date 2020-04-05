@@ -230,8 +230,8 @@ public class mainController {
      * @param tagId the id of the tag
      * @return challenges as a list
      */
-    @GetMapping("/api/getChallengesByTag")
-    public List<Challenge> getChallengesByTag(@RequestParam long tagId){
+    @RequestMapping(path = "/api/getChallengesByTag/{tagId}", method = RequestMethod.GET)
+    public List<Challenge> getChallengesByTag(@PathVariable long tagId){
         return isAService.getChallengesOfTag(tagId);
     }
 
