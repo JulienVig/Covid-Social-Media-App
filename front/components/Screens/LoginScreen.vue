@@ -1,7 +1,7 @@
 <template>
     <view class="real-container">
       <view class ="container">
-        <text class="title">Consvid la tête</text>
+        <text class="title">CONSVID la TÊTE</text>
         <text class="text-container">Enter username :</text>
         <text-input class="input-container" v-model="username"/>
         <text class="text-container">Enter password :</text>
@@ -77,7 +77,8 @@ export default {
 }
 
 .title{
-    font-size: 30;
+    font-size: 40;
+    font-weight: 100;
     margin-bottom: 100;
 }
 .text-container{
