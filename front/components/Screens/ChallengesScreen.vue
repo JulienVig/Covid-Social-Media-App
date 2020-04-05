@@ -1,8 +1,13 @@
 E<template>
   <view class="container">
     <view class ="topbar">
+      <view>
       <text class="heading">Challenges</text>
       <text>This is the Challenge screen</text>
+      </view>
+      <touchable-opacity class = "corona-touchable" :on-press="() => goToCorona()">
+        <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
+      </touchable-opacity>
     </view>
     <scroll-view class = "myScrollView">
       <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
@@ -12,14 +17,13 @@ E<template>
           <text class = "challenge-desc">{{challenge.description}}</text>
           </view>
           <view>
-          <image class = "challenge-icon" :source="require('../../assets/images/phone_black_192x192.png')"/>
+          <image class = "challenge-icon" :source="require('../../assets/images/challengescreen/phone_black_192x192.png')"/>
           </view>
         </touchable-opacity>
       </view>
     </scroll-view>
   </view>
 </template>
-
 <style>
 
 .topbar {
@@ -27,11 +31,22 @@ E<template>
   justify-content: center;
   align-items: center;
   background-color: #FFC107;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .container {
   background-color: #ffecb3;
   flex: 1;
+}
+
+.corona-icon {
+  width: 40;
+  height: 40;
+}
+
+.corona-touchable {
+  text-align: right;
 }
 
 .heading {
@@ -48,6 +63,7 @@ E<template>
 }
 
 .element-container {
+  width: 90%;
   flex-direction: row;
 }
 
@@ -72,6 +88,11 @@ import {API} from '../../api.js';
 import React from 'react';
 import {Text} from 'react-native';
 export default {
+  props: {
+      navigation: {
+        type: Object
+      }
+    },
   data: function() {
     return {
         challenges: [
@@ -222,15 +243,7 @@ export default {
         ]
     }
   },
-  /*
-  <view class ="challenges-container" v-for="challenge in challenges" :key="challenge.id">
-        <view class ="single-challenge">
-          <text class = "title-challenge">{{challenge.title}}</text>
-          <text class = "description-challenge">{{challenge.description}}</text>
-          <image :source="require('../../assets/phone_black_192x192.png')"/>
-        </view>
-    </view>
-    */
+
   methods: {
     renderList : function(item) {
       return(
@@ -240,19 +253,28 @@ export default {
         </View>
       )
     },
+
     fetch : function() {
-      this.challenges = []
+      const self = this;
+       API({
+        method: 'get',
+        url: '/api/allChallenges'
+        }).then(function(response){
+          console.log(response)
+          self.challenges = response.data
+        })
     },
+
     goToChallenge : function(challenge) {
-      //console.log("pressed challenge")
-      //console.log(challenge.title)
-      //this.navigation.navigate("Tabs")
-      //send router param challenge id
+      this.navigation.navigate("ChallengeDetail", {challengeId:challenge.id})
+    },
+
+    goToCorona : function() {
+      this.navigation.navigate("Corona")
     }
   },
   mounted: function() {
-    //uncomment when connected to the server
-    //this.fetch();
+    this.fetch();
   }
 };
 </script>

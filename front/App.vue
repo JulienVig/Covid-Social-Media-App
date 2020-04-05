@@ -4,10 +4,12 @@
 
 <script>
 import LoginScreen from "./components/Screens/LoginScreen";
+import CoronaScreen from "./components/Screens/CoronaScreen";
 import DetailsScreen from "./components/Screens/DetailsScreen";
-import SettingsScreen from "./components/Screens/SettingsScreen";
+import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
-import ValidationChallenge from "./components/Screens/ValidationChallenge";//temporary
+import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
+import ValidationChallenge from "./components/Screens/ValidationChallengeScreen";
 
 import {
   createAppContainer,
@@ -22,13 +24,16 @@ const Tabs = createBottomTabNavigator(
 
     Challenges: ChallengesScreen,
     Details: DetailsScreen,
-    Settings: SettingsScreen,
-    Validation: ValidationChallenge, //temporary
+    Profile: ProfileScreen,
+    Validation: ValidationChallenge,
+    Corona : CoronaScreen,
   }
 );
 const StackNavigator = createStackNavigator(
   {
     Home: LoginScreen,
+    ChallengeDetail : ChallengeDetailScreen,
+    Corona: CoronaScreen,
     Tabs
   }
 );
