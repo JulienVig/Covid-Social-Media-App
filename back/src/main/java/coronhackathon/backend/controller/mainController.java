@@ -118,6 +118,15 @@ public class mainController {
         return completedService.getCompletersOfChallenge(challengeId);
     }
 
+    /**
+     * Return a list with all the comment on a specified challenge
+     * @param challengeId
+     * @return
+     */
+    @RequestMapping(path = "/api/getCommentsOfChallenge/{challengeId}", method = RequestMethod.GET)
+    public List<String> getCommentsOfChallenge(@PathVariable long challengeId){
+        return completedService.getCommentsOfChallenge(challengeId);
+    }
 
     /* ----Challenge---- */
 

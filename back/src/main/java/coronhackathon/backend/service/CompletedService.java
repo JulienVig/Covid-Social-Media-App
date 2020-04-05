@@ -81,4 +81,15 @@ public class CompletedService {
         }
         return l;
     }
+
+    public List<String> getCommentsOfChallenge(long challengeId) {
+        List<String> l = new ArrayList<>();
+        Optional<Challenge> oc = challengeRepository.findById(challengeId);
+        if(!oc.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : "+challengeId+" not found");
+        for(HasCompleted hc : completedRepository.findByChallenge(oc.get())){
+            l.add(hc.getCommentary());
+        }
+        return l;
+    }
 }
