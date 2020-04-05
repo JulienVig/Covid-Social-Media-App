@@ -213,8 +213,8 @@ public class mainController {
      * @param category
      * @return
      */
-    @RequestMapping(path = "/api/addCategory/{category}", method = RequestMethod.GET)
-    public void addCategory(@PathVariable Category category) {
+    @PostMapping("/api/addCategory")
+    public void addCategory(@RequestBody Category category) {
         categoryService.addCategory(category);
     }
 
