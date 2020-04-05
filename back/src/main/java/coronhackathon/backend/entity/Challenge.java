@@ -20,9 +20,8 @@ public class Challenge {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "category")
-    private Category category;
+    @Column(nullable = false)
+    private long categoryId;
 
     /* ---- Relations ---- */
 
@@ -38,8 +37,8 @@ public class Challenge {
         return name;
     }
 
-    public Category getCategory() {
-        return category;
+    public long getCategoryId() {
+        return categoryId;
     }
 
     public String getDescription() {
@@ -54,8 +53,8 @@ public class Challenge {
         this.name = name;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public void setDescription(String description) {

@@ -14,7 +14,6 @@ public class ChallengeService {
     @Autowired
     private ChallengeRepository challengeRepository;
 
-
     public void addChallenge(Challenge challenge) {
         challengeRepository.save(challenge);
     }

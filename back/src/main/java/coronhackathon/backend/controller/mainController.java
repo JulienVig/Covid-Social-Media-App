@@ -187,7 +187,6 @@ public class mainController {
 
     /* ----Category---- */
 
-
     /**
      *
      * @param id of the category
