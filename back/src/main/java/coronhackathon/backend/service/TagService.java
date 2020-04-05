@@ -34,7 +34,4 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public List<Challenge> findByIsA(long tagId) {
-        return tagRepository.findByIsA_challengeId(tagId);
-    }
 }

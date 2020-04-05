@@ -3,10 +3,7 @@ package coronhackathon.backend.controller;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
-import coronhackathon.backend.service.ChallengeService;
-import coronhackathon.backend.service.CompletedService;
-import coronhackathon.backend.service.TagService;
-import coronhackathon.backend.service.UserService;
+import coronhackathon.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +20,8 @@ public class mainController {
     private CompletedService completedService;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private IsAService isAService;
 
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
@@ -209,7 +208,7 @@ public class mainController {
      * @param tag a tag we want to add
      */
     @PostMapping("/api/addTag")
-    public void addChallenge(@RequestBody Tag tag) {
+    public void addTag(@RequestBody Tag tag) {
         tagService.addTag(tag);
     }
 
@@ -223,8 +222,17 @@ public class mainController {
         return tagService.allTags();
     }
 
+    /* ---- IsA ---- */
 
-
+    /**
+     * Retrieve all Challenges that have tht tag Tag
+     * @param tagId the id of the tag
+     * @return challenges as a list
+     */
+    @GetMapping("/api/getChallengesByTag")
+    public List<Challenge> getChallengesByTag(@RequestParam long tagId){
+        return isAService.getChallengesOfTag(tagId);
+    }
 
 
 }

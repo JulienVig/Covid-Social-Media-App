@@ -12,9 +12,6 @@ public class Tag {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "isA")
-    Set<Challenge> isA;
-
     /* ----getters and setters---- */
 
     public long getId() {

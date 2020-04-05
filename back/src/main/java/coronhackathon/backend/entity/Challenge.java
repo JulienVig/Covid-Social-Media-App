@@ -27,9 +27,7 @@ public class Challenge {
 
     /* ---- Relations ---- */
 
-    @ManyToMany
-    @JoinTable(name = "isA")
-    Set<Tag> isA;
+
 
     /* ----Getters and Setters---- */
 
