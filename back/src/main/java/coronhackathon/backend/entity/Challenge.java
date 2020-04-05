@@ -22,7 +22,7 @@ public class Challenge {
 
     /* ---- Relations ---- */
 
-    @ManyToMany(mappedBy = "has_completed")
+    @OneToMany(mappedBy = "user")
     Set<User> has_completed;
 
     @ManyToMany
