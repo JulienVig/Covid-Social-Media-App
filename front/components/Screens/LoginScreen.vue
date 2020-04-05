@@ -2,9 +2,9 @@
     <view class="real-container">
       <view class ="container">
         <text>Enter username :</text>
-        <text-input>{{username}}</text-input>
+        <text-input v-model="username"/>
         <text>Enter password :</text>
-        <text-input>{{password}}</text-input>
+        <text-input v-model="password"/>
         <button :on-press="onPressEvent"
         title="LE bouton a presser"
         color="#841584"
@@ -54,6 +54,8 @@ export default {
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
           console.log(response)
+        }).catch(function(error){
+          console.log(error)
         })
     },
     goToPage2 (){
@@ -61,12 +63,12 @@ export default {
     },
     goToTabNavigator() {
       this.navigation.navigate("Tabs")
-    },
-    mounted: function() {
-      this.username = 'user'
-      this.password = 'userPass'
     }
   },
+  mounted: function() {
+      this.username = 'user'
+      this.password = 'user'
+  }
 };
 </script>
 
