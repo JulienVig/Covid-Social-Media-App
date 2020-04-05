@@ -36,6 +36,6 @@ public class ChallengeService {
     }
 
     public List<String> allCategories() {
-        return null;
+        return challengeRepository.findDistinctByNameNotIn(allChallenges());
     }
 }

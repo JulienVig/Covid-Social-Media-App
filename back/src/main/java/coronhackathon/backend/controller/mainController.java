@@ -95,6 +95,11 @@ public class mainController {
         return challengeService.getChallengeByCategory(category);
     }
 
+    /**
+     * Returns a list with all the categories
+     * @param
+     * @return a list with all the categories
+     */
     @GetMapping("/api/allCategories")
     public List<String> allCategories(){
         return challengeService.allCategories();

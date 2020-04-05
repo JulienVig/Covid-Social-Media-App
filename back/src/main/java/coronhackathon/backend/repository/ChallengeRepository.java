@@ -12,5 +12,6 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     public Optional<Challenge> findById(long id);
     public Optional<Challenge> findByName(String name);
     public List<Challenge> findByCategory(String category);
+    public List<String> findDistinctByNameNotIn(List<Challenge> challenges);
 
 }
