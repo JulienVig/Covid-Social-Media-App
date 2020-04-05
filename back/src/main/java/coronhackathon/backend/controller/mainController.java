@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -64,6 +68,33 @@ public class mainController {
     )
     public @ResponseBody byte[] getImageWithMediaType(@RequestParam String path) throws IOException {
         return Files.readAllBytes(Paths.get("src/main/" + path));
+    }
+
+    @PostMapping(
+            value = "/uploadImage",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody String uploadImageTest(@RequestBody byte[] imgData) throws IOException {
+        String destinationPath = "src/main/resources/upload.jpg";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "jpg", new File(destinationPath));
+
+        return destinationPath;
+    }
+
+    @RequestMapping(
+            value = "/api/uploadImage/<id>",
+            method = RequestMethod.POST,
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody String uploadImage(@RequestBody byte[] imgData, @PathVariable("id") long id ) throws IOException {
+        String destinationPath = "src/main/resources/completedImage/" + Long.toString(id) + ".jpg";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "jpg", new File(destinationPath) );
+
+        return destinationPath;
     }
 
     /* ---Users ----*/
