@@ -13,12 +13,12 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    public List<Tag> getAllTags() {
-        return tagRepository.findAll();
-    }
-
     public Optional<Tag> getTag(long tagId){
         return tagRepository.findById(tagId);
+    }
+
+    public Optional<Tag> getTagByName(String name){
+        return tagRepository.findByName(name);
     }
 
     public void addTag(Tag tag) {
@@ -28,9 +28,4 @@ public class TagService {
     public List<Tag> allTags() {
         return tagRepository.findAll();
     }
-
-    public void insert(Tag tag) {
-        tagRepository.save(tag);
-    }
-
 }

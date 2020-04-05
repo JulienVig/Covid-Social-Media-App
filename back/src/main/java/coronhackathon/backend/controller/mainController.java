@@ -219,6 +219,27 @@ public class mainController {
     }
 
     /**
+     * Return a tag with a given Id
+     * @param tagId the id of a tag
+     * @return the tag with this associated Id
+     */
+    @RequestMapping(path = "/api/getTag/{tagId}", method = RequestMethod.GET)
+    public Optional<Tag> getTag(@PathVariable long tagId){
+        return tagService.getTag(tagId);
+    }
+
+    /**
+     * Return a tag with a given name
+     * @param tagName the name of the tag
+     * @return the tag that has a given name
+     */
+    @RequestMapping(path = "/api/getTagByName/{tagName}", method = RequestMethod.GET)
+    public Optional<Tag> getTagByName(@PathVariable String tagName){
+        return tagService.getTagByName(tagName);
+    }
+
+
+    /**
      * Returns a list with all the tags
      * @param
      * @return a list with all the tags
@@ -238,5 +259,20 @@ public class mainController {
     @RequestMapping(path = "/api/getChallengesByTag/{tagId}", method = RequestMethod.GET)
     public List<Challenge> getChallengesByTag(@PathVariable long tagId){
         return tagOfChallengeService.getChallengesOfTag(tagId);
+    }
+
+    @RequestMapping(path = "/api/getTagsOfChallenge/{challengeId}", method = RequestMethod.GET)
+    public List<Tag> getTagsOfChallenge(@PathVariable long challengeId){
+        return tagOfChallengeService.getTagsOfChallenge(challengeId);
+    }
+    /**
+     * Add a tag to a particular challenge
+     * @param tagId the tag we want to link
+     * @param challengeId the challenge we want to link to
+     * @return a string if the link was done
+     */
+    @PostMapping("/api/addTagToChallenge")
+    public String completeChallenge(@RequestParam long tagId, @RequestParam long challengeId){
+        return tagOfChallengeService.addTagToChallenge(tagId, challengeId);
     }
 }
