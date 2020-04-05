@@ -29,7 +29,7 @@
 .icon {
   height:80;
   width:80;
-  border-radius: 100;
+  /* border-radius: 50%; */
 }
 
 .main {
