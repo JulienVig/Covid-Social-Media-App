@@ -1,153 +1,258 @@
-<template>
+E<template>
   <view class="container">
-    <text class="heading">Challenge</text>
-    <text>This is the Challenge screen</text>
-    <button
-    :on-press="() => pickImage()"
-    title="Pick an image from camera roll"
-    />
-    <button
-    :on-press="() => takePhoto()"
-    title="Take a photo"
-    />
+    <view class ="topbar">
+      <text class="heading">Challenges</text>
+      <text>This is the Challenge screen</text>
+    </view>
+    <scroll-view class = "myScrollView">
+      <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
+        <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
+          <view>
+          <text class = "challenge-title">{{challenge.title}}</text>
+          <text class = "challenge-desc">{{challenge.description}}</text>
+          </view>
+          <view>
+          <image class = "challenge-icon" :source="require('../../assets/images/phone_black_192x192.png')"/>
+          </view>
+        </touchable-opacity>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
-<script>
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
-import { Alert } from 'react-native';
-
-
-export default {
-    data: async function() {
-      return {
-          uploading: false,
-          image:null,
-      }
-    },
-    methods:{
-        pickImage :  async function () {
-            const {
-              status: cameraRollPerm
-            } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-            // only if user allows permission to camera roll
-            if (cameraRollPerm === 'granted') {
-              let pickerResult = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: true,
-                aspect: [4, 3],
-              });
-              this.handleImagePicked(pickerResult);
-          }
-        },
-
-        takePhoto : async function () {
-           const {
-             status: cameraPerm
-           } = await Permissions.askAsync(Permissions.CAMERA);
-
-           const {
-             status: cameraRollPerm
-           } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-           // only if user allows permission to camera AND camera roll
-           if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
-             let pickerResult = await ImagePicker.launchCameraAsync({
-               allowsEditing: true,
-               aspect: [4, 3],
-             });
-             let uploadResponse, uploadResult;
-             this.uploading = true;
-             try {
-                 if (!pickerResult.cancelled) {
-                     //Send POST to server
-                    uploadResponse = await uploadImageAsync(pickerResult.uri);
-                    // uploadResult = await uploadResponse.json();
-                    // this.image: uploadResult.location
-                }
-               } catch (e) {
-                  console.log({ uploadResponse });
-                 // console.log({ uploadResult });
-                 console.log({ e });
-                 Alert.alert('Upload failed, sorry :(');
-
-               } finally {
-                   this.uploading = false;
-               }
-             }
-         },
-         handleImagePicked : async function(pickerResult) {
-            let uploadResponse, uploadResult;
-
-            try {
-              this.uploading = true;
-
-              if (!pickerResult.cancelled) {
-                uploadResponse = await uploadImageAsync(pickerResult.uri);
-                // uploadResult = await uploadResponse.json();
-                // image = uploadResult.location
-              }
-            } catch (e) {
-              console.log({ uploadResponse });
-              console.log({ uploadResult });
-              console.log({ e });
-              Alert.alert('Upload failed, sorry :(');
-            } finally {
-              this.uploading= false;
-            }
-          }
-
-    }
-}
-
-
-async function uploadImageAsync(uri){
-    Alert.alert('uploading')
-    return 0;
-  // let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
-  //
-  // // Note:
-  // // Uncomment this if you want to experiment with local server
-  // //
-  // // if (Constants.isDevice) {
-  // //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
-  // // } else {
-  // //   apiUrl = `http://localhost:3000/upload`
-  // // }
-  //
-  // let uriParts = uri.split('.');
-  // let fileType = uriParts[uriParts.length - 1];
-  //
-  // let formData = new FormData();
-  // formData.append('photo', {
-  //   uri,
-  //   name: `photo.${fileType}`,
-  //   type: `image/${fileType}`,
-  // });
-  //
-  // let options = {
-  //   method: 'POST',
-  //   body: formData,
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'multipart/form-data',
-  //   },
-  // };
-  //
-  // return fetch(apiUrl, options);
-}
-</script>
 <style>
-.container {
-  align-items: center;
+
+.topbar {
+  height : 15%;
   justify-content: center;
+  align-items: center;
+  background-color: #FFC107;
+}
+
+.container {
+  background-color: #ffecb3;
   flex: 1;
 }
+
 .heading {
   font-size: 30px;
   font-weight: bold;
-  color: darkolivegreen;
-  margin: 20px;
+  color: #212121;
+}
+
+.element-border {
+  border-bottom-width: 1;
+  border-color: gray;
+  width: 100%;
+  padding: 15;
+}
+
+.element-container {
+  flex-direction: row;
+}
+
+.challenge-title {
+  font-size: 20;
+  color: #9E9E9E;
+}
+
+.challenge-description {
+  font-size : 10;
+}
+
+.challenge-icon {
+  width: 40;
+  height: 40;
+  border-radius: 25;
 }
 </style>
+
+<script>
+import {API} from '../../api.js';
+import React from 'react';
+import {Text} from 'react-native';
+export default {
+  data: function() {
+    return {
+        challenges: [
+           {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+          {
+            id: 1,
+            title : 'Prendre des nouvelles de ses voisins',
+            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+          },
+           {
+            id: 2,
+            title : 'Faire une mousse au chocolat',
+            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+          },
+           {
+            id: 3,
+            title : 'Un troisième challenge',
+            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+            image : ''
+          },
+        ]
+    }
+  },
+  /*
+  <view class ="challenges-container" v-for="challenge in challenges" :key="challenge.id">
+        <view class ="single-challenge">
+          <text class = "title-challenge">{{challenge.title}}</text>
+          <text class = "description-challenge">{{challenge.description}}</text>
+          <image :source="require('../../assets/phone_black_192x192.png')"/>
+        </view>
+    </view>
+    */
+  methods: {
+    renderList : function(item) {
+      return(
+        <View>
+        <Text>{item.item.title}</Text>
+        <Text>{item.item.description}</Text>
+        </View>
+      )
+    },
+    fetch : function() {
+      this.challenges = []
+    },
+    goToChallenge : function(challenge) {
+      //console.log("pressed challenge")
+      //console.log(challenge.title)
+      //this.navigation.navigate("Tabs")
+      //send router param challenge id
+    }
+  },
+  mounted: function() {
+    //uncomment when connected to the server
+    //this.fetch();
+  }
+};
+</script>
