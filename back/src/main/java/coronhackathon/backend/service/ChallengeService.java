@@ -1,14 +1,13 @@
 package coronhackathon.backend.service;
 
-import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.repository.CategoryRepository;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +56,9 @@ public class ChallengeService {
         return challengeRepository.countByCategoryId((categoryService.getIdFromName(name)));
     }
 
-
-    public void changeCategory(long challengeId, long categoryId) {
-        getChallenge(challengeId).get().setCategoryId(categoryId);
+    public List<Challenge> getNineChallenges() {
+        List<Challenge> all = getAllChallenges();
+        Collections.shuffle(all);
+        return all.subList(0,Math.min(9,all.size()));
     }
 }
