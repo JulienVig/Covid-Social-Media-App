@@ -23,7 +23,9 @@
     "vue-native-core": "^0.1.4",
     "vue-native-helper": "^0.1.4",
     "vue-native-router": "^0.1.1",
-    "vue-native-web": "^1.0.5"
+    "vue-native-web": "^1.0.5",
+    "expo-permissions": "~8.1.0",
+    "expo-image-picker": "~8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
