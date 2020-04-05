@@ -12,7 +12,7 @@ E<template>
           <text class = "challenge-desc">{{challenge.description}}</text>
           </view>
           <view>
-          <image class = "challenge-icon" :source="require('../../assets/phone_black_192x192.png')"/>
+          <image class = "challenge-icon" :source="require('../../assets/images/phone_black_192x192.png')"/>
           </view>
         </touchable-opacity>
       </view>
