@@ -9,6 +9,7 @@ import DetailsScreen from "./components/Screens/DetailsScreen";
 import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
 import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
+import CategoryScreen from "./components/Screens/CategoryScreen";
 
 import {
   createAppContainer,
@@ -22,6 +23,7 @@ const Tabs = createBottomTabNavigator(
   {
 
     Challenges: ChallengesScreen,
+    Category: CategoryScreen,
     Details: DetailsScreen,
     Profile: ProfileScreen,
   }
