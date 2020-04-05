@@ -24,7 +24,7 @@
     />
 
     <!-- On affiche l'image qui a été sélectionnée   -->
-    <image :source="require('/home/colbois/Documents/Lauzhack/Coronhackathon/front/assets/images/phone_black_192x192.png')"/> 
+    <!--<image :source="require('/home/colbois/Documents/Lauzhack/Coronhackathon/front/assets/images/phone_black_192x192.png')"/> -->
 
     
     

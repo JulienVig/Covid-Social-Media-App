@@ -10,8 +10,6 @@
            <text  class="login-btn" :on-press="login">Login</text>
            <text  class="login-btn" :on-press="goToTabNavigator">Bypass login</text>
         </view>
-
-
       </view>
   </view>
 </template>

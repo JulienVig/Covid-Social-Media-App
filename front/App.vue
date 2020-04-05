@@ -9,6 +9,7 @@ import DetailsScreen from "./components/Screens/DetailsScreen";
 import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
 import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
+import ValidationChallenge from "./components/Screens/ValidationChallengeScreen";
 
 import {
   createAppContainer,
@@ -24,6 +25,7 @@ const Tabs = createBottomTabNavigator(
     Challenges: ChallengesScreen,
     Details: DetailsScreen,
     Profile: ProfileScreen,
+    Validation: ValidationChallengeScreen
   }
 );
 const StackNavigator = createStackNavigator(
