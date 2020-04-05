@@ -12,8 +12,8 @@ public class Tag {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "is_A")
-    Set<Challenge> is_A;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "isA")
+    Set<Challenge> isA;
 
     /* ----getters and setters---- */
 
@@ -25,8 +25,8 @@ public class Tag {
         return name;
     }
 
-    public void setId(long id) {
-        Id = id;
+    public void setId(long tagId) {
+        this.Id = tagId;
     }
 
     public void setName(String name) {

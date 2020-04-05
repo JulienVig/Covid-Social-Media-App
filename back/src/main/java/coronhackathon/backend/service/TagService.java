@@ -1,5 +1,6 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.TagRepository;
@@ -21,11 +22,19 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public Optional<Tag> getTag(long id){
-        return tagRepository.findById(id);
+    public Optional<Tag> getTag(long tagId){
+        return tagRepository.findById(tagId);
     }
 
-    public void insert(Tag tag) {
+    public void addTag(Tag tag) {
         tagRepository.save(tag);
+    }
+
+    public List<Tag> allTags() {
+        return tagRepository.findAll();
+    }
+
+    public List<Challenge> findByIsA(long tagId) {
+        return tagRepository.findByIsA_challengeId(tagId);
     }
 }

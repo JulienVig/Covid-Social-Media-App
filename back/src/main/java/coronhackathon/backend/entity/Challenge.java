@@ -28,11 +28,8 @@ public class Challenge {
     private Set<User> has_completed = new HashSet<User>();
 
     @ManyToMany
-    @JoinTable(
-            name = "is_A",
-            joinColumns = @JoinColumn(name = "challenge_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    Set<Tag> is_A;
+    @JoinTable(name = "isA")
+    Set<Tag> isA;
 
     /* ----Getters and Setters---- */
 
