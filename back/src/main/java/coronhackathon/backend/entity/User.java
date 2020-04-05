@@ -44,7 +44,7 @@ public class User {
     }
 
     public Set<HasCompleted> getHasCompleted() {
-        return new HashSet<HasCompleted>(hasCompleted);
+        return this.hasCompleted;
     }
 
     /* REMOVE if unused

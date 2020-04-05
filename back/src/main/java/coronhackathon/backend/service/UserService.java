@@ -1,6 +1,7 @@
 package coronhackathon.backend.service;
 
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

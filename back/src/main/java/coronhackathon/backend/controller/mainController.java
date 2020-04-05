@@ -3,6 +3,7 @@ package coronhackathon.backend.controller;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
+import coronhackathon.backend.service.CompletedService;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -70,11 +71,14 @@ public class mainController {
      * Marks user and challenge as completed.
      * @param userId the completer's Id
      * @param challengeId the completed challenge's Id
+     * @param commentary a commentary on the realisation of the challenge
+     * @param picture a picture on the realisation of the challenge
      * @return a verification message
      */
     @PostMapping("/api/completeChallenge")
-    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId ){
-        return completedService.addCompletedChallenge(userId, challengeId);
+    public String completeChallenge(@RequestParam long userId, @RequestParam long challengeId,
+                                    @RequestParam String commentary, @RequestParam String picture){
+        return completedService.addCompletedChallenge(userId, challengeId, commentary, picture);
     }
 
     /**
@@ -108,7 +112,7 @@ public class mainController {
      */
     @GetMapping("/api/allChallenges")
     public List<Challenge> allChallenges() {
-        return challengeService.allChallenges();
+        return challengeService.getAllChallenges();
     }
 
     /**

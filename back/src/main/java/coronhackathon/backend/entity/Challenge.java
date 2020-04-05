@@ -80,7 +80,7 @@ public class Challenge {
     }
 
     public Set<HasCompleted> getHasCompleted() {
-        return new HashSet<HasCompleted>(this.completed);
+        return this.completed;
     }
 
 
