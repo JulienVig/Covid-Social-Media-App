@@ -6,12 +6,14 @@
             </view>
             <view class ="main">
                 <view class="categories">
-                    <view class="category" v-for="(category, id) in categories" :key="id">
-                        <view class="single-element-container">
-                            <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
-                            <text class="name">{{category.name}}</text>
+                    <!-- <scroll-view class = "scrollable"> -->
+                        <view class="category" v-for="(category, id) in categories" :key="id">
+                            <view class="single-element-container" :on-press="goToCategory(category.name)">
+                                <image class = "icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>
+                                <text class="name">{{category.name}}</text>
+                            </view>
                         </view>
-                    </view>
+                    <!-- </scroll-view> -->
                 </view>
             </view>
         </view>
@@ -20,9 +22,14 @@
 
 <style>
 
-.corona-icon {
+.header{
+    background-color: #DDDDDD;
+}
+
+.icon {
   height:80;
   width:80;
+  border-radius: 100;
 }
 
 .main {
@@ -32,12 +39,16 @@
 .categories{
 
     /* margin: 10px; */
+
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
     max-width: 90%;
 }
-
+.scrollable{
+    background-color: #EEEEEE;
+    flex-direction: row;
+}
 .single-element-container{
     justify-content: center;
     align-items: center;
@@ -85,49 +96,65 @@ export default {
         categories: [
             {
                 name: "Jardinage de tulipe",
+                logo:"",
             },
             {
                 name: "Dessin",
+                logo:"",
             },
             {
                 name: "Bricolage",
+                logo:"",
             },
             {
                 name: "Musique",
+                logo:"",
             },
             {
                 name: "Entraide",
+                logo:"",
             },
             {
                 name: "Nettoyage",
-            }
+                logo:"",
+            },
+            {
+                name: "Jardinage de tulipe",
+                logo:"",
+            },
+            {
+                name: "Dessin",
+                logo:"",
+            },
+            {
+                name: "Bricolage",
+                logo:"",
+            },
+
         ]
     }
   },
   methods: {
     login () {
      console.log("Login !")
-      var bodyFormData = new FormData();
-        bodyFormData.append('username', this.username);
-        bodyFormData.append('password', this.password);
         const self = this;
        API({
-        method: 'post',
+        method: 'get',
         url: '/api/allCategories',
-        data: bodyFormData,
-        headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
-           //console.log(response)
-          if(response != undefined && response.status == 200){
-              self.navigation.navigate("Challenges")
-          }
+            self.categories = response.data;
+            this.setLogos();
         }).catch(function(error){
            console.log(error)
         })
     },
-    goToTabNavigator() {
-      this.navigation.navigate("Challenges")
-    }
+    setLogos(){
+
+    },
+    goToCategory(name) {
+      // this.navigation.navigate("Challenges")
+    },
+
   },
   mounted: function() {
 
