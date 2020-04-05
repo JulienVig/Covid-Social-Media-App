@@ -31,7 +31,9 @@ public class CompletedService {
         Optional<User> ou = userRepository.findById(userId);
         if(!ou.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : "+ userId+" not found");
-        for(HasCompleted hc : ou.get().getHasCompleted()){
+        System.out.println(ou.get().getHasCompleted().size());
+        List<HasCompleted> lhc = new ArrayList<>(ou.get().getHasCompleted());
+        for(HasCompleted hc : lhc){
             l.add(hc.getChallenge());
         }
         return l;
