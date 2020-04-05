@@ -3,9 +3,7 @@ package coronhackathon.backend.controller;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.Tag;
 import coronhackathon.backend.entity.User;
-import coronhackathon.backend.service.ChallengeService;
-import coronhackathon.backend.service.CompletedService;
-import coronhackathon.backend.service.UserService;
+import coronhackathon.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -102,16 +100,22 @@ public class mainController {
      * @throws IOException
      */
     @RequestMapping(
-            value = "/api/uploadImage/{id}",
+            value = "/api/uploadImage/{userId}-{challengeId}",
             method = RequestMethod.POST,
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    public @ResponseBody String uploadImage(@RequestBody byte[] imgData, @PathVariable("id") long id ) throws IOException {
-        String destinationPath = "resources/completedImage/hasCompleted_" + Long.toString(id) + ".jpg";
+    public @ResponseBody String uploadImage(
+            @RequestBody byte[] imgData,
+            @PathVariable("userId") long userId,
+            @PathVariable("challengeId") long challengeId) throws IOException {
+        String destinationPath = "resources/completedImage/hasCompleted_"
+                + Long.toString(userId)
+                + "_"
+                + Long.toString(challengeId)+".jpg";
 
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
         ImageIO.write(img, "jpg", new File("src/main/"+destinationPath) );
-        // TODO hasCompletedService.setPath(path)
+        completedService.setPath(userId, challengeId, destinationPath);
         return destinationPath;
     }
 
