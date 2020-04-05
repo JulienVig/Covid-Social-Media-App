@@ -20,7 +20,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "hasCompleted",
+            name = "has_Completed",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "challenge_id"))
     private Set<Challenge> has_completed = new HashSet<Challenge>();

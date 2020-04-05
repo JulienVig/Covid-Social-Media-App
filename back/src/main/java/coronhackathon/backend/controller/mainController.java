@@ -3,7 +3,6 @@ package coronhackathon.backend.controller;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.ChallengeService;
-import coronhackathon.backend.service.CompletedService;
 import coronhackathon.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +60,6 @@ public class mainController {
      */
     public void addUser(@RequestBody User user) { userService.insert(user);
     }
-
 
     //TODO age
     //TODO Badge
@@ -155,6 +153,37 @@ public class mainController {
     public Optional<Challenge> getChallengeByName(@RequestParam String name) {
         return challengeService.getChallengeByName(name);
     }
+
+    /**
+     * Returns the number of challenges
+     * @return the number of challenges
+     */
+    @GetMapping("/api/numberOfChallenges")
+    public long numberOfChallenges() {
+        return challengeService.numberOfChallenges();
+    }
+
+    /**
+     * Returns the number of challenges of a given category
+     * @param category the name of the category
+     * @return the number of challenges in the category
+     */
+    @GetMapping("/api/numberOfChallengesOfCategory")
+    public Long numberOfChallengesOfCategory(@RequestParam String category) {
+        return challengeService.numberOfChallengesByCategory(category);
+    }
+
+    /**
+     * Returns the number of challenges with a given tag
+     * @param tag_id the id of the tag
+     * @return the list of challenges with the tag
+     */
+    @GetMapping("/api/challengesByTag")
+    public List<Challenge> challengesByTag(@RequestParam long tag_id) {
+        return challengeService.findByIsA_tag_id(tag_id);
+    }
+
+
 
     /**
      * Add a challenge given as argument to the database
