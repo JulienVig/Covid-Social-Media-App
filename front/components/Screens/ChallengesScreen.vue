@@ -24,7 +24,6 @@ E<template>
     </scroll-view>
   </view>
 </template>
-
 <style>
 
 .topbar {
@@ -64,6 +63,7 @@ E<template>
 }
 
 .element-container {
+  width: 90%;
   flex-direction: row;
 }
 
