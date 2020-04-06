@@ -1,6 +1,7 @@
 package coronhackathon.backend.service;
 
 import coronhackathon.backend.entity.Challenge;
+import coronhackathon.backend.repository.CategoryRepository;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +15,8 @@ import java.util.Optional;
 public class ChallengeService {
     @Autowired
     private ChallengeRepository challengeRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Autowired
     private CategoryService categoryService;
 
