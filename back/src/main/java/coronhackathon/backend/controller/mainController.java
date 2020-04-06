@@ -69,22 +69,37 @@ public class mainController {
     /**
      * Get an image from path
      * @param path : should start with 'resources/'
-     * @return the image data as byte arraygit reset
-     * @use ip:8080/api/image?<path> where <path> was received from a previous query
+     * @return the image data as byte array
+     * @use ip:8080/api/image/jpg?<path> where <path> was received from a previous query
      * @throws IOException
      */
     @GetMapping(
-            value = "/api/image",
+            value = "/api/image/jpg",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    public @ResponseBody byte[] getImageWithMediaType(@RequestParam String path) throws IOException {
+    public @ResponseBody byte[] getJPG(@RequestParam String path) throws IOException {
         return Files.readAllBytes(Paths.get("src/main/" + path));
     }
+
+    /**
+     * Get an image from path
+     * @param path : should start with 'resources/'
+     * @return the image data as byte array
+     * @use ip:8080/api/image/png?<path> where <path> was received from a previous query
+     * @throws IOException
+     */
+    @GetMapping(
+            value = "/api/image/png",
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody byte[] getPNG(@RequestParam String path) throws IOException {
+        return Files.readAllBytes(Paths.get("src/main/" + path));
+    }
+
 
     /*
     TODO remove when unecessary
     use it as test method
-
      */
     @PostMapping(
             value = "/uploadImage",
@@ -99,20 +114,65 @@ public class mainController {
         return destinationPath;
     }
 
+    // TODO check if path argument like this can contain "/"
     /**
-     * Receive an image illustrating a completion, save it and set path in hasCompleted entity
+     * Receive a JPG image
      * @param imgData: the uploaded image as byte array. see https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
-     * @param id: the id of hasCompleted entity received from a previous query
+     * @param path the path and name without extension
      * @return the path to find the image
-     * @use ip:8080/api/uploadImage/hasCompletedID where <path> was received from a previous query
      * @throws IOException
      */
     @RequestMapping(
-            value = "/api/uploadImage/{userId}-{challengeId}",
+            value = "/api/uploadImage/jpg/{path}",
             method = RequestMethod.POST,
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    public @ResponseBody String uploadImage(
+    public @ResponseBody String uploadJPGImage(
+            @RequestBody byte[] imgData,
+            @PathVariable("path") String path) throws IOException {
+        String destinationPath = "resources/misc/"+ path + ".jpg";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "jpg", new File("src/main/"+destinationPath) );
+        return destinationPath;
+    }
+
+    /**
+     * Receive a PNG image
+     * @param imgData: the uploaded image as byte array. see https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
+     * @param path the path and name of the image without extension
+     * @return the path to find the image
+     * @throws IOException
+     */
+    @RequestMapping(
+            value = "/api/uploadImage/png/{path}",
+            method = RequestMethod.POST,
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody String uploadPNGImage(
+            @RequestBody byte[] imgData,
+            @PathVariable("path") String path) throws IOException {
+        String destinationPath = "resources/misc/"+ path + ".jpg";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "jpg", new File("src/main/"+destinationPath) );
+        return destinationPath;
+    }
+
+    /**
+     * Receive a JPG image illustrating a completion, save it and set path in hasCompleted entity
+     * @param imgData: the uploaded image as byte array. see https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
+     * @param userId: the id of hasCompleted entity received from a previous query
+     * @param challengeId: the id of hasCompleted entity received from a previous query
+     * @return the path to find the image
+     * @throws IOException
+     */
+    @RequestMapping(
+            value = "/api/uploadCompletedImage/jpg/{userId}-{challengeId}",
+            method = RequestMethod.POST,
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody String uploadCompletedJPGImage(
             @RequestBody byte[] imgData,
             @PathVariable("userId") long userId,
             @PathVariable("challengeId") long challengeId) throws IOException {
@@ -123,6 +183,33 @@ public class mainController {
 
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
         ImageIO.write(img, "jpg", new File("src/main/"+destinationPath) );
+        completedService.setPath(userId, challengeId, destinationPath);
+        return destinationPath;
+    }
+    /**
+     * Receive a PNG image illustrating a completion, save it and set path in hasCompleted entity
+     * @param imgData: the uploaded image as byte array. see https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
+     * @param userId: the id of hasCompleted entity received from a previous query
+     * @param challengeId: the id of hasCompleted entity received from a previous query
+     * @return the path to find the image
+     * @throws IOException
+     */
+    @RequestMapping(
+            value = "/api/uploadCompletedImage/png/{userId}-{challengeId}",
+            method = RequestMethod.POST,
+            produces = MediaType.IMAGE_PNG_VALUE
+    )
+    public @ResponseBody String uploadCompletedPNGImage(
+            @RequestBody byte[] imgData,
+            @PathVariable("userId") long userId,
+            @PathVariable("challengeId") long challengeId) throws IOException {
+        String destinationPath = "resources/completedImage/hasCompleted_user"
+                + Long.toString(userId)
+                + "_challenge"
+                + Long.toString(challengeId)+".png";
+
+        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgData));
+        ImageIO.write(img, "png", new File("src/main/"+destinationPath) );
         completedService.setPath(userId, challengeId, destinationPath);
         return destinationPath;
     }
@@ -277,7 +364,7 @@ public class mainController {
 
     /**
      * Returns a list with all the challenges that are in a category
-     * @param categoryId a category of challenges
+     * @param name a category of challenges
      * @return a list with all the challenge of a category
      */
     @RequestMapping(path = "/api/getChallengeByCategoryName/{name}", method = RequestMethod.GET)
