@@ -1,7 +1,6 @@
 package coronhackathon.backend.service;
 
 import coronhackathon.backend.entity.Challenge;
-import coronhackathon.backend.repository.CategoryRepository;
 import coronhackathon.backend.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,8 +14,6 @@ import java.util.Optional;
 public class ChallengeService {
     @Autowired
     private ChallengeRepository challengeRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
     @Autowired
     private CategoryService categoryService;
 
@@ -59,6 +56,6 @@ public class ChallengeService {
     public List<Challenge> getNineChallenges() {
         List<Challenge> all = getAllChallenges();
         Collections.shuffle(all);
-        return all.subList(0,Math.min(9,all.size()));
+        return all.subList(0, Math.min(9, all.size()));
     }
 }

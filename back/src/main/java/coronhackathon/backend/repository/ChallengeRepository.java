@@ -11,8 +11,12 @@ import java.util.Optional;
 
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     public Optional<Challenge> findById(long id);
+
     public Optional<Challenge> findByName(String name);
+
     public List<Challenge> findByCategoryId(long categoryId);
+
     public long count();
+
     public Long countByCategoryId(long categoryId);
 }

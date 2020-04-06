@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface CompletedRepository extends JpaRepository<HasCompleted, Long> {
     public List<HasCompleted> findByUser(User user);
+
     public List<HasCompleted> findByChallenge(Challenge challenge);
+
     public Optional<HasCompleted> findByUserAndChallenge(User user, Challenge challenge);
 }
