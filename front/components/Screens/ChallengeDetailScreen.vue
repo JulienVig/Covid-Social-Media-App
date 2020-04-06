@@ -14,7 +14,10 @@
 
       <text class="titre">{{titre}}</text>
 
+
       <text class="description">{{description}}</text> 
+
+
 
       <button :on-press="accessChallengeValidation"
         title="Valider ce challenge"
@@ -26,7 +29,7 @@
         <text>{{commentaire}}</text></view>
 
       </scroll-view>
-      
+
   </view>
 </template>
 
@@ -45,7 +48,7 @@
     position :relative;
     top : -160px;
     left : -170px;
-    
+
 
 }
 
@@ -76,7 +79,7 @@
 
 .description{
     color : #1d3060;
-    font-size:20;  
+    font-size:20;
     top : -150px;
     left : -20px;
 }
@@ -110,9 +113,11 @@ export default {
     }
   },
   methods: {
-    
+
+
     accessChallengeValidation : function(){
-        //=> lier à la page de validation
+        this.navigation.navigate("Validation", {challengeId:this.navigation.state.params.challengeId})
+
     },
 
     fetch : function() {
@@ -136,8 +141,10 @@ export default {
       const self = this;
        API({
         method: 'get',
+
         url: '/api/getCommentsOfChallenge/'+this.navigation.state.params.challengeId  
         }).then(function(response){   
+
           self.commentaires =response.data;
           self.getImageCategory();
         }).catch(function(error){
@@ -149,15 +156,15 @@ export default {
       const self = this;
        API({
         method: 'get',
+
         url: '/api/getCategory/'+self.categoryId 
         }).then(function(response){   
           self.imageCategory = response.data.logo;
+
         }).catch(function(error){
           console.log(error);
         })
     }
-
-    
   },
 
   mounted : function(){
