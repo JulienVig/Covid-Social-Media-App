@@ -245,7 +245,6 @@ export default {
   },
 
   methods: {
-
     fetch : function() {
       const self = this;
        API({

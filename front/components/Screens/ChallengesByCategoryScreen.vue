@@ -5,32 +5,29 @@ E<template>
       <text class="heading">Catégorie : </text>
       <text>{{categoryInfo.name}}</text>
       </view>
-      <!-- <touchable-opacity class = "corona-touchable" :on-press="() => goToCorona()">
-        <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
-      </touchable-opacity> -->
-    </view>
-    <scroll-view class = "myScrollView">
-      <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
-        <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
-          <view>
-          <text class = "challenge-title">{{challenge.title}}</text>
-          <text class = "challenge-desc">{{challenge.description}}</text>
+        </view>
+        <scroll-view class = "myScrollView">
+          <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
+            <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
+              <view>
+              <text class = "challenge-title">{{challenge.title}}</text>
+              <text class = "challenge-desc">{{challenge.description}}</text>
+              </view>
+              <view>
+              <image class = "challenge-icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>
+              </view>
+            </touchable-opacity>
           </view>
-          <view>
-          <image class = "challenge-icon" :source="require('../../assets/images/challengescreen/phone_black_192x192.png')"/>
-          </view>
-        </touchable-opacity>
+        </scroll-view>
       </view>
-    </scroll-view>
-  </view>
 </template>
-<style>
 
+<style>
 .topbar {
   height : 15%;
   justify-content: center;
   align-items: center;
-  background-color: #FFC107;
+  background-color: #b2ebcc;
   flex-direction: row;
   justify-content: space-around;
 }
@@ -52,7 +49,7 @@ E<template>
 .heading {
   font-size: 30px;
   font-weight: bold;
-  color: #212121;
+  color: #3d9d84;
 }
 
 .element-border {
@@ -156,22 +153,25 @@ export default {
       const self = this;
        API({
         method: 'get',
-        url: '/api/getChallengeByCategory/'+this.navigation.state.params.categoryId
+        url: '/api/getChallengeByCategory/'+self.navigation.state.params.categoryId
         }).then(function(response){
           //console.log(response)
           self.challenges = response.data
-          self.fetchCatInfo()
+        }).catch(function(error){
+          console.log(error);
         })
     },
 
     fetchCatInfo : function() {
+      const self = this;
       API({
         method: 'get',
-        url: '/api/getCategory/'+this.navigation.state.params.categoryId
+        url: '/api/getCategory/'+self.navigation.state.params.categoryId
         }).then(function(response){
           //console.log(response)
           self.categoryInfo = response.data
-          self.fetchCatInfo()
+        }).catch(function(error){
+          console.log(error);
         })
     },
 
@@ -185,6 +185,7 @@ export default {
   },
   mounted: function() {
     this.fetch();
+    this.fetchCatInfo();
   }
 };
 </script>

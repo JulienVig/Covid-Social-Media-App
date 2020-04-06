@@ -7,13 +7,13 @@
             <view class ="main">
                 <view class="categories">
                         <view class="category" v-for="category in categories" :key="category.id">
-                            <view class="single-element-container" :on-press="goToCategory(category.id)">
+                            <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
                                 <image
                                   :style="{width: 50, height: 50}"
                                   :source="{uri: 'http://192.168.1.17:8080/banana'}"
                                 />
                                 <text class="name">{{category.name}}</text>
-                            </view>
+                            </touchable-opacity>
                         </view>
                 </view>
             </view>
@@ -27,10 +27,6 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-}
-
-.title{
-    background-color: #888888;
 }
 
 .icon {
@@ -71,7 +67,7 @@
 
 .container {
     background-color: #b2ebcc;
-  width:100%;
+    width:100%;
 }
 
 .title{
@@ -127,8 +123,8 @@ export default {
     setLogos(){
 
     },
-    goToCategory(categoryId) {
-      this.navigation.navigate("ChallengesByCategory", {challengeId:categoryId})
+    goToCategory(catId) {
+      this.navigation.navigate("ChallengesByCategory", {categoryId:catId})
     },
 
   },
