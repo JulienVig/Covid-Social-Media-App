@@ -8,9 +8,9 @@
                 <text class= "heading">{{nbAchieved}} Défis relevés parmi {{nbAll}} défis disponibles!</text>
                 <view class="cat-container" v-for="(cat,index) in res" :key="index">
                     <text  v-if="cat.all!=0" class = "heading">{{cat.catName}} : {{cat.comp}} / {{cat.all}}</text>
-                    <view class="icon-container" v-for="challenge in cat.challenges">
+                    <view class="icon-container" v-for="challenge in cat.challenges" :key="challenge.id">
                             <image class = "badge" :source="require('../../assets/images/profilescreen/coeur_fonce.png')"/>
-                            <text class="desc"> Badge obetnue pour la réalisation du challenge : {{challenge.name}} : {{challenge.description}}</text>
+                            <text class="desc"> Badge obtenu pour la réalisation du challenge : {{challenge.name}} : {{challenge.description}}</text>
                     </view>
                 </view>
             </view>

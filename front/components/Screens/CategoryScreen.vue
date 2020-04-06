@@ -56,13 +56,13 @@
     justify-content: center;
     align-items: center;
     margin: 10px;
-    max-width: 100px;
-    width: 90%;
+    width: 80;
 }
 
 .name{
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .container {

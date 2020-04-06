@@ -13,11 +13,11 @@ E<template>
       <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
         <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
           <view>
-          <text class = "challenge-title">{{challenge.title}}</text>
+          <text class = "challenge-title">{{challenge.name}}</text>
           <text class = "challenge-desc">{{challenge.description}}</text>
           </view>
           <view>
-          <image class = "challenge-icon" :source="require('../../assets/images/challengescreen/phone_black_192x192.png')"/>
+          <image class = "challenge-icon" :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + challenge.imgPath}"/>
           </view>
         </touchable-opacity>
       </view>
@@ -28,11 +28,10 @@ E<template>
 
 .topbar {
   height : 15%;
-  justify-content: center;
+  padding: 15;
   align-items: center;
   background-color: #FFC107;
   flex-direction: row;
-  justify-content: space-around;
 }
 
 .container {
@@ -63,7 +62,7 @@ E<template>
 }
 
 .element-container {
-  width: 90%;
+  width: 85%;
   flex-direction: row;
 }
 
@@ -77,8 +76,8 @@ E<template>
 }
 
 .challenge-icon {
-  width: 40;
-  height: 40;
+  width: 60;
+  height: 60;
   border-radius: 25;
 }
 </style>
