@@ -1,6 +1,5 @@
 package coronhackathon.backend.service;
 
-import coronhackathon.backend.entity.Category;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
@@ -27,6 +26,7 @@ public class CompletedService {
     private CompletedRepository completedRepository;
     @Autowired
     private CategoryService categoryService;
+
 
 
     public List<Challenge> getCompletedChallenges(long userId) {
