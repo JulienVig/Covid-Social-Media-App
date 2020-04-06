@@ -128,7 +128,6 @@ export default {
         }).then(function(response){
             self.categories = response.data;
             // this.setLogos();
-            console.log(response)
             console.log('Fetched all categories')
 
 
