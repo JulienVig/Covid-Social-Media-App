@@ -6,6 +6,15 @@ Because of confinement, many people are bored at home. We offer a fun app to hel
 
 ## How to use
 
+* Install Vue Native and Expo (https://vue-native.io/docs/installation.html)
+* Install node.js (https://nodejs.org/en/download)
+* Run build.gradle (./back/build.gradle)
+* npm install (In the /front repository)
+* npm start
+* If you are on an iOS phone, scan the QR code
+  If you are on an android phone, scan the QR code with the app Expo
+* Put your IP address where it was hardcoded in the project (./front/api.js)
+  
 ## User guide
 The porting of the application to Android/iOS is in construction. 
 For the moment, here is an overview of the app : 
