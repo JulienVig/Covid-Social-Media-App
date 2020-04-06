@@ -6,19 +6,15 @@
             </view>
             <view class ="main">
                 <view class="categories">
-                    <!-- <scroll-view class = "scrollable"> -->
-                        <view class="category" v-for="(category, id) in categories" :key="id">
-                            <view class="single-element-container" :on-press="goToCategory(category.name)">
-                                <!--<image class = "icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>-->
+                        <view class="category" v-for="category in categories" :key="category.id">
+                            <view class="single-element-container" :on-press="goToCategory(category.id)">
                                 <image
                                   :style="{width: 50, height: 50}"
-                                  :source="{uri: 'http://192.168.1.19:8080/banana'}"
+                                  :source="{uri: 'http://192.168.1.17:8080/banana'}"
                                 />
                                 <text class="name">{{category.name}}</text>
-                                <!-- /api/image?unserpent -->
                             </view>
                         </view>
-                    <!-- </scroll-view> -->
                 </view>
             </view>
         </view>
@@ -28,9 +24,6 @@
 <style>
 
 .header{
-
-
-
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -76,11 +69,6 @@
     align-items: center;
 }
 
-.real-container {
-    /* align-items: center;
-    justify-content: center;
-    flex:1; */
-}
 .container {
     background-color: #b2ebcc;
   width:100%;
@@ -139,8 +127,8 @@ export default {
     setLogos(){
 
     },
-    goToCategory(name) {
-      // this.navigation.navigate("Challenges")
+    goToCategory(categoryId) {
+      this.navigation.navigate("ChallengesByCategory", {challengeId:categoryId})
     },
 
   },

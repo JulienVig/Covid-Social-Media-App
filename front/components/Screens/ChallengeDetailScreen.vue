@@ -5,7 +5,7 @@
 
       <image
         class='hexagone'
-        :source="{uri: 'http://192.168.1.17:8080/static/image?path=' + imageCategory}"
+        :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + imageCategory}"
       />
     <image
         class='licorne'
