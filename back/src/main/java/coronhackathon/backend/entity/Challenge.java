@@ -20,11 +20,11 @@ public class Challenge {
     @Column(nullable = false)
     private String description;
 
+
+    private String imgPath;
+
     @Column(nullable = false)
     private long categoryId;
-
-    /* ---- Relations ---- */
-
 
 
     /* ----Getters and Setters---- */
@@ -45,6 +45,10 @@ public class Challenge {
         return description;
     }
 
+    public String getImgPath() {
+        return imgPath;
+    }
+
     public void setId(long id) {
         Id = id;
     }
@@ -61,5 +65,7 @@ public class Challenge {
         this.description = description;
     }
 
-
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 }
