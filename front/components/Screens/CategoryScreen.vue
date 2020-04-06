@@ -6,7 +6,7 @@
             </view>
             <view class ="main">
                 <view class="categories">
-                        <view class="category" v-for="category in categories" :key="category.id">
+                        <view class="category" v-for="(category, index) in categories" :key="index">
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
                                 <image
                                   :style="{width: 50, height: 50}"

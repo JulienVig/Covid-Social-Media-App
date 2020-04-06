@@ -5,6 +5,9 @@
 </template>
 
 <style>
+  .link {
+    text-decoration-line: underline;
+  }
 </style>
 
 <script>
