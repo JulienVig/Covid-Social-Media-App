@@ -9,8 +9,13 @@
                     <!-- <scroll-view class = "scrollable"> -->
                         <view class="category" v-for="(category, id) in categories" :key="id">
                             <view class="single-element-container" :on-press="goToCategory(category.name)">
-                                <image class = "icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>
+                                <!--<image class = "icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>-->
+                                <image
+                                  :style="{width: 50, height: 50}"
+                                  :source="{uri: 'http://192.168.1.19:8080/banana'}"
+                                />
                                 <text class="name">{{category.name}}</text>
+                                <!-- /api/image?unserpent -->
                             </view>
                         </view>
                     <!-- </scroll-view> -->
@@ -23,7 +28,9 @@
 <style>
 
 .header{
-    background-color: #DDDDDD;
+
+
+
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -42,15 +49,15 @@
 .main {
     justify-content: center;
     align-items: center;
+
 }
 .categories{
-
     /* margin: 10px; */
-
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
     max-width: 90%;
+    height:100%;
 }
 .scrollable{
     background-color: #EEEEEE;
@@ -75,13 +82,14 @@
     flex:1; */
 }
 .container {
-  background-color: grey;
+    background-color: #b2ebcc;
   width:100%;
 }
 
 .title{
+    color: #3d9d84;
     font-size: 40;
-    font-weight: 100;
+    font-weight: 800;
     margin-bottom: 10;
 }
 
@@ -102,57 +110,17 @@ export default {
     return {
         categories: [
             {
-                name: "Jardinage de tulipe",
-                logo:"",
-                logoPath:"",
+                name: "Hardcodé 1",
             },
             {
-                name: "Dessin",
-                logo:"",
-                logoPath:"",
+                name: "Hardcodé 2",
             },
-            {
-                name: "Bricolage",
-                logo:"",
-                logoPath:"",
-            },
-            {
-                name: "Musique",
-                logo:"",
-                logoPath:"",
-            },
-            {
-                name: "Entraide",
-                logo:"",
-                logoPath:"",
-            },
-            {
-                name: "Nettoyage",
-                logo:"",
-                logoPath:"",
-            },
-            {
-                name: "Jardinage de tulipe",
-                logo:"",
-                logoPath:"",
-            },
-            {
-                name: "Dessin",
-                logo:"",
-                logoPath:"",
-            },
-            {
-                name: "Bricolage",
-                logo:"",
-                logoPath:"",
-            },
-
         ]
     }
   },
   methods: {
     fetch () {
-     console.log("Login !")
+     console.log("Fetch !")
         const self = this;
        API({
         method: 'get',
@@ -160,8 +128,9 @@ export default {
         }).then(function(response){
             self.categories = response.data;
             // this.setLogos();
-            console.log("==================       GET ALL CATEGORIES       ==================");
             console.log(response)
+            console.log('Fetched all categories')
+
 
         }).catch(function(error){
             console.log("==================      ERROR       ==================")
@@ -177,7 +146,7 @@ export default {
 
   },
   mounted: function() {
-      fetch();
+      this.fetch();
   }
 };
 </script>

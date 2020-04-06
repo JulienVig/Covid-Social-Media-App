@@ -260,7 +260,7 @@ export default {
         method: 'get',
         url: '/api/allChallenges'
         }).then(function(response){
-          console.log(response)
+          //console.log(response)
           self.challenges = response.data
         })
     },
