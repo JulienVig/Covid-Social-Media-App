@@ -10,7 +10,7 @@
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
                                 <image
                                   :style="{width: 50, height: 50}"
-                                  :source="{uri: 'http://192.168.1.17:8080/banana'}"
+                                  :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + category.logo}"
                                 />
                                 <text class="name">{{category.name}}</text>
                             </touchable-opacity>
@@ -114,10 +114,8 @@ export default {
             // this.setLogos();
             console.log('Fetched all categories')
 
-
         }).catch(function(error){
-            console.log("==================      ERROR       ==================")
-           console.log(error)
+            console.log(error)
         })
     },
     setLogos(){
