@@ -10,7 +10,7 @@
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
 
                                 <image class="icon"
-                                  :source="{uri: baseURL + '/static/image/jpg?path=' + category.logo}"
+                                  :source="{uri: baseURL + '/static/image/png?path=' + category.logo}"
                                 />
                                 <text class="name">{{category.name}}</text>
                             </touchable-opacity>
@@ -50,11 +50,11 @@
     height:90%;
 }
 .categories{
-    padding-top: 50px;
+    padding-top: 50;
     /* padding-bottom: 50px; */
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
     align-content: center;
     flex-wrap: wrap;
     max-width: 90%;
@@ -66,7 +66,7 @@
     margin: 10px;
     margin-bottom:70;
     width: 80;
-    
+    /* background-color: grey; */
 }
 
 .name{
@@ -119,7 +119,6 @@ export default {
         url: '/api/allCategories',
         }).then(function(response){
             self.categories = response.data;
-            console.log(response.data)
             console.log('Fetched all categories')
 
         }).catch(function(error){

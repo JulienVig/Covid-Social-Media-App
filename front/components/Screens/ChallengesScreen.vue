@@ -1,27 +1,14 @@
 E<template>
   <view class="container">
-    <view class ="topbar">
+    <view class ="header">
       <view>
-      <text class="heading">Défis</text>
-      <text>Bienvenue sur la liste des défis</text>
+      <text class="title">Listes des Défis</text>
       </view>
       <!-- <touchable-opacity class = "corona-touchable" :on-press="() => goToCorona()">
         <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
       </touchable-opacity> -->
     </view>
-    <scroll-view class = "myScrollView">
-      <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
-        <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
-          <view class="challenge-text">
-          <text class = "challenge-title">{{challenge.name}}</text>
-          <text class = "challenge-desc">{{challenge.description}}</text>
-          </view>
-          <view>
-          <image class = "challenge-icon" :source="{uri: baseURL + '/static/image/jpg?path=' + challenge.imgPath}"/>
-          </view>
-        </touchable-opacity>
-      </view>
-    </scroll-view>
+     <ChallengeList v-bind:challenges="challenges" v-bind:goToChallenge="goToChallenge"/>
   </view>
 </template>
 <style>
@@ -33,19 +20,24 @@ E<template>
   background-color: #FFC107;
   flex-direction: row;
 }
-
+.header {
+  height : 10%;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #b2ebcc; */
+  background-color: #3d9d84;
+  color:white;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.title {
+  font-size: 40px;
+  font-weight: 200;
+  color: white;
+}
 .container {
-  background-color: #ffecb3;
+  background-color: #b2ebcc;
   flex: 1;
-}
-
-.corona-icon {
-  width: 40;
-  height: 40;
-}
-
-.corona-touchable {
-  text-align: right;
 }
 
 .heading {
@@ -54,52 +46,21 @@ E<template>
   color: #212121;
 }
 
-.element-border {
-  border-bottom-width: 1;
-  border-color: gray;
-  width: 100%;
-  padding: 15;
-}
-
-.element-container {
-  width: 85%;
-  flex-direction: row;
-  justify-content: space-between;
-  width:100%;
-  
-}
-
-.challenge-text {
- width: 80%;
-}
-
-.challenge-title {
-  font-size: 20;
-  color: #9E9E9E;
-}
-
-.challenge-description {
-  font-size : 10;
-  
-}
-
-.challenge-icon {
-  width: 60;
-  height: 60;
-  border-radius: 25;
-}
 </style>
 
 <script>
 import {request, baseURL} from '../../api.js';
-import React from 'react';
-import {Text} from 'react-native';
+import ChallengeList from '../ChallengeList';
+
 export default {
   props: {
       navigation: {
         type: Object
       }
     },
+  components:{
+    ChallengeList:ChallengeList,
+  },
   data: function() {
     return {
       baseURL: baseURL,
