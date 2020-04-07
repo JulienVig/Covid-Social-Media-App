@@ -12,15 +12,17 @@
       </view>
 
       <view class="main">
-        <image class='image'
-          :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
-        />
-        <text class="description">{{description}}</text>
-        <button :on-press="accessChallengeValidation"
-          title="Valider ce challenge"
-          color="#841584"
-          accessibility-label="Accéder à la validation du défi"
-        />
+        <view class="image-container">
+          <image class='image'
+            :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
+          />
+        </view>
+        <view class="desc-container">
+          <text class="desc">{{description}}</text>
+        </view>
+        <touchable-opacity :on-press="accessChallengeValidation">
+        <text class="validation-btn">Valider ce challenge</text>
+        </touchable-opacity>
       </view>
 
       <view class="commentaires" v-for="(commentaire, index) in commentaires" :key="index">
@@ -39,6 +41,7 @@
   justify-content: center;
   flex: 1;
   width:100%;
+  height:100%;
 }
 
 .scroll {
@@ -51,11 +54,11 @@
   align-items: center;
   justify-content: space-between;
   width: 80%;
-  height:25%;
+  height:20%;
   min-height: 90;
   background-color: #3d9d84;
   border-bottom-right-radius: 15;
-  margin-bottom:20;
+  /* margin-bottom:30; */
 }
 
 .logo-container{
@@ -78,23 +81,58 @@
 }
 
 .main{
-  height:100%;
-  background-color: grey;
+  height:150%;
+  align-items: center;
+}
+
+.image-container{
+  width: 100%;
+  min-height: 30;
+  align-items: center;
+  margin-bottom:30;
+  margin-top:30;
 }
 .image{
-    width : 300;
-    height: 250;
+    width : 200;
+    height: 200;
+    border-width: 3;
+    border-color: white;
+    border-radius: 15;
 }
 
-
-.description{
+.desc-container{
+    width:100%;
+    border-top-width: 2; 
+    border-color:#3d9d84;
+    max-width: 80%;
+    justify-content: center;
+    align-items: center;
+    padding: 10;
+    padding-top:30;
+    margin-bottom:30;
+}
+.desc{
     color : #2c3c74;
     font-size:20;
+    /* text-align: center; */
+}
+
+.validation-btn{
+    font-size: 20;
+    color: white;
+    background-color:#3d9d84;
+    border-radius: 50;
+    padding-top: 10;
+    padding-bottom: 10;
+    padding-left: 20;
+    padding-right: 20;
 }
 
 .commentaires{
   color :#1d3060;
-  background-color: red;;
+  min-height: 100;
+  width:100%;
+  background-color: red;
 }
 
 </style>
