@@ -1,25 +1,27 @@
 <template>
   <view class="container">
 
-    <scroll-view>
+    <scroll-view class="scroll">
+      <view class="header">
+        <view class="logo-container">
+        <image class='logo'
+          :source="{uri: baseURL + '/static/image/jpg?path=resources/white_logo_entraide.png'}"
+        />
+        </view>
+        <text class="title">{{titre}}</text>
+      </view>
 
-      <image
-        class='hexagone'
-        :source="{uri: baseURL + '/static/image/jpg?path=' + imageCategory}"
-      />
-      <image
-        class='licorne'
-        :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
-      />
-
-      <text class="titre">{{titre}}</text>
-      <text class="description">{{description}}</text>
-
-      <button :on-press="accessChallengeValidation"
-        title="Valider ce challenge"
-        color="#841584"
-        accessibility-label="Accéder à la validation du défi"
-      />
+      <view class="main">
+        <image class='image'
+          :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
+        />
+        <text class="description">{{description}}</text>
+        <button :on-press="accessChallengeValidation"
+          title="Valider ce challenge"
+          color="#841584"
+          accessibility-label="Accéder à la validation du défi"
+        />
+      </view>
 
       <view class="commentaires" v-for="(commentaire, index) in commentaires" :key="index">
         <text>{{commentaire}}</text>
@@ -32,33 +34,67 @@
 
 <style>
 .container {
-  background-color: #65D498;
+  background-color: #b2ebcc;
   align-items: center;
   justify-content: center;
   flex: 1;
+  width:100%;
 }
 
-.hexagone{
-    transform: rotate(30deg);
+.scroll {
+  width:100%;
+  height:100%;
+}
+
+.header{
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  height:25%;
+  min-height: 90;
+  background-color: #3d9d84;
+  border-bottom-right-radius: 15;
+  margin-bottom:20;
+}
+
+.logo-container{
+  width:30%;
+  align-items: center;
+}
+
+.logo{
+    /* transform: rotate(30deg); */
     width : 80;
     height : 80;
 }
-.licorne{
-    width : 250;
-    height : 150;
-}
-.titre{
-    color : #1d3060;
-    font-size:25;
+
+.title{
+    color : white ; /*#1d3060*/
+    font-size:30;
+    font-weight: 200;
+    width: 70%;
+    text-align: center;
 }
 
+.main{
+  height:100%;
+  background-color: grey;
+}
+.image{
+    width : 300;
+    height: 250;
+}
+
+
 .description{
-    color : #1d3060;
+    color : #2c3c74;
     font-size:20;
 }
 
 .commentaires{
   color :#1d3060;
+  background-color: red;;
 }
 
 </style>
@@ -98,7 +134,6 @@ export default {
         method: 'get',
         url: '/api/getChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
-          console.log(response.data);
           self.titre = response.data.name;
           self.description = response.data.description;
           self.categoryId =response.data.categoryId;
@@ -116,6 +151,7 @@ export default {
         url: '/api/getCommentsOfChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
           self.commentaires =response.data;
+          console.log(response.data)
           self.getImageCategory();
         }).catch(function(error){
           console.log(error);
