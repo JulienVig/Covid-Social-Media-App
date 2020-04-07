@@ -1,9 +1,9 @@
 E<template>
   <view class="container">
     <view class ="topbar">
-      <view>
-      <text class="heading">Catégorie : </text>
-      <text>{{categoryInfo.name}}</text>
+      <view class>
+      <!-- <text class="heading">Catégorie : </text> -->
+      <text class="heading">{{categoryInfo.name}}</text>
       </view>
         </view>
         <scroll-view class = "myScrollView">

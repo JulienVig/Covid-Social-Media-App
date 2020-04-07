@@ -5,11 +5,11 @@
 
       <image
         class='hexagone'
-        :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + imageCategory}"
+        :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + imageCategory}"
       />
     <image
         class='licorne'
-        :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + imageChallenge}"
+        :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + imageChallenge}"
       />
 
       <text class="titre">{{titre}}</text>

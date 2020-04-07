@@ -12,12 +12,12 @@ E<template>
     <scroll-view class = "myScrollView">
       <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
         <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
-          <view>
+          <view class="challenge-text">
           <text class = "challenge-title">{{challenge.name}}</text>
           <text class = "challenge-desc">{{challenge.description}}</text>
           </view>
           <view>
-          <image class = "challenge-icon" :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + challenge.imgPath}"/>
+          <image class = "challenge-icon" :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + challenge.imgPath}"/>
           </view>
         </touchable-opacity>
       </view>
@@ -64,6 +64,13 @@ E<template>
 .element-container {
   width: 85%;
   flex-direction: row;
+  justify-content: space-between;
+  width:100%;
+  
+}
+
+.challenge-text {
+ width: 80%;
 }
 
 .challenge-title {
@@ -73,6 +80,7 @@ E<template>
 
 .challenge-description {
   font-size : 10;
+  
 }
 
 .challenge-icon {

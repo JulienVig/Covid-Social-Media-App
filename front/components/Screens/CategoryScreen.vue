@@ -10,7 +10,7 @@
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
                                 <image
                                   :style="{width: 50, height: 50}"
-                                  :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + category.logo}"
+                                  :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + category.logo}"
                                 />
                                 <text class="name">{{category.name}}</text>
                             </touchable-opacity>
@@ -25,36 +25,45 @@
 
 .header{
     width: 100%;
+    height: 10%;
     justify-content: center;
     align-items: center;
+    /* margin-bottom: 50; */
+    background-color: #3d9d84;
+}
+
+.title{
+    color: white;
+    font-size: 40;
+    font-weight: 300;
+    /* margin-left: 50; */
 }
 
 .icon {
-  height:80;
-  width:80;
+  height:100;
+  width:100;
   /* border-radius: 50%; */
 }
 
 .main {
     justify-content: center;
     align-items: center;
-
+    height:90%;
 }
 .categories{
-    /* margin: 10px; */
+    padding-top: 50px;
+    padding-bottom: 50px;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+    align-content: center;
     flex-wrap: wrap;
     max-width: 90%;
-    height:100%;
-}
-.scrollable{
-    background-color: #EEEEEE;
-    flex-direction: row;
+    height:80%;
+    background-color: grey;
 }
 .single-element-container{
     justify-content: center;
-    align-items: center;
     margin: 10px;
     width: 80;
 }
@@ -63,6 +72,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-weight:200;
+    color:#2c3c74;
 }
 
 .container {
@@ -70,12 +81,7 @@
     width:100%;
 }
 
-.title{
-    color: #3d9d84;
-    font-size: 40;
-    font-weight: 800;
-    margin-bottom: 10;
-}
+
 
 </style>
 
