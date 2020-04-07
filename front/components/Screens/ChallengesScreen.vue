@@ -65,6 +65,7 @@ E<template>
   width: 85%;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width:100%;
   
 }
@@ -76,6 +77,7 @@ E<template>
 .challenge-title {
   font-size: 20;
   color: #9E9E9E;
+  padding-bottom:10;
 }
 
 .challenge-description {

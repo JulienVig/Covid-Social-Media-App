@@ -1,30 +1,34 @@
 <template>
   <view class="container">
     <view class ="header">
-      <view class>
       <!-- <text class="heading">Catégorie : </text> -->
-      <text class="heading">{{categoryInfo.name}}</text>
-      </view>
-        </view>
-        <scroll-view class = "myScrollView">
+      <text class="title">{{categoryInfo.name}}</text>
+    </view>
+    <scroll-view class = "myScrollView">
           <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
             <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
-              <view>
-              <text class = "challenge-title">{{challenge.title}}</text>
+              <view class ="challenge-text">
+              <text class = "challenge-title">{{challenge.name}}</text> 
               <text class = "challenge-desc">{{challenge.description}}</text>
               </view>
               <view>
-              <image class = "challenge-icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>
+              <image class = "challenge-icon" :source="{uri: baseURL + '/static/image/jpg?path=' + challenge.imgPath}"/>
               </view>
             </touchable-opacity>
           </view>
-        </scroll-view>
+    </scroll-view>
       </view>
 </template>
 
 <style>
+.container {
+    background-color: #b2ebcc;
+    width:100%;
+    flex:1;
+}
+
 .header {
-  height : 15%;
+  height : 10%;
   justify-content: center;
   align-items: center;
   /* background-color: #b2ebcc; */
@@ -34,24 +38,10 @@
   justify-content: space-around;
 }
 
-.container {
-  background-color: #ffecb3;
-  flex: 1;
-}
-
-.corona-icon {
-  width: 40;
-  height: 40;
-}
-
-.corona-touchable {
-  text-align: right;
-}
-
-.heading {
-  font-size: 30px;
-  font-weight: bold;
-  color: #3d9d84;
+.title {
+  font-size: 40px;
+  font-weight: 200;
+  color: white;
 }
 
 .element-border {
@@ -62,13 +52,21 @@
 }
 
 .element-container {
-  width: 90%;
+  width: 100%;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.challenge-text{
+  /* background-color: grey; */
+  width:80%;
+  
+}
 .challenge-title {
   font-size: 20;
-  color: #9E9E9E;
+  color: #3d9d84;
+  padding-bottom:10;
 }
 
 .challenge-description {
@@ -76,14 +74,14 @@
 }
 
 .challenge-icon {
-  width: 40;
-  height: 40;
+  width: 60;
+  height: 60;
   border-radius: 25;
 }
 </style>
 
 <script>
-import {request} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import React from 'react';
 import {Text} from 'react-native';
 export default {
@@ -94,6 +92,7 @@ export default {
     },
   data: function() {
     return {
+      baseURL: baseURL,
         categoryInfo: {
           name:'',
         },
