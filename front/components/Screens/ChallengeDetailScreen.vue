@@ -20,16 +20,49 @@
         <view class="desc-container">
           <text class="desc">{{description}}</text>
         </view>
-        <touchable-opacity :on-press="accessChallengeValidation">
+        <touchable-opacity class="container-btn" :on-press="accessChallengeValidation">
         <text class="validation-btn">Valider ce challenge</text>
         </touchable-opacity>
+        
+      </view>
+      <view class="sep-container">
+        <view class="sep"></view>
+      </view>
+      <view class="comment-title-container">
+        <text class="comment-title">Commentaires des autres utilisateurs:</text>
       </view>
 
-      <view class="commentaires" v-for="(commentaire, index) in commentaires" :key="index">
-        <text>{{commentaire}}</text>
+      <view class="comments-container">
+        <view class="comments" v-for="(commentaire, index) in commentaires" :key="index">
+          <view class="comment-container">
+            <text class="comment">{{commentaire}}</text>
+          </view>
+          <view class="comment-container">
+            <text class="comment">Vous savez, moi je ne crois pas qu'il y ait de bonnes 
+              ou de mauvaises situations. Moi si je devais résumer ma vie, aujourd'hui, 
+              avec vous, je dirais que c'est d'abord des rencontres, des gens qui m'ont 
+              tendu la main, peut-être à un moment où je ne pouvais pas, où j'étais seul 
+              chez moi, et c'est assez curieux de se dire que les hasards, les rencontres 
+              forgent une destinée, parce que quand on a le goût de la chose, quand on a 
+              le goût de la chose bien faite, le beau geste, parfois on ne trouve pas 
+              l'interlocuteur en face, je dirais le miroir qui vous aide à avancer ; alors 
+              ce n'est pas mon cas comme je le disais là, puisque moi au contraire j'ai pu 
+              et je dis merci à la vie, je lui dis merci, je chante la vie, je danse la vie, 
+              je ne suis qu'amour, et finalement quand beaucoup de gens aujourd'hui me disent : 
+              Mais comment fais-tu pour avoir cette humanité ? Et bah je leur réponds très 
+              simplement, je leur dis : c'est ce goût de l'amour, ce goût donc qui m'a 
+              poussé, aujourd'hui, à entreprendre une construction mécanique mais demain, 
+              qui sait, peut-être, simplement à me mettre au service de la communauté, à 
+              faire le don, le don de soi...
+            </text>
+          </view>
+          <view class="comment-container">
+            <text class="comment">Sa va?</text>
+          </view>
+        </view>
       </view>
     </scroll-view>
-
+    <view class="footer"></view>
   </view>
 </template>
 
@@ -39,14 +72,14 @@
   background-color: #b2ebcc;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  /* flex: 1; */
   width:100%;
   height:100%;
 }
 
 .scroll {
   width:100%;
-  height:100%;
+  
 }
 
 .header{
@@ -54,8 +87,7 @@
   align-items: center;
   justify-content: space-between;
   width: 80%;
-  height:20%;
-  min-height: 90;
+  height:90;
   background-color: #3d9d84;
   border-bottom-right-radius: 15;
   /* margin-bottom:30; */
@@ -81,8 +113,8 @@
 }
 
 .main{
-  height:150%;
   align-items: center;
+  /* background-color: gray; */
 }
 
 .image-container{
@@ -101,7 +133,6 @@
 }
 
 .desc-container{
-    width:100%;
     border-top-width: 2; 
     border-color:#3d9d84;
     max-width: 80%;
@@ -117,22 +148,74 @@
     /* text-align: center; */
 }
 
+.container-btn {
+  border-radius: 25;
+  background-color:#3d9d84;
+  margin-bottom:30;
+}
 .validation-btn{
     font-size: 20;
     color: white;
-    background-color:#3d9d84;
-    border-radius: 50;
     padding-top: 10;
     padding-bottom: 10;
     padding-left: 20;
     padding-right: 20;
+    
 }
 
-.commentaires{
-  color :#1d3060;
-  min-height: 100;
+.sep-container{
   width:100%;
-  background-color: red;
+  align-items: center;
+  padding: 10;
+  padding-bottom: 30;
+}
+
+.sep{
+ width:80%;
+ border-top-width: 2;
+ border-color:#3d9d84;
+}
+
+.comment-title-container{
+  width:100%;
+  padding:10;
+  align-items: center;
+}
+
+.comment-title{
+  font-size:25;
+  color : #2c3c74;
+  width:80%;
+}
+
+.comments-container{
+  width:100%;
+  align-items: center;
+}
+.comments{
+  width:90%;
+  padding-bottom:100;
+  align-items: center;
+}
+
+.comment-container{
+  border-bottom-width: 1;
+  border-color:#3d9d84;
+  width:100%;
+  padding:20;
+  
+}
+
+.comment{
+  color :#1d3060;
+  font-size: 20;
+
+}
+
+.footer{
+  background-color:white;
+  height:10%;
+  width:100%;
 }
 
 </style>
