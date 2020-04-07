@@ -23,27 +23,25 @@
 }
 
 .element-container {
-  width: 85%;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width:100%;
+}
+
+.challenge-text{
+  /* background-color: grey; */
+  width:80%;
   
 }
-
-.challenge-text {
- width: 80%;
-}
-
 .challenge-title {
   font-size: 20;
-  color: #9E9E9E;
+  color: #3d9d84;
   padding-bottom:10;
 }
 
 .challenge-description {
   font-size : 10;
-  
 }
 
 .challenge-icon {
@@ -54,14 +52,24 @@
 </style>
 
 <script>
-import {baseURL} from '../../api.js';
+import {baseURL} from '../api.js';
 
 export default {
-    props: ['challenges', "goToChallenge"],
-    // methods: {
-    //     goToChallenge : function(challenge) {
-    //         this.navigation.navigate("ChallengeDetail", {challengeId:challenge.id})
-    //     },
-    // }
+    props: {
+        challenges: Array,
+        goToChallenge: Function,
+    },
+    data: function() {
+        return {
+            baseURL: baseURL,
+        }
+    },
+    methods: {
+        // goToChallenge : this.goToChallenge
+    },
+    mounted: function (){
+        console.log(this.challenges)
+    }
 }
+
 </script>

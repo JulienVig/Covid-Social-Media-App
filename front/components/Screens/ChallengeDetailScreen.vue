@@ -7,26 +7,24 @@
         class='hexagone'
         :source="{uri: baseURL + '/static/image/jpg?path=' + imageCategory}"
       />
-    <image
+      <image
         class='licorne'
         :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
       />
 
       <text class="titre">{{titre}}</text>
-
       <text class="description">{{description}}</text>
 
       <button :on-press="accessChallengeValidation"
         title="Valider ce challenge"
         color="#841584"
-
-        accessibility-label="Accéder à la validation du défi"/>
+        accessibility-label="Accéder à la validation du défi"
+      />
 
       <view class="commentaires" v-for="(commentaire, index) in commentaires" :key="index">
         <text>{{commentaire}}</text>
       </view>
-
-      </scroll-view>
+    </scroll-view>
 
   </view>
 </template>
@@ -139,11 +137,9 @@ export default {
 
 
   },
-
   mounted : function(){
       this.fetch();
   }
-
 };
 
 </script>
