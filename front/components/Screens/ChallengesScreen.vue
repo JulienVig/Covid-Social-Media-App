@@ -83,7 +83,7 @@ E<template>
 </style>
 
 <script>
-import {API} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import React from 'react';
 import {Text} from 'react-native';
 export default {
@@ -246,7 +246,7 @@ export default {
   methods: {
     fetch : function() {
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/allChallenges'
         }).then(function(response){

@@ -67,7 +67,7 @@
 
 
 <script>
-import {API} from '../../api.js';
+import {request} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
 
@@ -95,7 +95,7 @@ export default {
 
     fetch : function() {
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
@@ -112,7 +112,7 @@ export default {
 
     getComments : function(){
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getCommentsOfChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
@@ -125,7 +125,7 @@ export default {
 
     getImageCategory : function(){
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getCategory/'+self.categoryId
         }).then(function(response){
