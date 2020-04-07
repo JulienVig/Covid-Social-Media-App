@@ -53,7 +53,6 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  width: ;
 }
 .title {
   color: white;
@@ -126,4 +125,3 @@ export default {
 
 }
 </script>
-
