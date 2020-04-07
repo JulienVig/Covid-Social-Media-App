@@ -5,11 +5,11 @@
 
       <image
         class='hexagone'
-        :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + imageCategory}"
+        :source="{uri: baseURL + '/static/image/jpg?path=' + imageCategory}"
       />
     <image
         class='licorne'
-        :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + imageChallenge}"
+        :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
       />
 
       <text class="titre">{{titre}}</text>
@@ -67,7 +67,7 @@
 
 
 <script>
-import {request} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
 
@@ -84,7 +84,8 @@ export default {
         categoryId:'',
         imageCategory:'',
         imageChallenge:'',
-        commentaires:[]
+        commentaires:[],
+        baseURL:baseURL,
     }
   },
   methods: {
