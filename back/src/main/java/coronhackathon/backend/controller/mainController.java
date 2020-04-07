@@ -497,7 +497,7 @@ public class mainController {
      * @param path : should start with 'resources/'
      * @return the image data as byte array
      * @throws IOException
-     * @use ip:8080/api/image/png?<path> where <path> was received from a previous query
+     * @use ip:8080/static/image/png?<path> where <path> was received from a previous query
      */
     @GetMapping(
             value = "/static/image/png",

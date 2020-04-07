@@ -1,97 +1,55 @@
-E<template>
+<template>
   <view class="container">
-    <view class ="topbar">
-      <view>
-      <text class="heading">Catégorie : </text>
-      <text>{{categoryInfo.name}}</text>
-      </view>
-        </view>
-        <scroll-view class = "myScrollView">
-          <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
-            <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
-              <view>
-              <text class = "challenge-title">{{challenge.title}}</text>
-              <text class = "challenge-desc">{{challenge.description}}</text>
-              </view>
-              <view>
-              <image class = "challenge-icon" :source="require('../../assets/images/defiscreen/licorne.png')"/>
-              </view>
-            </touchable-opacity>
-          </view>
-        </scroll-view>
+    <view class ="header">
+      <!-- <text class="heading">Catégorie : </text> -->
+      <text class="title">{{categoryInfo.name}}</text>
+    </view>
+    <ChallengeList v-bind:challenges="challenges" v-bind:goToChallenge="goToChallenge"/>
       </view>
 </template>
 
 <style>
-.topbar {
-  height : 15%;
+.container {
+    background-color: #b2ebcc;
+    width:100%;
+    flex:1;
+}
+
+.header {
+  height : 10%;
   justify-content: center;
   align-items: center;
-  background-color: #b2ebcc;
+  /* background-color: #b2ebcc; */
+  background-color: #3d9d84;
+  color:white;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.container {
-  background-color: #ffecb3;
-  flex: 1;
-}
-
-.corona-icon {
-  width: 40;
-  height: 40;
-}
-
-.corona-touchable {
-  text-align: right;
-}
-
-.heading {
-  font-size: 30px;
-  font-weight: bold;
-  color: #3d9d84;
-}
-
-.element-border {
-  border-bottom-width: 1;
-  border-color: gray;
-  width: 100%;
-  padding: 15;
-}
-
-.element-container {
-  width: 90%;
-  flex-direction: row;
-}
-
-.challenge-title {
-  font-size: 20;
-  color: #9E9E9E;
-}
-
-.challenge-description {
-  font-size : 10;
-}
-
-.challenge-icon {
-  width: 40;
-  height: 40;
-  border-radius: 25;
+.title {
+  font-size: 40px;
+  font-weight: 200;
+  color: white;
 }
 </style>
 
 <script>
-import {API} from '../../api.js';
-import React from 'react';
-import {Text} from 'react-native';
+import ChallengeList from '../ChallengeList';
+
+import {request, baseURL} from '../../api.js';
 export default {
   props: {
       navigation: {
         type: Object
       }
     },
+  components: {
+    ChallengeList: ChallengeList,
+  },
+    
   data: function() {
     return {
+      baseURL: baseURL,
         categoryInfo: {
           name:'',
         },
@@ -114,36 +72,6 @@ export default {
             description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
             image : ''
           },
-          {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
-          {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
         ]
     }
   },
@@ -151,7 +79,7 @@ export default {
   methods: {
     fetch : function() {
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getChallengeByCategory/'+self.navigation.state.params.categoryId
         }).then(function(response){
@@ -164,7 +92,7 @@ export default {
 
     fetchCatInfo : function() {
       const self = this;
-      API({
+      request({
         method: 'get',
         url: '/api/getCategory/'+self.navigation.state.params.categoryId
         }).then(function(response){
