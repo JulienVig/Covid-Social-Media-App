@@ -1,4 +1,4 @@
-E<template>
+<template>
   <view class="container">
     <view class ="topbar">
       <view>
@@ -81,7 +81,7 @@ E<template>
 </style>
 
 <script>
-import {API} from '../../api.js';
+import {request} from '../../api.js';
 import React from 'react';
 import {Text} from 'react-native';
 export default {
@@ -151,7 +151,7 @@ export default {
   methods: {
     fetch : function() {
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getChallengeByCategory/'+self.navigation.state.params.categoryId
         }).then(function(response){
@@ -164,7 +164,7 @@ export default {
 
     fetchCatInfo : function() {
       const self = this;
-      API({
+      request({
         method: 'get',
         url: '/api/getCategory/'+self.navigation.state.params.categoryId
         }).then(function(response){

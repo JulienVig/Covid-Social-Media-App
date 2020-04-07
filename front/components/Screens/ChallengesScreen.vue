@@ -17,7 +17,7 @@ E<template>
           <text class = "challenge-desc">{{challenge.description}}</text>
           </view>
           <view>
-          <image class = "challenge-icon" :source="{uri: 'http://192.168.1.17:8080/static/image/jpg?path=' + challenge.imgPath}"/>
+          <image class = "challenge-icon" :source="{uri: baseURL + '/static/image/jpg?path=' + challenge.imgPath}"/>
           </view>
         </touchable-opacity>
       </view>
@@ -83,7 +83,7 @@ E<template>
 </style>
 
 <script>
-import {API} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import React from 'react';
 import {Text} from 'react-native';
 export default {
@@ -94,159 +94,34 @@ export default {
     },
   data: function() {
     return {
-        challenges: [
-           {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
+      baseURL: baseURL,
+      challenges: [
           {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
+          id: 1,
+          title : 'Prendre des nouvelles de ses voisins',
+          description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
+          image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
+        },
           {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
+          id: 2,
+          title : 'Faire une mousse au chocolat',
+          description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
+          image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
+        },
           {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
-          {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
-          {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
-          {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
-          {
-            id: 1,
-            title : 'Prendre des nouvelles de ses voisins',
-            description : "En ce moment, certains n'ont pas la chance d'avoir des proches près d'eux ...",
-            image : 'https://www.materialui.co/materialIcons/communication/phone_black_192x192.png'
-          },
-           {
-            id: 2,
-            title : 'Faire une mousse au chocolat',
-            description : "Des oeufs, une tablette de chocolat dessert? Pourquoi ne pas essayer de reproduire chez vous ...",
-            image : 'https://icons-for-free.com/iconfiles/png/512/cake+48px-131987943060752100.png'
-          },
-           {
-            id: 3,
-            title : 'Un troisième challenge',
-            description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
-            image : ''
-          },
-        ]
+          id: 3,
+          title : 'Un troisième challenge',
+          description : "Lorem ipsum je n'ai pas d'idée, de toute façons personne ne lira cette description. PERSONNE LIS TES PAVEEEES",
+          image : ''
+        },
+      ]
     }
   },
 
   methods: {
     fetch : function() {
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/allChallenges'
         }).then(function(response){
