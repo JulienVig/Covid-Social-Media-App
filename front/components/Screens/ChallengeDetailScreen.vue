@@ -5,11 +5,11 @@
 
       <image
         class='hexagone'
-        :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + imageCategory}"
+        :source="{uri: baseURL + '/static/image/jpg?path=' + imageCategory}"
       />
     <image
         class='licorne'
-        :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + imageChallenge}"
+        :source="{uri: baseURL + '/static/image/jpg?path=' + imageChallenge}"
       />
 
       <text class="titre">{{titre}}</text>
@@ -67,7 +67,7 @@
 
 
 <script>
-import {API} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
 
@@ -84,7 +84,8 @@ export default {
         categoryId:'',
         imageCategory:'',
         imageChallenge:'',
-        commentaires:[]
+        commentaires:[],
+        baseURL:baseURL,
     }
   },
   methods: {
@@ -95,7 +96,7 @@ export default {
 
     fetch : function() {
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
@@ -112,7 +113,7 @@ export default {
 
     getComments : function(){
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getCommentsOfChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
@@ -125,7 +126,7 @@ export default {
 
     getImageCategory : function(){
       const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/getCategory/'+self.categoryId
         }).then(function(response){

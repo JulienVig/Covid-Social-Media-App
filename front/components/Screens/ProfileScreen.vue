@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {API} from '../../api.js';
+import {request} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
     export default {
@@ -46,12 +46,12 @@ import axios from "axios";
             fetch : function(){
                 const self = this
                 // console.log("fetching the data")
-                API({
+                request({
                     method: 'GET',
                     url: '/api/userProfile'
                 }).then(function(ansName){
                     self.username = ansName.data.username
-                    API({
+                    request({
                         method: 'GET',
                         url: '/api/allCategories'
                     }).then(function(categories){
@@ -69,13 +69,13 @@ import axios from "axios";
 
             getCatInfo: function(index){
                 const self = this
-                API({
+                request({
                     method: 'GET',
                     url: "/api/getChallengeByCategoryName/"+self.cats[index].name
                 }).then(function(allChallengeName){
                     const allChallofCat = allChallengeName.data.length
                     self.nbAll += allChallofCat
-                    API({
+                    request({
                         method: 'GET',
                         url: "/api/getMyCompletedByCat/"+self.cats[index].id
                     }).then(function(completed){

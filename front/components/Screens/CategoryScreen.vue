@@ -8,8 +8,9 @@
                 <view class="categories">
                         <view class="category" v-for="(category, index) in categories" :key="index">
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
+
                                 <image class="icon"
-                                  :source="{uri: 'http://192.168.43.78:8080/static/image/jpg?path=' + category.logo}"
+                                  :source="{uri: baseURL + '/static/image/jpg?path=' + category.logo}"
                                 />
                                 <text class="name">{{category.name}}</text>
                             </touchable-opacity>
@@ -86,7 +87,7 @@
 </style>
 
 <script>
-import {API} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
 
@@ -98,6 +99,7 @@ export default {
     },
   data: function() {
     return {
+        baseURL:baseURL,
         categories: [
             {
                 name: "Hardcodé 1",
@@ -112,7 +114,7 @@ export default {
     fetch () {
      console.log("Fetch !")
         const self = this;
-       API({
+       request({
         method: 'get',
         url: '/api/allCategories',
         }).then(function(response){
