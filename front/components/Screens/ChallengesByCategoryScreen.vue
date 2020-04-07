@@ -1,6 +1,6 @@
 E<template>
   <view class="container">
-    <view class ="topbar">
+    <view class ="header">
       <view class>
       <!-- <text class="heading">Catégorie : </text> -->
       <text class="heading">{{categoryInfo.name}}</text>
@@ -23,11 +23,13 @@ E<template>
 </template>
 
 <style>
-.topbar {
+.header {
   height : 15%;
   justify-content: center;
   align-items: center;
-  background-color: #b2ebcc;
+  /* background-color: #b2ebcc; */
+      background-color: #3d9d84;
+  color:white;
   flex-direction: row;
   justify-content: space-around;
 }
