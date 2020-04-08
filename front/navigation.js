@@ -85,18 +85,18 @@ const Tabs = createBottomTabNavigator(
     },
     {
         tabBarOptions: {
-        activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
-        inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
-        showLabel: false, // On masque les titres
-        showIcon: true,
+            activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
+            inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
+            showLabel: false, // On masque les titres
+            showIcon: true,
         }
     }
 );
 
 const StackNavigator = createStackNavigator(
     {
-      Home: LoginScreen,
-      Tabs
+        Home: LoginScreen,
+        Tabs
     },
     {
         headerMode: 'none'

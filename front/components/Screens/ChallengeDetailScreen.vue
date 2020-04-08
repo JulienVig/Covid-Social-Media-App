@@ -62,7 +62,6 @@
         </view>
       </view>
     </scroll-view>
-    <view class="footer"></view>
   </view>
 </template>
 
@@ -210,12 +209,6 @@
   color :#1d3060;
   font-size: 20;
 
-}
-
-.footer{
-  background-color:white;
-  height:10%;
-  width:100%;
 }
 
 </style>
