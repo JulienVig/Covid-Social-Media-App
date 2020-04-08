@@ -13,13 +13,6 @@ E<template>
 </template>
 <style>
 
-.topbar {
-  height : 15%;
-  padding: 15;
-  align-items: center;
-  background-color: #FFC107;
-  flex-direction: row;
-}
 .header {
   height : 10%;
   justify-content: center;

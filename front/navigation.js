@@ -13,6 +13,23 @@ import CategoryScreen from "./components/Screens/CategoryScreen";
 import ValidationChallengeScreen from "./components/Screens/ValidationChallengeScreen";
 import ChallengesByCategoryScreen from "./components/Screens/ChallengesByCategoryScreen";
 
+const CategoryTab = createStackNavigator(
+    {
+        Category: CategoryScreen,
+        ChallengesByCategory : ChallengesByCategoryScreen,
+        ChallengeDetail : ChallengeDetailScreen,
+        Validation : ValidationChallengeScreen,
+    },
+)
+
+const ChallengesTab = createStackNavigator(
+    {
+        ChallengesScreen: ChallengesScreen,
+        ChallengeDetail : ChallengeDetailScreen,
+        Validation : ValidationChallengeScreen,
+    },
+)
+
 const Tabs = createBottomTabNavigator(
     {
         Covid19 : {
@@ -26,7 +43,7 @@ const Tabs = createBottomTabNavigator(
             }
         },
         Categories: {
-            screen : CategoryScreen,
+            screen : CategoryTab,
             navigationOptions: {
                 tabBarIcon: () => {
                 return <Image
@@ -36,7 +53,7 @@ const Tabs = createBottomTabNavigator(
             }
         },
         Défis: {
-            screen : ChallengesScreen,
+            screen : ChallengesTab,
             navigationOptions: {
                 tabBarIcon: () => {
                 return <Image
@@ -66,24 +83,23 @@ const Tabs = createBottomTabNavigator(
             }
         }
     },
-  
-  {
-    tabBarOptions: {
-      activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
-      inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
-      showLabel: false, // On masque les titres
-      showIcon: true,
+    {
+        tabBarOptions: {
+        activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
+        inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
+        showLabel: false, // On masque les titres
+        showIcon: true,
+        }
     }
-  }
 );
 
 const StackNavigator = createStackNavigator(
     {
       Home: LoginScreen,
-      ChallengeDetail : ChallengeDetailScreen,
-      Validation: ValidationChallengeScreen,
-      ChallengesByCategory: ChallengesByCategoryScreen,
       Tabs
+    },
+    {
+        headerMode: 'none'
     }
   );
 
