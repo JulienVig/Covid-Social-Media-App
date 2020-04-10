@@ -1,11 +1,11 @@
 import axios from "axios";
 
- export const API = axios.create({
-  baseURL: 'http://192.168.1.17:8080', //Set your IPV4 here
+ export const request = axios.create({
+  baseURL: 'http://192.168.1.15:8080', //Set your IPV4 here
   withCredentials: true,
 })
 
-API.interceptors.response.use(function (response) {
+request.interceptors.response.use(function (response) {
     return response
   }, function (error) {
     if(!error.response){
@@ -19,4 +19,4 @@ API.interceptors.response.use(function (response) {
     return Promise.reject(error)
   })
 
-  export default API
+  export default request

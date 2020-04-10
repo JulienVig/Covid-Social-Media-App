@@ -2,12 +2,12 @@
     <view class="real-container">
       <view class ="container">
         <text class="title">CONSVID la TÊTE</text>
-        <text class="text-container">Enter username :</text>
+        <text class="text-container">Pseudo : </text>
         <text-input class="input-container" placeholder="username" v-model="username"/>
-        <text class="text-container">Enter password :</text>
+        <text class="text-container">Mot de passe :</text>
         <text-input class="input-container" placeholder="password" secure-text-entry v-model="password"/>
         <view class="login-container">
-           <text  class="login-btn" :on-press="login">Login</text>
+           <text  class="login-btn" :on-press="login">Log in</text>
            <text  class="login-btn" :on-press="goToTabNavigator">Bypass login</text>
         </view>
       </view>
@@ -15,9 +15,8 @@
 </template>
 
 <script>
-import {API} from '../../api.js';
+import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
-import axios from "axios";
 
 export default {
     props: {
@@ -28,7 +27,7 @@ export default {
   data: function() {
     return {
         username:'',
-        password:''
+        password:'',
     }
   },
   methods: {
@@ -38,7 +37,7 @@ export default {
         bodyFormData.append('username', this.username);
         bodyFormData.append('password', this.password);
         const self = this;
-       API({
+        request({
         method: 'post',
         url: '/login',
         data: bodyFormData,
@@ -46,14 +45,14 @@ export default {
         }).then(function(response){
            //console.log(response)
           if(response != undefined && response.status == 200){
-              self.navigation.navigate("Challenges")
+              self.navigation.navigate("Défis")
           }
         }).catch(function(error){
            console.log(error)
         })
     },
     goToTabNavigator() {
-      this.navigation.navigate("Challenges")
+      this.navigation.navigate("Défis")
     }
   },
   mounted: function() {
@@ -65,9 +64,9 @@ export default {
 
 <style>
 .real-container {
-    align-items: center;
-    justify-content: center;
-    flex:1;
+  align-items: center;
+  justify-content: center;
+  flex:1;
 }
 .container {
   background-color: white;
@@ -75,12 +74,12 @@ export default {
 }
 
 .title{
-    font-size: 40;
-    font-weight: 100;
-    margin-bottom: 100;
+  font-size: 40;
+  font-weight: 100;
+  margin-bottom: 100;
 }
 .text-container{
-    font-size: 22;
+  font-size: 22;
 }
 .input-container {
   border-style: solid;
@@ -93,19 +92,17 @@ export default {
 }
 
 .login-container{
-    margin-top: 10;
-    width: 100%;
-    border-radius: 10;
-    justify-content: space-between;
-    flex-direction: row;
-
-
+  margin-top: 10;
+  width: 100%;
+  border-radius: 10;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 .login-btn {
-    padding: 20;
-    font-size: 22;
-    background-color: #EEAAEE;
-color:white;
+  padding: 20;
+  font-size: 22;
+  background-color: #EEAAEE;
+  color:white;
 }
 </style>
