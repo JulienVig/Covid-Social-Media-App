@@ -101,14 +101,12 @@ export default {
           bodyFormData.append('challengeId', this.navigation.state.params.challengeId);
           bodyFormData.append('commentary',this.review);
           bodyFormData.append('picture',""); //à changer
-          console.log(bodyFormData)
           request({
             method: 'post',
             url : '/api/completeMyChallenge',
             data : bodyFormData,
             headers: {'Content-Type':'multipart/form-data'}
         }).then(function(response){
-             console.log(response)
           }).catch(function(error){
             console.log(error)
           })
