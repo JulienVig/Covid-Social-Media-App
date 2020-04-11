@@ -21,6 +21,15 @@ E<template>
   background-color: #3d9d84;
   color:white;
   flex-direction: row;
+}
+.header {
+  height : 10%;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #b2ebcc; */
+  background-color: #3d9d84;
+  color:white;
+  flex-direction: row;
   justify-content: space-around;
 }
 .title {

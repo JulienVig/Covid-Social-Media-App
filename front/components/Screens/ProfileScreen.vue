@@ -55,7 +55,6 @@ import axios from "axios";
                         method: 'GET',
                         url: '/api/allCategories'
                     }).then(function(categories){
-                        console.log(categories)
                         self.cats = categories.data
                         self.getCatInfo(0);
 
