@@ -1,7 +1,7 @@
 // Navigation/Navigation.js
 
 import React from 'react' // N'oubliez pas l'import de React ici. On en a besoin pour rendre nos components React Native Image ! 
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Easing, Animated } from 'react-native';
 import { Ionicons, FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 import LoginScreen from "./components/Screens/LoginScreen";
@@ -21,6 +21,9 @@ const CategoryTab = createStackNavigator(
         ChallengeDetail : ChallengeDetailScreen,
         Validation : ValidationChallengeScreen,
     },
+    {
+      transitionConfig
+    }
 )
 
 const ChallengesTab = createStackNavigator(
@@ -37,9 +40,7 @@ const Tabs = createBottomTabNavigator(
             screen : CoronaScreen,
             navigationOptions: {
                 tabBarIcon: ({ focused}) => {
-                  let iconName;
-                  console.log(focused)
-                  iconName = 'warning';
+                  let iconName = 'warning';
                   let color = focused ? '#980740' : 'gray';
                   return <AntDesign name={iconName} size={28} color={color} />;
                 },
@@ -49,9 +50,7 @@ const Tabs = createBottomTabNavigator(
             screen : CategoryTab,
             navigationOptions: {
               tabBarIcon: ({ focused}) => {
-                let iconName;
-                console.log(focused)
-                iconName = focused ? 'hexagon-slice-6': 'hexagon-outline';
+                let iconName = focused ? 'hexagon-slice-6': 'hexagon-outline';
                 let color = focused ? '#2c3c74' : 'gray';
                 return <MaterialCommunityIcons name={iconName} size={30} color={color}/>;
               },
@@ -61,9 +60,7 @@ const Tabs = createBottomTabNavigator(
             screen : ChallengesTab,
             navigationOptions: {
               tabBarIcon: ({ focused}) => {
-                let iconName;
-                console.log(focused)
-                iconName = focused ? 'home': 'home-outline';
+                let iconName = focused ? 'home': 'home-outline';
                 let color = focused ? '#3d9d84' : 'gray';
                 return <MaterialCommunityIcons name={iconName} size={30} color={color}/>;
               },
@@ -73,9 +70,7 @@ const Tabs = createBottomTabNavigator(
             screen : ProfileScreen,
             navigationOptions: {
               tabBarIcon: ({ focused}) => {
-                let iconName;
-                console.log(focused)
-                iconName = focused ? 'user': 'user-o';
+                let iconName = focused ? 'user': 'user-o';
                 let color = focused ? 'orange' : 'gray';
                 return <FontAwesome name={iconName} size={28} color={color}/>;
               },
@@ -85,9 +80,7 @@ const Tabs = createBottomTabNavigator(
             screen : DetailsScreen,
             navigationOptions: {
               tabBarIcon: ({ focused}) => {
-                let iconName;
-                console.log(focused)
-                iconName = focused ? 'ios-information-circle': 
+                let iconName = focused ? 'ios-information-circle': 
                 'ios-information-circle-outline';
                 let color = focused ? '#fedff2' : 'gray';
                 return <Ionicons name={iconName} size={30} color={color}/>;
@@ -123,5 +116,34 @@ const styles = StyleSheet.create({
     height: 30
   }
 })
+
+const transitionConfig = () => {
+  console.log('transitionConfig')
+  return {
+    transitionSpec: {
+      duration: 500,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+      useNativeDriver: true,
+    },
+    screenInterpolator: sceneProps => {
+      const { layout, position, scene } = sceneProps;
+ 
+      const thisSceneIndex = scene.index;
+      const width = layout.initWidth;
+ 
+      const translateX = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        outputRange: [-width, 0],
+        extrapolate: 'clamp'
+      });
+ 
+      return {
+        transform: [{ translateX }]
+      }
+    }
+  }
+}
+ 
 
 export default createAppContainer(StackNavigator)

@@ -265,7 +265,6 @@ export default {
         url: '/api/getCommentsOfChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
           self.commentaires =response.data;
-          console.log(response.data)
           self.getImageCategory();
         }).catch(function(error){
           console.log(error);
