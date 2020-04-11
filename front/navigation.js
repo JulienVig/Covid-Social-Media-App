@@ -14,9 +14,43 @@ import CategoryScreen from "./components/Screens/CategoryScreen";
 import ValidationChallengeScreen from "./components/Screens/ValidationChallengeScreen";
 import ChallengesByCategoryScreen from "./components/Screens/ChallengesByCategoryScreen";
 
+const Covid19Tab = createStackNavigator(
+  {
+    Covid19: {
+      screen: CoronaScreen,
+      navigationOptions: {
+        title: 'COVID-19',
+        headerStyle: {
+          backgroundColor: '#ffffff',
+        },
+        headerTintColor: '#980740',
+        headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 30,
+        },
+        headerStatusBarHeight: 500,
+        
+      }
+    },
+  })
+
 const CategoryTab = createStackNavigator(
     {
-        Category: CategoryScreen,
+      Category: {
+        screen: CategoryScreen,
+        navigationOptions: {
+          title: 'CATÉGORIES',
+          headerStyle: {
+            backgroundColor: '#3d9d84',
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: '200',
+            fontSize: 30,
+          },
+          headerBackTitle:"Catégories",
+        }
+      },
         ChallengesByCategory : ChallengesByCategoryScreen,
         ChallengeDetail : ChallengeDetailScreen,
         Validation : ValidationChallengeScreen,
@@ -25,23 +59,74 @@ const CategoryTab = createStackNavigator(
 
 const ChallengesTab = createStackNavigator(
     {
-        ChallengesScreen: ChallengesScreen,
+      Challenges: {
+        screen: ChallengesScreen,
+        navigationOptions: {
+          title: 'Listes des Défis',
+          headerStyle: {
+            backgroundColor: '#3d9d84',
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: '200',
+            fontSize: 30,
+          },
+          headerBackTitle:"Défis",
+        }
+      },
         ChallengeDetail : ChallengeDetailScreen,
         Validation : ValidationChallengeScreen,
     },
 )
 
+const ProfilTab = createStackNavigator(
+  {
+      Profil: ProfileScreen,
+  },
+)
+
+
+const DetailsTab = createStackNavigator(
+  {
+    Details: {
+      screen: DetailsScreen,
+      navigationOptions: {
+        title: 'DÉTAILS',
+        headerStyle: {
+          backgroundColor: '#f',
+        },
+        headerTintColor: 'black',
+        headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 30,
+        },
+        headerBackTitle:"Catégories",
+        animationTypeForReplace: "pop",
+      }
+    },
+  },
+)
+
 const Tabs = createBottomTabNavigator(
     {
         "Covid-19" : {
-            screen : CoronaScreen,
+            screen : Covid19Tab,
             navigationOptions: {
                 tabBarIcon: ({ focused}) => {
                   let iconName = 'warning';
                   let color = focused ? '#980740' : 'gray';
                   return <AntDesign name={iconName} size={28} color={color} />;
                 },
-            }
+                title: 'My home',
+              headerStyle: {
+                backgroundColor: '#f4511e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            },
+            
         },
         "Catégories": {
             screen : CategoryTab,
@@ -64,7 +149,7 @@ const Tabs = createBottomTabNavigator(
             }
         },
         "Profil": {
-            screen : ProfileScreen,
+            screen : ProfilTab,
             navigationOptions: {
               tabBarIcon: ({ focused}) => {
                 let iconName = focused ? 'user': 'user-o';
@@ -74,7 +159,7 @@ const Tabs = createBottomTabNavigator(
             }
         },
         "Détails": {
-            screen : DetailsScreen,
+            screen : DetailsTab,
             navigationOptions: {
               tabBarIcon: ({ focused}) => {
                 let iconName = focused ? 'ios-information-circle': 
@@ -102,8 +187,9 @@ const StackNavigator = createStackNavigator(
         Tabs
     },
     {
-        headerMode: 'none'
-    }
+        headerMode: 'none',
+    },
+    
   );
 
 

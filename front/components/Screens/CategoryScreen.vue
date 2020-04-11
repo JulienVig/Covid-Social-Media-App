@@ -1,9 +1,9 @@
 <template>
     <view class="real-container">
         <view class="container">
-            <view class="header">
+            <!-- <view class="header">
               <text class="title">Catégories</text>
-            </view>
+            </view> -->
             <view class ="main">
                 <view class="categories">
                         <view class="category" v-for="(category, index) in categories" :key="index">
@@ -47,7 +47,8 @@
 .main {
     justify-content: center;
     align-items: center;
-    height:90%;
+    /* height:90%; */
+    height:100%;
 }
 .categories{
     padding-top: 50;

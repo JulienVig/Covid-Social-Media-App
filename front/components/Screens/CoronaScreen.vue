@@ -1,5 +1,8 @@
 <template>
+<view>
+  
 <scroll-view class="scroll">
+    <StatusBar barStyle="dark-content" />
     <view class="container" v-for="(element, index) in content" :key="index">
       <text class="title">{{element.title}}</text>
       <text v-if="element.text" class="para">{{element.text}}</text>
@@ -8,6 +11,7 @@
       </view>
     </view>
 </scroll-view>
+</view>
 </template>
 
 <style>
@@ -67,6 +71,7 @@
 </style>
 <script>
 import href from "../href.vue";
+import {StatusBar} from 'react-native';
 export default {
   components : {
     href

@@ -1,37 +1,24 @@
 E<template>
   <view class="container">
-    <view class ="header">
+    <!-- <view class ="header">
       <view>
       <text class="title">Listes des Défis</text>
       </view>
-      <!-- <touchable-opacity class = "corona-touchable" :on-press="() => goToCorona()">
-        <image class = "corona-icon" :source="require('../../assets/images/challengescreen/virus-lab-scientist-biology-cell-medical-512.png')"/>
-      </touchable-opacity> -->
-    </view>
+    </view> -->
      <ChallengeList v-bind:challenges="challenges" v-bind:goToChallenge="goToChallenge"/>
   </view>
 </template>
 <style>
 
-.header {
+/* .header {
   height : 10%;
   justify-content: center;
   align-items: center;
-  /* background-color: #b2ebcc; */
-  background-color: #3d9d84;
-  color:white;
-  flex-direction: row;
-}
-.header {
-  height : 10%;
-  justify-content: center;
-  align-items: center;
-  /* background-color: #b2ebcc; */
   background-color: #3d9d84;
   color:white;
   flex-direction: row;
   justify-content: space-around;
-}
+} */
 .title {
   font-size: 40px;
   font-weight: 200;
