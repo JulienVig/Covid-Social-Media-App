@@ -68,24 +68,29 @@ export default {
     align-items: center;
     justify-content: center;
     flex:1;
+    background-color : #f1b9a2;
 }
 .container {
-  background-color: white;
+  background-color :#f1b9a2;
+  flex:1;
   width:80%;
 }
 
 .title{
+    color : #980740;
     font-size: 40;
-    font-weight: 100;
+    font-weight: 200;
+    top : 60;
     margin-bottom: 100;
 }
 .text-container{
+    color : #e7794c;
     font-size: 22;
 }
 .input-container {
   border-style: solid;
-  border-color: #FFFFFF;
-  border-bottom-color: #888888;
+  border-color:#e7794c;
+  /*border-bottom-color: #888888;*/
   border-width: 2;
   font-size: 22;
   padding: 10;
@@ -105,7 +110,8 @@ export default {
 .login-btn {
     padding: 20;
     font-size: 22;
-    background-color: #EEAAEE;
-color:white;
+    background-color: #980740;
+    color:white;
+    
 }
 </style>
