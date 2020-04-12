@@ -1,14 +1,13 @@
 <template>
     <view class="real-container">
-        <view class="container">
-            <view class="header">
-              <text class="title">Catégories</text>
+        <view class="container" :style=styles.lightPrimaryColor>
+            <view class="header" :style=styles.defaultPrimaryColor>
+              <text class="title" :style=styles.textPrimaryColor>Catégories</text>
             </view>
             <view class ="main">
                 <view class="categories">
                         <view class="category" v-for="(category, index) in categories" :key="index">
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
-
                                 <image class="icon"
                                   :source="{uri: baseURL + '/static/image/png?path=' + category.logo}"
                                 />
@@ -29,11 +28,9 @@
     justify-content: center;
     align-items: center;
     /* margin-bottom: 50; */
-    background-color: #3d9d84;
 }
 
 .title{
-    color: white;
     font-size: 40;
     font-weight: 200;
     /* margin-left: 50; */
@@ -78,7 +75,6 @@
 }
 
 .container {
-    background-color: #b2ebcc;
     width:100%;
 }
 
@@ -90,6 +86,7 @@
 import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
+import styles from "../../palette.js"
 
 export default {
     props: {
@@ -99,6 +96,7 @@ export default {
     },
   data: function() {
     return {
+        styles: styles,
         baseURL:baseURL,
         categories: [
             {
