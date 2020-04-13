@@ -1,8 +1,9 @@
 <template>
   <view class="container">
     <view class ="header">
-      <!-- <text class="heading">Catégorie : </text> -->
+      
       <text class="title">{{categoryInfo.name}}</text>
+      <view class="sep"></view>
     </view>
     <ChallengeList v-bind:challenges="challenges" v-bind:goToChallenge="goToChallenge"/>
       </view>
@@ -16,20 +17,27 @@
 }
 
 .header {
-  height : 10%;
   justify-content: center;
   align-items: center;
-  /* background-color: #b2ebcc; */
-  background-color: #3d9d84;
-  color:white;
-  flex-direction: row;
-  justify-content: space-around;
+  margin-bottom: 20;
 }
 
+.sep{
+  width: 80%;
+  align-items: center;
+  border-color:#3d9d84;
+  border-bottom-width: 2;
+  padding-bottom: 20;
+  
+  
+}
 .title {
   font-size: 40px;
   font-weight: 200;
-  color: white;
+  color:#3d9d84;
+  /* background-color: white; */
+  margin-top:20;
+  /* color: white; */
 }
 </style>
 

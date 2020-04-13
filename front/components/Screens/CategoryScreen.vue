@@ -23,14 +23,13 @@
 
 <style>
 
-.header{
+/* .header{
     width: 100%;
     height: 10%;
     justify-content: center;
     align-items: center;
-    /* margin-bottom: 50; */
     background-color: #3d9d84;
-}
+} */
 
 .title{
     color: white;
@@ -75,6 +74,7 @@
     align-items: center;
     text-align: center;
     font-weight:200;
+    font-size:15;
     color:#2c3c74;
 }
 

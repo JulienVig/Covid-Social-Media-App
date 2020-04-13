@@ -2,7 +2,6 @@
 <view>
   
 <scroll-view class="scroll">
-    <StatusBar barStyle="dark-content" />
     <view class="container" v-for="(element, index) in content" :key="index">
       <text class="title">{{element.title}}</text>
       <text v-if="element.text" class="para">{{element.text}}</text>

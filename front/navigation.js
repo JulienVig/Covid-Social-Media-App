@@ -27,12 +27,11 @@ const Covid19Tab = createStackNavigator(
         headerTitleStyle: {
           fontWeight: '200',
           fontSize: 30,
-        },
-        headerStatusBarHeight: 500,
-        
+        },        
       }
     },
-  })
+  },
+  )
 
 const CategoryTab = createStackNavigator(
     {
@@ -51,9 +50,51 @@ const CategoryTab = createStackNavigator(
           headerBackTitle:"Catégories",
         }
       },
-        ChallengesByCategory : ChallengesByCategoryScreen,
-        ChallengeDetail : ChallengeDetailScreen,
-        Validation : ValidationChallengeScreen,
+        ChallengesByCategory: {
+          screen: ChallengesByCategoryScreen,
+          navigationOptions: {
+            title: '',
+            headerStyle: {
+              backgroundColor: '#3d9d84',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 30,
+            },
+            headerBackTitle:"Défis",
+          }
+        },
+        ChallengeDetail: {
+          screen: ChallengeDetailScreen,
+          navigationOptions: {
+            title: '',
+            headerStyle: {
+              backgroundColor: '#3d9d84',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 30,
+            },
+            headerBackTitle:"Défis",
+          }
+        },
+        Validation: {
+          screen: ValidationChallengeScreen,
+          navigationOptions: {
+            title: '',
+            headerStyle: {
+              backgroundColor: '#3d9d84',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 30,
+            },
+            headerBackTitle:"Défis",
+          }
+        },
     },
 )
 
@@ -62,7 +103,7 @@ const ChallengesTab = createStackNavigator(
       Challenges: {
         screen: ChallengesScreen,
         navigationOptions: {
-          title: 'Listes des Défis',
+          title: 'DÉFIS',
           headerStyle: {
             backgroundColor: '#3d9d84',
           },
@@ -74,14 +115,56 @@ const ChallengesTab = createStackNavigator(
           headerBackTitle:"Défis",
         }
       },
-        ChallengeDetail : ChallengeDetailScreen,
-        Validation : ValidationChallengeScreen,
+        ChallengeDetail: {
+          screen: ChallengeDetailScreen,
+          navigationOptions: {
+            title: '',
+            headerStyle: {
+              backgroundColor: '#3d9d84',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 30,
+            },
+            headerBackTitle:"Défis",
+          }
+        },
+        Validation: {
+          screen: ValidationChallengeScreen,
+          navigationOptions: {
+            title: '',
+            headerStyle: {
+              backgroundColor: '#3d9d84',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 30,
+            },
+            headerBackTitle:"Défis",
+          }
+        },
     },
 )
 
 const ProfilTab = createStackNavigator(
   {
-      Profil: ProfileScreen,
+    Profil: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        title: 'PROFIL',
+        headerStyle: {
+          backgroundColor: '#ffffff',
+        },
+        headerTintColor: 'black',
+        headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 30,
+        },
+        animationTypeForReplace: "pop",
+      }
+    },
   },
 )
 
@@ -93,14 +176,13 @@ const DetailsTab = createStackNavigator(
       navigationOptions: {
         title: 'DÉTAILS',
         headerStyle: {
-          backgroundColor: '#f',
+          backgroundColor: '#ffffff',
         },
         headerTintColor: 'black',
         headerTitleStyle: {
           fontWeight: '200',
           fontSize: 30,
         },
-        headerBackTitle:"Catégories",
         animationTypeForReplace: "pop",
       }
     },
@@ -117,7 +199,7 @@ const Tabs = createBottomTabNavigator(
                   let color = focused ? '#980740' : 'gray';
                   return <AntDesign name={iconName} size={28} color={color} />;
                 },
-                title: 'My home',
+                title: 'Covid-19',
               headerStyle: {
                 backgroundColor: '#f4511e',
               },
@@ -146,6 +228,7 @@ const Tabs = createBottomTabNavigator(
                 let color = focused ? '#3d9d84' : 'gray';
                 return <MaterialCommunityIcons name={iconName} size={30} color={color}/>;
               },
+              gesturesEnabled: false,
             }
         },
         "Profil": {
@@ -188,6 +271,9 @@ const StackNavigator = createStackNavigator(
     },
     {
         headerMode: 'none',
+        navigationOptions: {
+          gesturesEnabled: false,
+        },
     },
     
   );
