@@ -68,7 +68,7 @@ export default {
         // goToChallenge : this.goToChallenge
     },
     mounted: function (){
-        console.log(this.challenges)
+
     }
 }
 
