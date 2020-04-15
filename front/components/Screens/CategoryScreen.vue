@@ -8,7 +8,6 @@
                 <view class="categories">
                         <view class="category" v-for="(category, index) in categories" :key="index">
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
-
                                 <image class="icon"
                                   :source="{uri: baseURL + '/static/image/png?path=' + category.logo}"
                                 />
