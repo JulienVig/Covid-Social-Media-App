@@ -1,7 +1,7 @@
 <template>
     <view class="real-container">
       <view class ="container">
-        <text class="title">CONSVID la TÊTE</text>
+        <text class="title" :style="styles.myred">CONSVID la TÊTE</text>
         <text class="text-container">Pseudo : </text>
         <text-input class="input-container" placeholder="username" v-model="username"/>
         <text class="text-container">Mot de passe :</text>
@@ -17,6 +17,7 @@
 <script>
 import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
+import Stylesheet from '../../palette.js'
 
 export default {
     props: {
@@ -28,6 +29,7 @@ export default {
     return {
         username:'',
         password:'',
+        styles: Stylesheet
     }
   },
   methods: {

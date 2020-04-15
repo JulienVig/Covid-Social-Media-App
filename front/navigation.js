@@ -1,7 +1,8 @@
 // Navigation/Navigation.js
 
 import React from 'react' // N'oubliez pas l'import de React ici. On en a besoin pour rendre nos components React Native Image ! 
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Easing, Animated } from 'react-native';
+import { Ionicons, FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 import LoginScreen from "./components/Screens/LoginScreen";
 import CoronaScreen from "./components/Screens/CoronaScreen";
@@ -32,63 +33,65 @@ const ChallengesTab = createStackNavigator(
 
 const Tabs = createBottomTabNavigator(
     {
-        Covid19 : {
+        "Covid-19" : {
             screen : CoronaScreen,
             navigationOptions: {
-                tabBarIcon: () => {
-                return <Image
-                    source={require('./assets/images/navigation/coronascreen.png')}
-                    style={styles.icon}/>
-                }
+                tabBarIcon: ({ focused}) => {
+                  let iconName = 'warning';
+                  let color = focused ? '#980740' : 'gray';
+                  return <AntDesign name={iconName} size={28} color={color} />;
+                },
             }
         },
-        Categories: {
+        "Catégories": {
             screen : CategoryTab,
             navigationOptions: {
-                tabBarIcon: () => {
-                return <Image
-                    source={require('./assets/images/navigation/categoryscreen.png')}
-                    style={styles.icon}/>
-                }
+              tabBarIcon: ({ focused}) => {
+                let iconName = focused ? 'hexagon-slice-6': 'hexagon-outline';
+                let color = focused ? '#2c3c74' : 'gray';
+                return <MaterialCommunityIcons name={iconName} size={30} color={color}/>;
+              },
             }
         },
-        Défis: {
+        "Défis": {
             screen : ChallengesTab,
             navigationOptions: {
-                tabBarIcon: () => {
-                return <Image
-                    source={require('./assets/images/navigation/challengescreen.png')}
-                    style={styles.icon}/>
-                }
+              tabBarIcon: ({ focused}) => {
+                let iconName = focused ? 'home': 'home-outline';
+                let color = focused ? '#3d9d84' : 'gray';
+                return <MaterialCommunityIcons name={iconName} size={30} color={color}/>;
+              },
             }
         },
-        Profile: {
+        "Profil": {
             screen : ProfileScreen,
             navigationOptions: {
-                tabBarIcon: () => {
-                return <Image
-                    source={require('./assets/images/navigation/profilescreen.png')}
-                    style={styles.icon}/>
-                }
+              tabBarIcon: ({ focused}) => {
+                let iconName = focused ? 'user': 'user-o';
+                let color = focused ? 'orange' : 'gray';
+                return <FontAwesome name={iconName} size={28} color={color}/>;
+              },
             }
         },
-        Details: {
+        "Détails": {
             screen : DetailsScreen,
             navigationOptions: {
-                tabBarIcon: ({tintColor}) => {
-                    return <Image
-                    source={require('./assets/images/navigation/detailscreen.png')}
-                    style={styles.icon}/>
-                }
+              tabBarIcon: ({ focused}) => {
+                let iconName = focused ? 'ios-information-circle': 
+                'ios-information-circle-outline';
+                let color = focused ? '#fedff2' : 'gray';
+                return <Ionicons name={iconName} size={30} color={color}/>;
+              },
             }
         }
     },
     {
         tabBarOptions: {
-            activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
+            // activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
             inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
-            showLabel: false, // On masque les titres
+            showLabel: true, // On masque les titres
             showIcon: true,
+            activeTintColor: "black",
         }
     }
 );
@@ -110,5 +113,7 @@ const styles = StyleSheet.create({
     height: 30
   }
 })
+
+ 
 
 export default createAppContainer(StackNavigator)

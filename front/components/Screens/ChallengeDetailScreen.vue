@@ -1,14 +1,14 @@
 <template>
-  <view class="container">
+  <view class="container" :style=styles.lightPrimaryColor>
 
     <scroll-view class="scroll">
-      <view class="header">
+      <view class="header" :style=styles.defaultPrimaryColor>
         <view class="logo-container">
         <image class='logo'
           :source="{uri: baseURL + '/static/image/jpg?path=resources/white_logo_entraide.png'}"
         />
         </view>
-        <text class="title">{{titre}}</text>
+        <text class="title" :style=styles.textPrimaryColor>{{titre}}</text>
       </view>
 
       <view class="main">
@@ -20,8 +20,8 @@
         <view class="desc-container">
           <text class="desc">{{description}}</text>
         </view>
-        <touchable-opacity class="container-btn" :on-press="accessChallengeValidation">
-        <text class="validation-btn">Valider ce challenge</text>
+        <touchable-opacity class="container-btn" :on-press="accessChallengeValidation" :style=styles.defaultPrimaryColor>
+        <text class="validation-btn" :style=styles.textPrimaryColor>Valider ce challenge</text>
         </touchable-opacity>
         
       </view>
@@ -68,7 +68,6 @@
 
 <style>
 .container {
-  background-color: #b2ebcc;
   align-items: center;
   justify-content: center;
   /* flex: 1; */
@@ -87,7 +86,6 @@
   justify-content: space-between;
   width: 80%;
   height:90;
-  background-color: #3d9d84;
   border-bottom-right-radius: 15;
   /* margin-bottom:30; */
 }
@@ -104,7 +102,6 @@
 }
 
 .title{
-    color : white ; /*#1d3060*/
     font-size:30;
     font-weight: 200;
     width: 70%;
@@ -132,7 +129,7 @@
 }
 
 .desc-container{
-    border-top-width: 2; 
+    border-top-width: 2;
     border-color:#3d9d84;
     max-width: 80%;
     justify-content: center;
@@ -149,12 +146,10 @@
 
 .container-btn {
   border-radius: 25;
-  background-color:#3d9d84;
   margin-bottom:30;
 }
 .validation-btn{
     font-size: 20;
-    color: white;
     padding-top: 10;
     padding-bottom: 10;
     padding-left: 20;
@@ -218,6 +213,7 @@
 import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
+import styles from "../../palette.js"
 
 export default {
   props: {
@@ -227,6 +223,7 @@ export default {
     },
   data: function() {
     return {
+        styles: styles,
         titre:'',
         description:'',
         categoryId:'',
@@ -265,7 +262,6 @@ export default {
         url: '/api/getCommentsOfChallenge/'+this.navigation.state.params.challengeId
         }).then(function(response){
           self.commentaires =response.data;
-          console.log(response.data)
           self.getImageCategory();
         }).catch(function(error){
           console.log(error);
