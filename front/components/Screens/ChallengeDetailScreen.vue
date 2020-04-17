@@ -1,12 +1,12 @@
 <template>
-  <view class="container" :style=styles.lightPrimaryColor>
-
+  <view class="container" > 
+    <!-- :style=styles.lightPrimaryColor -->
     <scroll-view class="scroll">
       <view class ="header">
       
       <text class="title">{{titre}}</text>
       <view class="sep"></view>
-    </view>
+      </view>
 
       <view class="main">
         <view class="image-container">

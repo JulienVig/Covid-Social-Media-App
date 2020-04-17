@@ -5,8 +5,9 @@
             <activity-indicator v-if="loading" size="large" color="black"/>
         </view>
         <scroll-view v-if="!loading" class="top">
-                <view class="header">
+                <view class ="header">
                     <text class="title">{{username}}</text>
+                    <view class="sep"></view>
                 </view>
 
             <view class="container">
@@ -167,11 +168,10 @@ import axios from "axios";
     bottom:0;
 
 }
-.header {
+/* .header {
   height : 20%;
   justify-content: center;
   align-items: center;
-  /* background-color: #b2ebcc; */
   background-color: #3d9d84;
   color:white;
   flex-direction: row;
@@ -181,9 +181,33 @@ import axios from "axios";
   font-size: 40px;
   font-weight: 200;
   color: white;
+} */
+
+.header {
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20;
+}
+
+.sep{
+  width: 80%;
+  align-items: center;
+  border-color:#3d9d84;
+  border-bottom-width: 2;
+  padding-bottom: 20;
+  
+  
+}
+.title {
+  font-size: 40px;
+  font-weight: 200;
+  color:#3d9d84;
+  margin-top:20;
+  max-width:90%;
+  text-align: center;
 }
 .container {
-  background-color: #b2ebcc;
+  /* background-color: #b2ebcc; */
   flex: 1;
 }
 .cat-container{
@@ -201,7 +225,7 @@ import axios from "axios";
 }
 .top{
     /* align-items: center; */
-    background-color: #b2ebcc;
+    /* background-color: #b2ebcc; */
 }
 
 .description{

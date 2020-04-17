@@ -155,9 +155,9 @@ const ProfilTab = createStackNavigator(
       navigationOptions: {
         title: 'PROFIL',
         headerStyle: {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#3d9d84',
         },
-        headerTintColor: 'black',
+        headerTintColor: 'white',
         headerTitleStyle: {
           fontWeight: '200',
           fontSize: 30,
