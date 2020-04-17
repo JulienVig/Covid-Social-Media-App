@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :style=styles.lightPrimaryColor>
 
     <scroll-view class="scroll">
       <view class ="header">
@@ -17,8 +17,8 @@
         <view class="desc-container">
           <text class="desc">{{description}}</text>
         </view>
-        <touchable-opacity class="container-btn" :on-press="accessChallengeValidation">
-        <text class="validation-btn">Valider ce challenge</text>
+        <touchable-opacity class="container-btn" :on-press="accessChallengeValidation" :style=styles.defaultPrimaryColor>
+        <text class="validation-btn" :style=styles.textPrimaryColor>Valider ce challenge</text>
         </touchable-opacity>
         
       </view>
@@ -65,7 +65,6 @@
 
 <style>
 .container {
-  background-color: #b2ebcc;
   align-items: center;
   justify-content: center;
   /* flex: 1; */
@@ -138,12 +137,10 @@
 
 .container-btn {
   border-radius: 25;
-  background-color:#3d9d84;
   margin-bottom:30;
 }
 .validation-btn{
     font-size: 20;
-    color: white;
     padding-top: 10;
     padding-bottom: 10;
     padding-left: 20;
@@ -203,6 +200,7 @@
 import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
+import styles from "../../palette.js"
 
 export default {
   props: {
@@ -212,6 +210,7 @@ export default {
     },
   data: function() {
     return {
+        styles: styles,
         titre:'',
         description:'',
         categoryId:'',

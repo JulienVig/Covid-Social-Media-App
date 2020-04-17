@@ -8,7 +8,6 @@
                 <view class="categories">
                         <view class="category" v-for="(category, index) in categories" :key="index">
                             <touchable-opacity class="single-element-container" :on-press="() => goToCategory(category.id)">
-
                                 <image class="icon"
                                   :source="{uri: baseURL + '/static/image/png?path=' + category.logo}"
                                 />
@@ -32,7 +31,6 @@
 } */
 
 .title{
-    color: white;
     font-size: 40;
     font-weight: 200;
     /* margin-left: 50; */
@@ -79,7 +77,6 @@
 }
 
 .container {
-    background-color: #b2ebcc;
     width:100%;
 }
 
@@ -91,6 +88,7 @@
 import {request, baseURL} from '../../api.js';
 import { Alert } from 'react-native';
 import axios from "axios";
+import styles from "../../palette.js"
 
 export default {
     props: {
@@ -100,6 +98,7 @@ export default {
     },
   data: function() {
     return {
+        styles: styles,
         baseURL:baseURL,
         categories: [
             {

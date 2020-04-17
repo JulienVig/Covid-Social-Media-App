@@ -1,13 +1,16 @@
-E<template>
+<template>
   <view class="container">
     <!-- <view class ="header">
+  <view class="container" :style=styles.lightPrimaryColor>
+    <view class ="header" :style=styles.defaultPrimaryColor>
       <view>
-      <text class="title">Listes des Défis</text>
+      <text class="title" :style=styles.textPrimaryColor>Listes des Défis</text>
       </view>
     </view> -->
-     <ChallengeList v-bind:challenges="challenges" v-bind:goToChallenge="goToChallenge"/>
+     <ChallengeList :challenges="challenges" :goToChallenge="goToChallenge"/>
   </view>
 </template>
+
 <style>
 
 /* .header {
@@ -19,27 +22,26 @@ E<template>
   flex-direction: row;
   justify-content: space-around;
 } */
+
+.header {
+  height : 10%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
 .title {
   font-size: 40px;
   font-weight: 200;
-  color: white;
 }
 .container {
-  background-color: #b2ebcc;
   flex: 1;
 }
-
-.heading {
-  font-size: 30px;
-  font-weight: bold;
-  color: #212121;
-}
-
 </style>
 
 <script>
 import {request, baseURL} from '../../api.js';
 import ChallengeList from '../ChallengeList';
+import styles from '../../palette.js'
 
 export default {
   props: {
@@ -52,6 +54,7 @@ export default {
   },
   data: function() {
     return {
+      styles: styles,
       baseURL: baseURL,
       challenges: [
           {
