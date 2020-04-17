@@ -58,8 +58,8 @@ export default {
     }
   },
   mounted: function() {
-      this.username = 'user'
-      this.password = 'user'
+      this.username = 'Julien Le Vig'
+      this.password = '1234'
   }
 };
 </script>
