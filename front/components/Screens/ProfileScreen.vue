@@ -77,7 +77,6 @@ import axios from "axios";
                         method: 'GET',
                         url: '/api/allCategories'
                     }).then(function(categories){
-                        console.log(categories)
                         self.cats = categories.data
                         self.getCatInfo(0);
 
@@ -91,7 +90,7 @@ import axios from "axios";
 
             getCatInfo: function(index){
                 const self = this
-                request({
+                request({ 
                     method: 'GET',
                     url: "/api/getChallengeByCategoryName/"+self.cats[index].name
                 }).then(function(allChallengeName){

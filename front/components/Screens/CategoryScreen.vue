@@ -101,12 +101,12 @@ export default {
         styles: styles,
         baseURL:baseURL,
         categories: [
-            {
-                name: "Hardcodé 1",
-            },
-            {
-                name: "Hardcodé 2",
-            },
+            // {
+            //     name: "Hardcodé 1",
+            // },
+            // {
+            //     name: "Hardcodé 2",
+            // },
         ]
     }
   },
