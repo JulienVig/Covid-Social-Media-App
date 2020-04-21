@@ -1,7 +1,8 @@
 import axios from "axios";
 
- export const request = axios.create({
-  baseURL: 'http://192.168.1.19:8080', //Set your IPV4 here
+export const baseURL = 'http://192.168.1.19:8080';
+export const request = axios.create({
+  baseURL: baseURL, //Set your IPV4 here
   withCredentials: true,
 })
 
