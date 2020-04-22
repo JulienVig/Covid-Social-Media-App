@@ -7,6 +7,7 @@ import { createStackNavigator, createAppContainer, createBottomTabNavigator } fr
 import LoginScreen from "./components/Screens/LoginScreen";
 import CoronaScreen from "./components/Screens/CoronaScreen";
 import DetailsScreen from "./components/Screens/DetailsScreen";
+import FriendsScreen from "./components/Screens/FriendsScreen";
 import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
 import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
@@ -188,6 +189,26 @@ const DetailsTab = createStackNavigator(
   },
 )
 
+const FriendsTab = createStackNavigator(
+  {
+    Friends: {
+      screen: FriendsScreen,
+      navigationOptions: {
+        title: 'AMIS',
+        headerStyle: {
+          backgroundColor: '#3d9d84',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 30,
+        },
+        animationTypeForReplace: "pop",
+      }
+    },
+  },
+)
+
 const Tabs = createBottomTabNavigator(
     {
         "Covid-19" : {
@@ -240,17 +261,27 @@ const Tabs = createBottomTabNavigator(
               },
             }
         },
-        "Détails": {
-            screen : DetailsTab,
-            navigationOptions: {
-              tabBarIcon: ({ focused}) => {
-                let iconName = focused ? 'ios-information-circle': 
-                'ios-information-circle-outline';
-                let color = focused ? '#fedff2' : 'gray';
-                return <Ionicons name={iconName} size={30} color={color}/>;
-              },
-            }
-        }
+        "Amis": {
+          screen : FriendsTab,
+          navigationOptions: {
+            tabBarIcon: ({ focused}) => {
+              let iconName = 'team';
+              let color = focused ? '#fedff2' : 'gray';
+              return <AntDesign name={iconName} size={28} color={color}/>;
+            },
+          }
+      },
+        // "Détails": {
+        //     screen : DetailsTab,
+        //     navigationOptions: {
+        //       tabBarIcon: ({ focused}) => {
+        //         let iconName = focused ? 'ios-information-circle': 
+        //         'ios-information-circle-outline';
+        //         let color = focused ? '#fedff2' : 'gray';
+        //         return <Ionicons name={iconName} size={30} color={color}/>;
+        //       },
+        //     }
+        // }
     },
     {
         tabBarOptions: {

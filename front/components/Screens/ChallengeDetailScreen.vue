@@ -89,8 +89,6 @@
   border-color:#3d9d84;
   border-bottom-width: 2;
   padding-bottom: 20;
-  
-  
 }
 .title {
   font-size: 40px;
