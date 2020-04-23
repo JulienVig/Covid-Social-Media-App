@@ -2,3 +2,8 @@ language: java
 before_install:
 - cd back
 - chmod +x gradlew
+# whitelist
+branches:
+  only:
+    - master
+    - continuous-deployment
