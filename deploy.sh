@@ -6,7 +6,7 @@ remoteServerIp=$1
 
 # Script
 echo "Starting script"
-echo remoteServerIP
+echo $remoteServerIP
  
 # Scp to instance
 
