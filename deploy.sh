@@ -8,6 +8,7 @@ echo "Starting deploy script"
 
 #Preparing the key file
 echo $2 > key.pem
+chmod 400 key.pem
 
 # Scp to instance
 echo "printing the key"
