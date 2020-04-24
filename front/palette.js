@@ -6,8 +6,8 @@ export default StyleSheet.create({
   titlePrimaryColor:   { color: '#3d9d84' },
   textPrimaryColor: { color: '#FFFFFF' },
   accentColor: { backgroundColor: '#8BC34A' },
-  primaryTextColor: { color: '#212121' },
-  secondaryTextColor: { color: '#757575' },
+  textPrimaryColor: { color: '#FFFFFF' },
+  textSecondaryColor: { color: '#3d9d84' },
   dividerColor: { backgroundColor: '#BDBDBD' },
   separatorColor: { borderColor: '#3d9d84' }
 })
