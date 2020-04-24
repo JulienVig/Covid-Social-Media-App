@@ -1,7 +1,8 @@
 language: java
-cache:
-  directories:
-  - back/build
+env:
+  global:
+  #a long encrypted key
+    secure: oPimZx89f0sXnnp9+07eJawUR/RvlFjVEoeZLdlz6qLLcLK0uwjaA6z/VlW5zy7cS68yKNb+2O7uuiU4a5ayGi3MxCcJj/+Mod6PKQUGT6+0vXklJBbSx+UT8UNkl+sUUtgdwCTpyZ1voFSSwImALZr8L2qQ73AaS90Qa1HlVmN62/V5Cd3T0ag1nUQ6113KnJrU9bm7jn6LPeiLpGDHb7WBEX4Y5GpMzxK6qnO/YRknkuhsHDXJsPs6Y7Ncr61qZJweqLNPzfGDfodPc6Cb2NTEZRcS3aZkCGKQCUAxtkBwTmsUz3K7Z1ya/TmruBm8U2OM5r0fBTOUjAUgSUawtOhnr7FHxAWgt5Ftvd7EsAR3icKMGzZrqK4xOLaR4AHExVDCHRjAxUjPu22TkhZMMnDnXNf0hGpNkwlO+t9AWVQRscX7+AGiUy9GRe86TYjIrywMJcf/0Oh54rSyJNympBbAb+EKDPRctxs3XHrdaPwkief943iZ5OdniNeYIKNKrCM6VF4s7pZoEGbhjIBO6NtCI+nUNA4HtU74H5MVZFatKbG3Dr8mzSCuNEi029ZiPwR7YGiAItbJk5SxVQJPl48gO8subAEljIEJSug3jp2IxO9hdTk9dHBeryWhvI7iIapZU0eK98JZjSHIQjQl/4BLUkDqP13LnvWyC3DPZK4=
 before_install:
 - cd back
 - chmod +x gradlew
@@ -13,6 +14,6 @@ branches:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash ../deploy.sh 18.234.142.249 test
+  script: bash ../deploy.sh 18.234.142.249 $AWS_KEY
   on:
     branch: continuous-deployment
