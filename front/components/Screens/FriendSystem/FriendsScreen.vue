@@ -53,7 +53,7 @@
           <touchable-opacity :on-press="() => goToFriendProfile(friend.userId)">
           <view class="friend-elem" :style=styles.lightPrimaryColor>
             <text class="friend-name" :style=styles.titlePrimaryColor>{{friend.username}}</text>
-            <text class="friend-score" :style=styles.titlePrimaryColor>{{friend.score}}</text>
+            <text class="friend-score" :style=styles.titlePrimaryColor>{{friend.nbChall}}</text>
           </view>
           </touchable-opacity>
         </view>
@@ -176,6 +176,7 @@ export default {
         method: 'get',
         url: '/api/getFriends'
         }).then(function(response){
+          console.log(response.data)
           self.friends = response.data
           self.existsFriends = self.friends.length > 0
         })
