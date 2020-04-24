@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
  
 # Variables
 remoteUserName="ec2-user"
@@ -6,7 +6,7 @@ remoteServerIp=$1
 
 # Script
 echo "Starting script"
-echo remoteServerIp
+echo remoteServerIP
  
 # Scp to instance
 
