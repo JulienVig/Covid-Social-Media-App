@@ -9,6 +9,9 @@ echo "Starting script"
 echo $remoteServerIP
 echo "$remoteServerIP"
 echo $remoteUserName
+echo args:
+echo $1
+echo $2
  
 # Scp to instance
 
