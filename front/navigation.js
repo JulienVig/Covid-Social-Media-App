@@ -8,13 +8,14 @@ import LoginScreen from "./components/Screens/LoginScreen";
 import RegisterScreen from "./components/Screens/RegisterScreen";
 import CoronaScreen from "./components/Screens/CoronaScreen";
 import DetailsScreen from "./components/Screens/DetailsScreen";
-import FriendsScreen from "./components/Screens/FriendsScreen";
 import ProfileScreen from "./components/Screens/ProfileScreen";
 import ChallengesScreen from "./components/Screens/ChallengesScreen";
 import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
 import CategoryScreen from "./components/Screens/CategoryScreen";
 import ValidationChallengeScreen from "./components/Screens/ValidationChallengeScreen";
 import ChallengesByCategoryScreen from "./components/Screens/ChallengesByCategoryScreen";
+import FriendsScreen from "./components/Screens/FriendsScreen";
+import FriendProfileScreen from "./components/Screens/FriendProfileScreen";
 
 const Covid19Tab = createStackNavigator(
   {
@@ -184,32 +185,27 @@ const ProfilTab = createStackNavigator(
 )
 
 
-// const DetailsTab = createStackNavigator(
-//   {
-//     Details: {
-//       screen: DetailsScreen,
-//       navigationOptions: {
-//         title: 'DÉTAILS',
-//         headerStyle: {
-//           backgroundColor: '#ffffff',
-//         },
-//         headerTintColor: 'black',
-//         headerTitleStyle: {
-//           fontWeight: '200',
-//           fontSize: 30,
-//         },
-//         animationTypeForReplace: "pop",
-//       }
-//     },
-//   },
-// )
-
 const FriendsTab = createStackNavigator(
   {
     Friends: {
       screen: FriendsScreen,
       navigationOptions: {
         title: 'AMIS',
+        headerStyle: {
+          backgroundColor: '#3d9d84',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 30,
+        },
+        animationTypeForReplace: "pop",
+      }
+    },
+    FriendProfile: {
+      screen: FriendProfileScreen,
+      navigationOptions: {
+        title: '',
         headerStyle: {
           backgroundColor: '#3d9d84',
         },

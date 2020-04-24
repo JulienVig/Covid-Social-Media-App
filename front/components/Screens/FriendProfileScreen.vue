@@ -64,6 +64,7 @@ import axios from "axios";
                 nbAll: 0,
                 loading: true,
                 completedChallenges:[],
+                userId: this.navigation.state.params.friendId
             };
         },
         methods: {
@@ -76,10 +77,11 @@ import axios from "axios";
             },
 
             fetch : function(){
+                console.log(this.navigation.state.params.friendId)
                 const self = this
                 request({
                     method: 'GET',
-                    url: '/api/userProfile'
+                    url: '/api/getUser/'+self.navigation.state.params.friendId
                 }).then(function(ansName){
                     self.username = ansName.data.username
                     request({
@@ -107,14 +109,14 @@ import axios from "axios";
                     self.nbAll += allChallofCat
                     request({
                         method: 'GET',
-                        url: "/api/getMyCompletedByCat/"+self.cats[index].id
+                        url: "/api/getCompletedByCat/"+self.userId+"/"+self.cats[index].id
                     }).then(function(completed){
                         const nbComplet = completed.data.length
                         self.nbAchieved += nbComplet
                         
                         if(self.cats[index] != undefined){
                             if(self.cats != undefined && index == self.cats.length){
-                                console.log("everything loading at index : " + index)
+                                // console.log("everything loading at index : " + index)
                                 laoded = true;
                              }
                             self.res.push({
@@ -140,7 +142,7 @@ import axios from "axios";
                 const self = this
                 request({ 
                     method: 'GET',
-                    url: "/api/getMyCompleted",
+                    url: "/api/getCompleted/"+self.userId,
                 }).then(function(response){
                     // console.log(response)
                     self.completedChallenges = response.data

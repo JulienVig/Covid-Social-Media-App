@@ -1,50 +1,57 @@
 <template>
 <scroll-view>
   <view class="container">
+
+    <!-- Demande d'ami en cour -->
     <view class ="request-container" v-if="existFriendRequests">
       <text class="title" :style=styles.titlePrimaryColor>Demandes d'amis</text>
       <view class= "request-for" v-for="(request, index) in friendRequests" :key="index">
         <view class="request-elem" :style=styles.lightPrimaryColor>
-          <text class="request-user" :style=styles.primaryTextColor>{{request.user}}</text>
+          <text class="request-user" :style=styles.primaryTextColor>{{request.username}}</text>
           <view class="request-answer">
-            <touchable-opacity class="request-accept" :on-press="(index) => answerRequest(index, true)">
+            <touchable-opacity class="request-accept" :on-press="(index) => answerRequest(request.id, true)">
               <text :style=styles.secondaryTextColor>Accepter</text>
             </touchable-opacity>
-            <touchable-opacity class="request-decline" :on-press="(index) => answerRequest(index, false)">
+            <touchable-opacity class="request-decline" :on-press="(index) => declineRequest(request.id)">
               <text :style=styles.secondaryTextColor>Refuser</text>
             </touchable-opacity>
           </view>
-          <!-- <AntDesign name="check" size="28" color="green"/>
+          <!-- <AntDesign name="check" size="28" color="green"/> 
           <Entypo name="cross" size="28" color="red"/> -->
         </view>
       </view> 
       <view class="sep" :style=styles.separatorColor></view>
     </view>
 
+    <!--  Rechercher des amis -->
     <view class = "search-container">
       <text class="title" :style=styles.titlePrimaryColor>Chercher des amis</text>
       <view class="input-container">
         <text-input class = "input-text" 
-        placeholder="Envoie une invitation à un amis !" 
+        placeholder="Envoie une invitation à un ami !" 
         v-model= "searchPseudo"
         placeholderTextColor="grey"
         />
       </view>
-      <touchable-opacity class="search-btn-container" :style=styles.defaultPrimaryColor>
-        <text class="search-btn-text" :style=styles.textPrimaryColor>Demander en amis</text>
+      <touchable-opacity class="search-btn-container" :style=styles.defaultPrimaryColor :on-press="sendFriendRequest">
+        <text class="search-btn-text" :style=styles.textPrimaryColor>Demander en ami</text>
       </touchable-opacity>
+      <view v-if="loading" class="loadingIndicatorContainer">
+            <activity-indicator v-if="loading" size="large" color="black"/>
+        </view>
       <view class="sep" :style=styles.separatorColor></view>
     </view>
 
-    <view class ="friends-container" >
+    <!-- Liste des amis -->
+    <view class ="friends-container" v-if="existsFriends" >
       <view class="friends-title-container">
         <text class="title" :style=styles.titlePrimaryColor>Liste des amis</text>
       </view>
       <view class= "friends-for" :style=styles.separatorColor>
         <view  v-for="(friend, index) in friends" :key="index">
-          <touchable-opacity>
+          <touchable-opacity :on-press="() => goToFriendProfile(friend.id)">
           <view class="friend-elem" :style=styles.lightPrimaryColor>
-            <text class="friend-name" :style=styles.titlePrimaryColor>{{friend.name}}</text>
+            <text class="friend-name" :style=styles.titlePrimaryColor>{{friend.username}}</text>
             <text class="friend-score" :style=styles.titlePrimaryColor>{{friend.score}}</text>
           </view>
           </touchable-opacity>
@@ -55,6 +62,137 @@
   </view>
 </scroll-view>
 </template>
+
+
+<script>
+import {request} from '../../api.js';
+import React from 'react';
+import { Alert } from 'react-native';
+import styles from "../../palette.js"
+import { Entypo, AntDesign } from '@expo/vector-icons';
+
+export default {
+    props: {
+        navigation: {
+          type: Object
+      }
+  },
+  components: {
+    
+  },
+    data:   function() {
+      return {
+        styles:styles,
+        searchPseudo: '',
+        existFriendRequests: false,
+        existsFriends: false,
+        loading:false,
+        friendRequests: [],
+        friends :[],
+      }
+    },
+    methods:{
+      getFriendRequests(){ 
+        const self = this;
+       request({
+        method: 'get',
+        url: '/api/getFriendRequests'
+        }).then(function(response){
+          if(response.data.length > 0){
+            self.friendRequests = response.data
+            self.existFriendRequests = true
+          }
+
+        })
+      },
+
+      declineRequest(userId){
+        Alert.alert("Es-tu sûr de refuser cette demande d'ami ?",'',[
+                    {text: 'Annuler'},
+                    {text:'Refuser', onPress:() => this.answerRequest(userId,false)}
+                ])
+      },
+
+      answerRequest(userId, accept){
+        //Remove the friend request from the screen
+        this.friendRequests = this.friendRequests.filter(function(request) {
+          return request.id != userId;
+        });
+        if(this.friendRequests.length == 0){
+          this.existFriendRequests = false
+        }
+
+        var bodyFormData = new FormData();
+        bodyFormData.append('userId', userId);
+        const self = this;
+        // POST the answer here
+        request({
+        method: 'post',
+        url: '/api/' + (accept ? 'accept' : 'decline') +'FriendRequest', //post to the right url depending on the answer
+        data: bodyFormData,
+        headers: {'Content-Type': 'multipart/form-data' }
+        }).then(function(response){
+          if(accept){
+            //Refresh friend list
+            self.getFriends();  
+          } 
+        }).catch(function(error){
+          console.log(error) 
+
+        })
+      },
+
+      sendFriendRequest(){
+        this.loading = true
+        var bodyFormData = new FormData();
+        console.log("Psuedo "+this.searchPseudo)
+        bodyFormData.append('username', this.searchPseudo);
+        const self = this;
+        // POST the answer here
+        request({
+        method: 'post',
+        url: '/api/friendRequest',
+        data: bodyFormData,
+        headers: {'Content-Type': 'multipart/form-data' }
+        }).then(function(response){
+          self.loading = false
+          // console.log(response)
+        }).catch(function(error){
+          self.loading = false
+          console.log(error) 
+
+        })
+      },
+
+      getFriends(){
+        const self = this;
+        request({
+        method: 'get',
+        url: '/api/getFriends'
+        }).then(function(response){
+          if(response.data.length > 0){
+            self.friends = response.data
+            self.existsFriends = true
+
+          }
+        })
+      },
+
+      goToFriendProfile(friendId){
+        console.log(friendId)
+        this.navigation.navigate("FriendProfile",{friendId:friendId});
+      }
+
+      
+
+    },
+    mounted: function() {
+      this.getFriends()
+      this.getFriendRequests();
+    }
+  }
+</script>
+
 
 <style>
 .container {
@@ -176,95 +314,3 @@
 
 
 </style>
-
-<script>
-import {request} from '../../api.js';
-import React from 'react';
-import styles from "../../palette.js"
-import { Entypo, AntDesign } from '@expo/vector-icons';
-
-export default {
-    props: {
-        navigation: {
-          type: Object
-      }
-  },
-  components: {
-    
-  },
-    data:   function() {
-      return {
-        styles:styles,
-        searchPseudo: '',
-        existFriendRequests: true,
-        friendRequests: [
-          {
-            user: "Camarade 1"
-          },
-          {
-            user: "Collègue 2"
-          },
-          {
-            user: "Connaissance 3"
-          }
-        ],
-
-        friends :[
-          {
-            name: "George",
-            score: 3,
-          },
-          {
-            name: "Georgette",
-            score: 4,
-          },
-          {
-            name: "Valentine",
-            score: 2,
-          },
-          {
-            name: "Valentin",
-            score: 5,
-          },
-          {
-            name: "xXPussySlayerXx",
-            score: 1,
-          },
-          {
-            name: "Claude",
-            score: 6,
-          },
-          {
-            name: "asdsadam,",
-            score: 0,
-          },
-          {
-            name: "1231",
-            score: 5,
-          },
-          {
-            name: "$à¨à$",
-            score: 3,
-          },
-          {
-            name: "______",
-            score: 3,
-          },
-
-
-        ]
-      }
-    },
-    methods:{
-      answerRequest(index, accepted){
-        // POST the answer here
-        this.friendRequests.splice(index,1)
-      }
-    },
-    mounted: function() {
-      this.friends = this.friends.sort(function(a,b){
-        return b.score - a.score;
-      });
-    }
-  }
-</script>
