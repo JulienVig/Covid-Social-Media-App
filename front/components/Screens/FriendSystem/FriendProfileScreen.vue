@@ -59,7 +59,7 @@ import axios from "axios";
                 baseURL: baseURL,
                 cats: [],
                 res: [],
-                username: 'John Doe',
+                username: '',
                 nbAchieved: 0,
                 nbAll: 0,
                 loading: true,
@@ -243,6 +243,7 @@ import axios from "axios";
 .completed-container{
     justify-content: center;
     align-items: center;
+    /* width:98%; */
 }
 
 .completed-title{

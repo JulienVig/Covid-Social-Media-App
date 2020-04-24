@@ -7,7 +7,7 @@
         <text-input class="input-container" 
           placeholder="pseudo" 
           v-model="username" 
-          maxLength=15
+
         />
         <text class="text-container">Mot de passe :</text>
         <text-input class="input-container" 
@@ -71,8 +71,8 @@ export default {
         this.loading = true
         var bodyFormData = new FormData();
         bodyFormData.append('username', this.username);
-        bodyFormData.append('pwd', this.password);
-        bodyFormData.append('pwdBis', this.verification);
+        bodyFormData.append('hashPwd', this.password);
+        bodyFormData.append('hashPwd2', this.verification);
         const self = this;
         request({
         method: 'post',

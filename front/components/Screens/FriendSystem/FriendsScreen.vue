@@ -31,6 +31,7 @@
         placeholder="Envoie une invitation à un ami !" 
         v-model= "searchPseudo"
         placeholderTextColor="grey"
+        autoCapitalize="none"
         />
       </view>
       <touchable-opacity class="search-btn-container" :style=styles.defaultPrimaryColor :on-press="sendFriendRequest">
@@ -49,7 +50,7 @@
       </view>
       <view class= "friends-for" :style=styles.separatorColor>
         <view  v-for="(friend, index) in friends" :key="index">
-          <touchable-opacity :on-press="() => goToFriendProfile(friend.id)">
+          <touchable-opacity :on-press="() => goToFriendProfile(friend.userId)">
           <view class="friend-elem" :style=styles.lightPrimaryColor>
             <text class="friend-name" :style=styles.titlePrimaryColor>{{friend.username}}</text>
             <text class="friend-score" :style=styles.titlePrimaryColor>{{friend.score}}</text>
@@ -98,11 +99,8 @@ export default {
         method: 'get',
         url: '/api/getFriendRequests'
         }).then(function(response){
-          if(response.data.length > 0){
-            self.friendRequests = response.data
-            self.existFriendRequests = true
-          }
-
+          self.friendRequests = response.data
+          self.existFriendRequests = self.friendRequests.length > 0
         })
       },
 
@@ -121,19 +119,17 @@ export default {
         if(this.friendRequests.length == 0){
           this.existFriendRequests = false
         }
-
         var bodyFormData = new FormData();
         bodyFormData.append('userId', userId);
         const self = this;
         // POST the answer here
         request({
         method: 'post',
-        url: '/api/' + (accept ? 'accept' : 'decline') +'FriendRequest', //post to the right url depending on the answer
+        url: '/api/' + (accept ? 'accept' : 'refuse') +'FriendRequest', //post to the right url depending on the answer
         data: bodyFormData,
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
           if(accept){
-            //Refresh friend list
             self.getFriends();  
           } 
         }).catch(function(error){
@@ -145,7 +141,6 @@ export default {
       sendFriendRequest(){
         this.loading = true
         var bodyFormData = new FormData();
-        console.log("Psuedo "+this.searchPseudo)
         bodyFormData.append('username', this.searchPseudo);
         const self = this;
         // POST the answer here
@@ -156,10 +151,21 @@ export default {
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
           self.loading = false
-          // console.log(response)
-        }).catch(function(error){
+
+          //Only refresh if the searched username is in the friend requests or the friend list
+          if(self.friendRequests.filter(request => request.username === self.searchPseudo)){
+            self.getFriendRequests();
+            }
+          if(self.friends.filter(friend => friend.username === self.searchPseudo)){
+            self.getFriends();
+          }
+
+          self.searchPseudo = ""
           self.loading = false
+        }).catch(function(error){
           console.log(error) 
+          self.loading = false
+          self.searchPseudo = ""
 
         })
       },
@@ -170,19 +176,14 @@ export default {
         method: 'get',
         url: '/api/getFriends'
         }).then(function(response){
-          if(response.data.length > 0){
-            self.friends = response.data
-            self.existsFriends = true
-
-          }
+          self.friends = response.data
+          self.existsFriends = self.friends.length > 0
         })
       },
 
       goToFriendProfile(friendId){
         this.navigation.navigate("FriendProfile",{friendId:friendId});
       }
-
-      
 
     },
     mounted: function() {

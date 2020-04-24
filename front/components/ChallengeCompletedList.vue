@@ -1,5 +1,6 @@
 <template>
     <scroll-view class = "myScrollView">
+      <view class ="main">
           <view class = "element-border" v-for="(challenge, index) in challenges" :key="index">
             <touchable-opacity class = "element-container" :on-press="() => goToChallenge(challenge)">
               <view class ="challenge-text">
@@ -11,14 +12,19 @@
               </view>
             </touchable-opacity>
           </view>
+      </view>
     </scroll-view>
 </template>
 
 <style >
+
+.main{
+  align-items: center;
+}
 .element-border {
   border-bottom-width: 1;
   border-color: gray;
-  width: 100%;
+  width: 97%;
   padding: 15;
 }
 
