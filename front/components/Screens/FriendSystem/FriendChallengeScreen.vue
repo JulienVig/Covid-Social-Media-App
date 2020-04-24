@@ -145,7 +145,6 @@
 
 <script>
 import {request, baseURL} from '../../../api.js';
-import ChallengeMain from './ChallengeMain';
 import styles from "../../../palette.js"
 
 export default {
@@ -155,7 +154,6 @@ export default {
       }
   },
   components: {
-    ChallengeMain
   },
     data:   function() {
       return {
