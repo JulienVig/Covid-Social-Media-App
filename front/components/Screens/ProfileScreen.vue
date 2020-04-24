@@ -59,7 +59,7 @@ import axios from "axios";
                 baseURL: baseURL,
                 cats: [],
                 res: [],
-                username: 'John Doe',
+                username: '',
                 nbAchieved: 0,
                 nbAll: 0,
                 loading: true,

@@ -39,10 +39,10 @@
 
 <script>
 
-import {request, baseURL} from '../../api.js';
+import {request, baseURL} from '../../../api.js';
 import { Alert } from 'react-native';
-import ChallengeCompletedList from '../ChallengeCompletedList';
-import styles from '../../palette';
+import ChallengeCompletedList from '../../ChallengeCompletedList';
+import styles from '../../../palette';
 import axios from "axios";
     export default {
         props: {
@@ -77,7 +77,6 @@ import axios from "axios";
             },
 
             fetch : function(){
-                console.log(this.navigation.state.params.friendId)
                 const self = this
                 request({
                     method: 'GET',
@@ -116,7 +115,6 @@ import axios from "axios";
                         
                         if(self.cats[index] != undefined){
                             if(self.cats != undefined && index == self.cats.length){
-                                // console.log("everything loading at index : " + index)
                                 laoded = true;
                              }
                             self.res.push({
@@ -152,7 +150,11 @@ import axios from "axios";
             },
             
             goToChallenge(challenge){
-                this.navigation.navigate("ChallengeDetail", {challengeId:challenge.id})
+                this.navigation.navigate("FriendChallenge", {
+                    challengeId:challenge.id,
+                    userId: this.userId,
+                    username: this.username,
+                })
             }
         },
 

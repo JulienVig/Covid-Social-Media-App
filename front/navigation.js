@@ -14,8 +14,9 @@ import ChallengeDetailScreen from "./components/Screens/ChallengeDetailScreen";
 import CategoryScreen from "./components/Screens/CategoryScreen";
 import ValidationChallengeScreen from "./components/Screens/ValidationChallengeScreen";
 import ChallengesByCategoryScreen from "./components/Screens/ChallengesByCategoryScreen";
-import FriendsScreen from "./components/Screens/FriendsScreen";
-import FriendProfileScreen from "./components/Screens/FriendProfileScreen";
+import FriendsScreen from "./components/Screens/FriendSystem/FriendsScreen";
+import FriendProfileScreen from "./components/Screens/FriendSystem/FriendProfileScreen";
+import FriendChallengeScreen from "./components/Screens/FriendSystem/FriendChallengeScreen";
 
 const Covid19Tab = createStackNavigator(
   {
@@ -204,6 +205,21 @@ const FriendsTab = createStackNavigator(
     },
     FriendProfile: {
       screen: FriendProfileScreen,
+      navigationOptions: {
+        title: '',
+        headerStyle: {
+          backgroundColor: '#3d9d84',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: '200',
+          fontSize: 30,
+        },
+        animationTypeForReplace: "pop",
+      }
+    },
+    FriendChallenge: {
+      screen: FriendChallengeScreen,
       navigationOptions: {
         title: '',
         headerStyle: {

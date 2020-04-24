@@ -65,10 +65,10 @@
 
 
 <script>
-import {request} from '../../api.js';
+import {request} from '../../../api.js';
 import React from 'react';
 import { Alert } from 'react-native';
-import styles from "../../palette.js"
+import styles from "../../../palette.js"
 import { Entypo, AntDesign } from '@expo/vector-icons';
 
 export default {
@@ -179,7 +179,6 @@ export default {
       },
 
       goToFriendProfile(friendId){
-        console.log(friendId)
         this.navigation.navigate("FriendProfile",{friendId:friendId});
       }
 
