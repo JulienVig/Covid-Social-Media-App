@@ -10,6 +10,6 @@ branches:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash deploy.sh ec2-18-234-142-249.compute-1.amazonaws.com
+  script: bash ../deploy.sh ec2-18-234-142-249.compute-1.amazonaws.com
   on:
     branch: continuous-deployment
