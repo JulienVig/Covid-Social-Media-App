@@ -1,4 +1,7 @@
 language: java
+cache:
+  directories:
+  - back/build/libs
 before_install:
 - cd back
 - chmod +x gradlew
