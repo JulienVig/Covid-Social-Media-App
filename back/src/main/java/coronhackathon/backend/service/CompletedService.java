@@ -4,13 +4,9 @@ import coronhackathon.backend.DTO.UserDTO;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
-import coronhackathon.backend.repository.ChallengeRepository;
 import coronhackathon.backend.repository.CompletedRepository;
-import coronhackathon.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
