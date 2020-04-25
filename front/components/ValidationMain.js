@@ -56,7 +56,7 @@ export default class ValidationMain extends React.Component {
                size = "large"
         />
         <View style={{minHeight:100}}>
-          {this.state.validated  && <AntDesign name ="checkcircle" size="50" color='#3d9d84'/>}
+          {this.state.validated  && <AntDesign name ="checkcircle" size={50} color='#3d9d84'/>}
         </View>
       </View>
     );
