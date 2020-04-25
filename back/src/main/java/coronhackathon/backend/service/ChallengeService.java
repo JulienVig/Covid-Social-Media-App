@@ -95,7 +95,7 @@ public class ChallengeService {
     }
     private Challenge checkChallengeExists(Optional<Challenge> oc, String name, String value){
         if(!oc.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with "+name+" : " + value + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with "+name+" : " + value + " not found");
         }
         return oc.get();
     }
