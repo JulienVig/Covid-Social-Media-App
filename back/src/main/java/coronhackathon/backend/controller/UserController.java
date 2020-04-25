@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,23 +39,26 @@ public class UserController {
     @RequestMapping(value = "/api/userProfile", method = RequestMethod.GET)
     @ResponseBody
     public UserDTO currentUserProfile(Principal principal) {
-        return userService.getUserByUsername(principal.getName());
+        return new UserDTO(userService.getUserByUsername(principal.getName()));
     }
 
     @GetMapping("/api/allUsers")
     public List<UserDTO> allUsers() {
-        return userService.getAllUsers();
+        List<UserDTO> uDto = new ArrayList<>();
+        for(User u  : userService.getAllUsers())
+            uDto.add(new UserDTO(u));
+        return uDto;
     }
 
 
     @RequestMapping(path = "/api/getUser/{userId}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable long userId) {
-        return userService.getUser(userId);
+        return new UserDTO(userService.getUser(userId));
     }
 
     @RequestMapping(path = "/api/getUserByName/{username}", method = RequestMethod.GET)
     public UserDTO getUserByName(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+        return new UserDTO(userService.getUserByUsername(username));
     }
 
     /**

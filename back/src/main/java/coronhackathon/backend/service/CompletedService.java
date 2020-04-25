@@ -1,5 +1,6 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.DTO.UserDTO;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
@@ -62,13 +63,13 @@ public class CompletedService {
         return l;
     }
 
-    public List<User> getCompletersOfChallenge(long challengeId) {
-        List<User> l = new ArrayList<User>();
+    public List<UserDTO> getCompletersOfChallenge(long challengeId) {
+        List<UserDTO> l = new ArrayList<>();
         Optional<Challenge> oc = challengeRepository.findById(challengeId);
         if (!oc.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : " + challengeId + " not found");
         for (HasCompleted hc : completedRepository.findByChallenge(oc.get())) {
-            l.add(hc.getUser());
+            l.add(new UserDTO(hc.getUser()));
         }
         return l;
     }

@@ -23,23 +23,18 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<UserDTO> getAllUsers() {
-        List<UserDTO> uDto = new ArrayList<>();
-        for(User u  : userRepository.findAll())
-            uDto.add(new UserDTO(u));
-        return uDto;
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public UserDTO getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         Optional<User> ou = userRepository.findByUsername(username);
-        User u = checkUserExists(ou, "username", username);
-        return new UserDTO(u);
+        return checkUserExists(ou, "username", username);
     }
 
-    public UserDTO getUser(long id) {
+    public User getUser(long id) {
         Optional<User> ou = userRepository.findById(id);
-        User u = checkUserExists(ou, "id",""+id);
-        return new UserDTO(u);
+        return checkUserExists(ou, "id",""+id);
     }
 
     public void insert(User user) {
