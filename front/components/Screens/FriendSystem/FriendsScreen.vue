@@ -34,9 +34,16 @@
         autoCapitalize="none"
         />
       </view>
+      <view class="search-feedback">
+        <text class="search-feedback-text" v-if="searchSuccess" :style=styles.titlePrimaryColor>Invitation envoyée</text>
+        <text class="search-feedback-text" v-if="searchUnknown" :style=styles.titlePrimaryColor>Ce pseudo n'existe pas ...</text>
+        <text class="search-feedback-text" v-if="searchAlreadyFriend" :style=styles.titlePrimaryColor>Vous êtes déjà amis !</text>
+        <text class="search-feedback-text" v-if="searchAlreadyAsked" :style=styles.titlePrimaryColor>Une invitation a déjà été envoyée</text>
+      </view>
       <touchable-opacity class="search-btn-container" :style=styles.defaultPrimaryColor :on-press="sendFriendRequest">
         <text class="search-btn-text" :style=styles.textPrimaryColor>Demander en ami</text>
       </touchable-opacity>
+
       <view v-if="loading" class="loadingIndicatorContainer">
             <activity-indicator v-if="loading" size="large" color="black"/>
         </view>
@@ -90,6 +97,10 @@ export default {
         loading:false,
         friendRequests: [],
         friends :[],
+        searchSuccess:false,
+        searchUnknown:false,
+        searchAlreadyFriend:false,
+        searchAlreadyAsked:false,
       }
     },
     methods:{
@@ -134,7 +145,6 @@ export default {
           } 
         }).catch(function(error){
           console.log(error) 
-
         })
       },
 
@@ -150,8 +160,15 @@ export default {
         data: bodyFormData,
         headers: {'Content-Type': 'multipart/form-data' }
         }).then(function(response){
+          console.log(response.data)
           self.loading = false
+          self.searchPseudo = ""
 
+          self.searchUnknown = false;
+          self.searchAlreadyFriend = response.data.includes("already friends")
+          self.searchAlreadyAsked = response.data.includes("already asked")
+          self.searchSuccess= !(self.searchAlreadyFriend || self.searchAlreadyAsked);
+          
           //Only refresh if the searched username is in the friend requests or the friend list
           if(self.friendRequests.filter(request => request.username === self.searchPseudo)){
             self.getFriendRequests();
@@ -160,10 +177,11 @@ export default {
             self.getFriends();
           }
 
-          self.searchPseudo = ""
-          self.loading = false
         }).catch(function(error){
-          console.log(error) 
+          self.searchUnknown = true;
+          self.searchSuccess= false;
+          self.searchAlreadyFriend = false;
+          self.searchAlreadyAsked = false;
           self.loading = false
           self.searchPseudo = ""
 
@@ -176,7 +194,6 @@ export default {
         method: 'get',
         url: '/api/getFriends'
         }).then(function(response){
-          console.log(response.data)
           self.friends = response.data
           self.existsFriends = self.friends.length > 0
         })
@@ -251,6 +268,17 @@ export default {
   align-items: center;
 }
 
+.search-feedback{
+  margin-bottom:20;
+}
+
+.search-feedback-text{
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  
+}
+
 .input-container{
   width:80%;
   min-height:30;
@@ -303,10 +331,6 @@ export default {
   border-radius:5;
   margin-bottom:10;
   padding:10;
-}
-
-.friend-name{
-
 }
 
 .friend-score{

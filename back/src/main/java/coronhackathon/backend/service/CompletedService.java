@@ -100,7 +100,7 @@ public class CompletedService {
         }
         hc.setChallenge(challenge);
         hc.setUser(user);
-        hc.setCommentary(commentary);
+        hc.setCommentary(commentary.trim());
 
         if(imgBase64.length() > 0) {
 

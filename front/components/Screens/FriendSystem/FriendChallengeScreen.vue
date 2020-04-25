@@ -28,7 +28,7 @@
           <text class="comment" >{{user.comment}}</text>
           </view>
         </view>
-        <view class="image-container">
+        <view class="image-container" v-if="user.image != null && user.image.length > 0">
           <image class='image'
             :source="{uri: baseURL + '/static/image/jpg?path=' + user.image}"
             :style=styles.separatorColor
@@ -210,6 +210,8 @@ export default {
     mounted: function() {
       this.getChallenge();
       this.getDataCompleted();
+      console.log(this.user)
+      console.log(this.user.image)
     }
   }
 </script>
