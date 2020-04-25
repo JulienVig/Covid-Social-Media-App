@@ -36,7 +36,7 @@ public class TestController {
     //TODO delete this test method when not needed anymore
     @GetMapping("/ping")
     public String ping() {
-        return "pong! pong!";
+        return "pong!";
     }
 
     //TODO delete this test method when not needed anymore
