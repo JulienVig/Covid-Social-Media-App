@@ -2,7 +2,14 @@
 
 # Script
 cd
-killall java
-java -jar backend-0.0.1-SNAPSHOT.jar &
-disown
+# Stopping the currently executing server
+PID=$(cat pid.txt)
+kill $PID
+#Replacing the old file by the new one freshly transfered
+rm backend.jar
+mv backend-bis.jar backend.jar
+#Launching new server
+nohup java -jar backend.jar > log.txt 2> errors.txt < /dev/null &
+PID=$!
+echo $PID > pid.txt
 exit 0
