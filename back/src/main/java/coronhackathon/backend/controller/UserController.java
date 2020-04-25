@@ -50,8 +50,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/api/getUserByName/{username}", method = RequestMethod.GET)
-    public Optional<User> getUserByName(@PathVariable String username) {
-
+    public Optional<UserDTO> getUserByName(@PathVariable String username) {
         return userService.getUserByUsername(username);
     }
 

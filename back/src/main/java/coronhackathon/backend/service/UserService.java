@@ -1,5 +1,6 @@
 package coronhackathon.backend.service;
 
+import coronhackathon.backend.DTO.UserDTO;
 import coronhackathon.backend.entity.Challenge;
 import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
@@ -27,8 +28,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserDTO> getUserByUsername(String username) {
+        Optional<User> u = userRepository.findByUsername(username);
+        UserDTO uDto =
+        return Optional.of(uDto);
     }
 
     public Optional<User> getUser(Long id) {
