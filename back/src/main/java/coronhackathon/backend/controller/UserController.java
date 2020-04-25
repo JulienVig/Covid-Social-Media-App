@@ -1,5 +1,6 @@
 package coronhackathon.backend.controller;
 
+import coronhackathon.backend.DTO.UserDTO;
 import coronhackathon.backend.entity.Challenge;
 
 import coronhackathon.backend.entity.User;
@@ -34,7 +35,7 @@ public class UserController {
 
     @RequestMapping(value = "/api/userProfile", method = RequestMethod.GET)
     @ResponseBody
-    public Optional<User> currentUserProfile(Principal principal) {
+    public UserDTO currentUserProfile(Principal principal) {
         return userService.getUserByUsername(principal.getName());
     }
 
@@ -45,12 +46,12 @@ public class UserController {
 
 
     @RequestMapping(path = "/api/getUser/{userId}", method = RequestMethod.GET)
-    public Optional<User> getUser(@PathVariable long userId) {
+    public UserDTO getUser(@PathVariable long userId) {
         return userService.getUser(userId);
     }
 
     @RequestMapping(path = "/api/getUserByName/{username}", method = RequestMethod.GET)
-    public Optional<UserDTO> getUserByName(@PathVariable String username) {
+    public UserDTO getUserByName(@PathVariable String username) {
         return userService.getUserByUsername(username);
     }
 

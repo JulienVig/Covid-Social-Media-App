@@ -28,14 +28,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<UserDTO> getUserByUsername(String username) {
-        Optional<User> u = userRepository.findByUsername(username);
-        UserDTO uDto =
-        return Optional.of(uDto);
+    public UserDTO getUserByUsername(String username) {
+        Optional<User> ou = userRepository.findByUsername(username);
+        User u = checkUserExists(ou, "username", username);
+        return new UserDTO(u);
     }
 
-    public Optional<User> getUser(Long id) {
-        return userRepository.findById(id);
+    public UserDTO getUser(long id) {
+        Optional<User> ou = userRepository.findById(id);
+        User u = checkUserExists(ou, "id",""+id);
+        return new UserDTO(u);
     }
 
     public void insert(User user) {
@@ -67,5 +69,12 @@ public class UserService {
         } else {
             throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "passwords dont match");
         }
+    }
+
+    private User checkUserExists(Optional<User> ou, String name, String value){
+        if(!ou.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with "+name+" : " + value + " not found");
+        }
+        return ou.get();
     }
 }
