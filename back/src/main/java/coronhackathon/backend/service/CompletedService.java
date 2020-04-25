@@ -105,7 +105,7 @@ public class CompletedService {
 
         if(imgBase64.length() > 0) {
 
-            Long id = userService.getUserByUsername(username).get().getId();
+            Long id = userService.getUserByUsername(username).getId();
 
             String destinationPath = "resources/myCompletedImage/hasCompleted_"
                     + Long.toString(id)

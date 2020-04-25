@@ -27,7 +27,7 @@ public class FriendsController {
      */
     @RequestMapping(path = "/api/getFriends", method = RequestMethod.GET)
     public List<FriendsService.UserAndNbChallenge> getFriendsOrderByCompletedChallenges(Principal principal) {
-        User user = userService.getUserByUsername(principal.getName()).get();
+        User user = userService.getUserByUsername(principal.getName());
         return friendsService.getFriendsOrderByCompletedChallenges(user);
     }
 
@@ -93,6 +93,6 @@ public class FriendsController {
      * Return the current user
      */
     private User getCurrentUser(Principal principal){
-        return userService.getUserByUsername(principal.getName()).get();
+        return userService.getUserByUsername(principal.getName());
     }
 }
