@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/api/allUsers")
-    public List<User> allUsers() {
+    public List<UserDTO> allUsers() {
         return userService.getAllUsers();
     }
 

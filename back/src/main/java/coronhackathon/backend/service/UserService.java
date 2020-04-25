@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> uDto = new ArrayList<>();
+        for(User u  : userRepository.findAll())
+            uDto.add(new UserDTO(u));
+        return uDto;
     }
 
     public UserDTO getUserByUsername(String username) {
