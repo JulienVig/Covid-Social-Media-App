@@ -130,8 +130,8 @@ export default class ValidationMain extends React.Component {
     let bodyFormData = new FormData();
     bodyFormData.append('challengeId', this.props.challengeId);
     bodyFormData.append('commentary',this.state.commentary);
-    console.log(this.state.commentary);
-    if(this.state.image != null){
+
+    if(this.state.image != null && this.state.image.base64 != null){
       let uriParts = this.state.image.uri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       fileType = ['jpg', 'png'].includes(fileType) ? fileType : 'jpg';
