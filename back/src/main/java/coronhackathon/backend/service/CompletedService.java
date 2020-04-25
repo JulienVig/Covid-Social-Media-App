@@ -25,26 +25,22 @@ import java.util.Optional;
 @Service
 public class CompletedService {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ChallengeRepository challengeRepository;
-    @Autowired
     private CompletedRepository completedRepository;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ChallengeService challengeService;
 
     public long getNumberOfCompletedChallenges(long userId){
         return getCompletedChallenges(userId).size();
     }
     
     public List<Challenge> getCompletedChallenges(long userId) {
-        List<Challenge> l = new ArrayList<Challenge>();
-        Optional<User> ou = userRepository.findById(userId);
-        if (!ou.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : " + userId + " not found");
-        List<HasCompleted> lhc = completedRepository.findByUser(ou.get());
+        List<Challenge> l = new ArrayList<>();
+        User u = userService.getUser(userId);
+        List<HasCompleted> lhc = completedRepository.findByUser(u);
         for (HasCompleted hc : lhc) {
             l.add(hc.getChallenge());
         }
@@ -52,11 +48,9 @@ public class CompletedService {
     }
 
     public List<Challenge> getCompletedChallenges(String username) {
-        List<Challenge> l = new ArrayList<Challenge>();
-        Optional<User> ou = userRepository.findByUsername(username);
-        if (!ou.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with name : " + username + " not found");
-        List<HasCompleted> lhc = completedRepository.findByUser(ou.get());
+        List<Challenge> l = new ArrayList<>();
+        User u = userService.getUserByUsername(username);
+        List<HasCompleted> lhc = completedRepository.findByUser(u);
         for (HasCompleted hc : lhc) {
             l.add(hc.getChallenge());
         }
@@ -65,10 +59,8 @@ public class CompletedService {
 
     public List<UserDTO> getCompletersOfChallenge(long challengeId) {
         List<UserDTO> l = new ArrayList<>();
-        Optional<Challenge> oc = challengeRepository.findById(challengeId);
-        if (!oc.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : " + challengeId + " not found");
-        for (HasCompleted hc : completedRepository.findByChallenge(oc.get())) {
+        Challenge c = challengeService.getChallenge(challengeId);
+        for (HasCompleted hc : completedRepository.findByChallenge(c)) {
             l.add(new UserDTO(hc.getUser()));
         }
         return l;
@@ -83,16 +75,8 @@ public class CompletedService {
      */
     public String addCompletedChallenge(String username, long challengeId, String commentary, String imgBase64, String imgFormat)
     throws IOException {
-        Optional<User> ou = userRepository.findByUsername(username);
-        Optional<Challenge> oc = challengeRepository.findById(challengeId);
-        if (!ou.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with name : " + username + " not found");
-        if (!oc.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : " + challengeId + " not found");
-
-        User user = ou.get();
-        Challenge challenge = oc.get();
-
+        User user = userService.getUserByUsername(username);
+        Challenge challenge = challengeService.getChallenge(challengeId);
         HasCompleted hc;
         if(completedRepository.findByUserAndChallenge(user, challenge).isPresent())
             hc = completedRepository.findByUserAndChallenge(user, challenge).get();
@@ -126,11 +110,8 @@ public class CompletedService {
 
     public List<Challenge> getCompletedChallengesByCategory(long userId, long categoryId) {
         List<Challenge> l = new ArrayList<>();
-        Optional<User> ou = userRepository.findById(userId);
-        if (!ou.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with id : " + userId + " not found");
-
-        for (HasCompleted hc : completedRepository.findByUser(ou.get())) {
+        User u = userService.getUser(userId);
+        for (HasCompleted hc : completedRepository.findByUser(u)) {
             if (hc.getChallenge().getCategoryId() == categoryId)
                 l.add(hc.getChallenge());
         }
@@ -139,11 +120,8 @@ public class CompletedService {
 
     public List<Challenge> getCompletedChallengesByCategory(String username, long categoryId) {
         List<Challenge> l = new ArrayList<>();
-        Optional<User> ou = userRepository.findByUsername(username);
-        if (!ou.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user with name : " + username + " not found");
-
-        for (HasCompleted hc : completedRepository.findByUser(ou.get())) {
+        User u = userService.getUserByUsername(username);
+        for (HasCompleted hc : completedRepository.findByUser(u)) {
             if (hc.getChallenge().getCategoryId() == categoryId)
                 l.add(hc.getChallenge());
         }
@@ -162,12 +140,10 @@ public class CompletedService {
      * return a list of (user, comment) pairs
      */
     public List<List<String>> getCommentsOfChallenge(long challengeId) {
-        Optional<Challenge> oc = challengeRepository.findById(challengeId);
-        if (!oc.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : " + challengeId + " not found");
+        Challenge challenge = challengeService.getChallenge(challengeId);
 
         List<List<String>> userAndComments = new ArrayList<>();
-        for (HasCompleted hc : completedRepository.findByChallenge(oc.get())) {
+        for (HasCompleted hc : completedRepository.findByChallenge(challenge)) {
 
             List<String> UserAndComment = new ArrayList<String>();
             UserAndComment.add(hc.getUser().getUsername());
@@ -182,14 +158,10 @@ public class CompletedService {
     public List<String> getDataCompleted(String name, long challengeId){
         List<String> l = new ArrayList<>();
 
-        Optional<User> ou = userRepository.findByUsername(name);
-        if (!ou.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with username : " + name + " not found");
 
-        Optional<Challenge> oc = challengeRepository.findById(challengeId);
-        if (!oc.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with id : " + challengeId + " not found");
-        Optional<HasCompleted> oh  = completedRepository.findByUserAndChallenge(ou.get(),oc.get());
+        User u = userService.getUserByUsername(name);
+        Challenge challenge = challengeService.getChallenge(challengeId);
+        Optional<HasCompleted> oh  = completedRepository.findByUserAndChallenge(u,challenge);
 
         if (!oh.isPresent()) //If the user didn't complete the challenge yet return an empty array
             return l;
