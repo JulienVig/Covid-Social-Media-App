@@ -72,8 +72,7 @@ export default class ImagePickerExample extends React.Component {
       method: 'GET',
       url: "/api/getDataCompleted/"+this.props.challengeId, 
     }).then(function(response){
-      console.log('Success !')
-      console.log(response.data);
+      // console.log(response.data);
       if(response.data !== []){
         self.setState({commentary: response.data[0]})
         if(response.data.length > 1){
