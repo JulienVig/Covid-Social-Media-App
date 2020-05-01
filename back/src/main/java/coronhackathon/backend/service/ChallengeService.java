@@ -55,23 +55,6 @@ public class ChallengeService {
         return challengeRepository.countByCategoryId(category);
     }
 
-    public List<Challenge> getNineChallenges() {
-        List<Challenge> all = getAllChallenges();
-        Collections.shuffle(all);
-        return all.subList(0, Math.min(9, all.size()));
-    }
-
-    public List<Boolean> getNineBoolean(String username, List<Challenge> lc) {
-        List<Boolean> lb = new ArrayList<>();
-        User u = userService.getUserByUsername(username);
-        List<Challenge> cc = completedService.getCompletedChallenges(userService.getUserByUsername(username));
-        // creates the lists of booleans corresponding to the given list of challenges
-        for (Challenge c : lc) {
-            lb.add(cc.contains(c));
-        }
-        return lb;
-    }
-
     public List<Boolean> getChallengeBool(String username, long categoryId) {
         List<Boolean> l = new ArrayList<>();
         User u = userService.getUserByUsername(username);
