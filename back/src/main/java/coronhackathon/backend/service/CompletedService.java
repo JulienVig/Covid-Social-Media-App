@@ -30,23 +30,20 @@ public class CompletedService {
     private ChallengeService challengeService;
 
     public long getNumberOfCompletedChallenges(long userId){
-        return getCompletedChallenges(userId).size();
+        return getCompletedChallenges(userService.getUser(userId)).size();
     }
     
-    public List<Challenge> getCompletedChallenges(long userId) {
+    public List<Challenge> getCompletedChallenges(User user) {
         List<Challenge> l = new ArrayList<>();
-        User u = userService.getUser(userId);
-        List<HasCompleted> lhc = completedRepository.findByUser(u);
+        List<HasCompleted> lhc = completedRepository.findByUser(user);
         for (HasCompleted hc : lhc) {
             l.add(hc.getChallenge());
         }
         return l;
     }
-
-    public List<Challenge> getCompletedChallenges(String username) {
+    public List<Challenge> getCompletedAndApprovedChallenges(User user) {
         List<Challenge> l = new ArrayList<>();
-        User u = userService.getUserByUsername(username);
-        List<HasCompleted> lhc = completedRepository.findByUser(u);
+        List<HasCompleted> lhc = completedRepository.findByUserAndApproved(user, true);
         for (HasCompleted hc : lhc) {
             l.add(hc.getChallenge());
         }
@@ -82,6 +79,7 @@ public class CompletedService {
         hc.setChallenge(challenge);
         hc.setUser(user);
         hc.setCommentary(commentary.trim());
+        hc.setApproved(false);
 
         if(imgBase64.length() > 0) {
 
@@ -140,26 +138,25 @@ public class CompletedService {
 
         List<List<String>> userAndComments = new ArrayList<>();
         for (HasCompleted hc : completedRepository.findByChallenge(challenge)) {
+            if(hc.isApproved()) {
+                List<String> UserAndComment = new ArrayList<String>();
+                UserAndComment.add(hc.getUser().getUsername());
+                UserAndComment.add(hc.getCommentary());
 
-            List<String> UserAndComment = new ArrayList<String>();
-            UserAndComment.add(hc.getUser().getUsername());
-            UserAndComment.add(hc.getCommentary());
-
-            userAndComments.add(UserAndComment);
+                userAndComments.add(UserAndComment);
+            }
         }
-
         return userAndComments;
     }
 
     public List<String> getDataCompleted(String name, long challengeId){
         List<String> l = new ArrayList<>();
-
-
         User u = userService.getUserByUsername(name);
         Challenge challenge = challengeService.getChallenge(challengeId);
         Optional<HasCompleted> oh  = completedRepository.findByUserAndChallenge(u,challenge);
 
-        if (!oh.isPresent()) //If the user didn't complete the challenge yet return an empty array
+        if (!oh.isPresent() || !oh.get().isApproved()) //If the user didn't complete the challenge yet return an empty array
+                                                        //or it has not been approved
             return l;
         HasCompleted hc = oh.get();
         l.add(hc.getCommentary());

@@ -22,6 +22,8 @@ public class HasCompleted {
 
     private String commentary;
 
+    private boolean approved;
+
     public User getUser() {
         return user;
     }
@@ -52,5 +54,13 @@ public class HasCompleted {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }
