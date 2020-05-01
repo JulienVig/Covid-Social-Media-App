@@ -17,5 +17,7 @@ public interface CompletedRepository extends JpaRepository<HasCompleted, HasComp
 
     public Optional<HasCompleted> findByUserAndChallenge(User user, Challenge challenge);
 
+    public long countByUser(User user);
+
     public boolean findByUserAndChallengeContains(User user, Challenge challenge);
 }

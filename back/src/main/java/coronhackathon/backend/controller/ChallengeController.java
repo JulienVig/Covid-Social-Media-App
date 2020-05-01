@@ -22,6 +22,8 @@ public class ChallengeController {
     private CompletedService completedService;
     @Autowired
     private TagOfChallengeService tagOfChallengeService;
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * Retrieve all users that complete challenge Challenge
@@ -101,7 +103,7 @@ public class ChallengeController {
      */
     @RequestMapping(path = "/api/numberOfChallengesByCategory/{categoryId}", method = RequestMethod.GET)
     public Long numberOfChallengesOfCategory(@PathVariable long categoryId) {
-        return challengeService.numberOfChallengesByCategoryId(categoryId);
+        return challengeService.numberOfChallengesByCategory(categoryId);
     }
 
     /**
@@ -112,7 +114,7 @@ public class ChallengeController {
      */
     @RequestMapping(path = "/api/numberOfChallengesByCategoryName/{category}", method = RequestMethod.GET)
     public Long numberOfChallengesByCategoryName(@PathVariable String category) {
-        return challengeService.numberOfChallengesByCategoryName(category);
+        return challengeService.numberOfChallengesByCategory(categoryService.getIdFromName(category));
     }
 
     /**
@@ -146,7 +148,7 @@ public class ChallengeController {
      */
     @RequestMapping(path = "/api/getChallengeByCategoryName/{name}", method = RequestMethod.GET)
     public List<Challenge> getChallengeByCategory(@PathVariable String name) {
-        return challengeService.getChallengeByCategory(name);
+        return challengeService.getChallengeByCategory(categoryService.getIdFromName(name));
     }
 
     /**

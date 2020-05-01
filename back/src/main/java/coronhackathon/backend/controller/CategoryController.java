@@ -17,6 +17,8 @@ public class CategoryController {
     private CompletedService completedService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -69,12 +71,12 @@ public class CategoryController {
      */
     @RequestMapping(path = "/api/getCompletedByCat/{userId}/{categoryId}", method = RequestMethod.GET)
     public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable long categoryId) {
-        return completedService.getCompletedChallengesByCategory(userId, categoryId);
+        return completedService.getCompletedChallengesByCategory(userService.getUser(userId), categoryId);
     }
 
     @RequestMapping(path = "/api/getMyCompletedByCat/{categoryId}", method = RequestMethod.GET)
     public List<Challenge> getCompletedChallengesByCategory(Principal principal, @PathVariable long categoryId) {
-        return completedService.getCompletedChallengesByCategory(principal.getName(), categoryId);
+        return completedService.getCompletedChallengesByCategory(userService.getUserByUsername(principal.getName()), categoryId);
     }
 
     /**
@@ -86,12 +88,12 @@ public class CategoryController {
      */
     @RequestMapping(path = "/api/getCompletedByCatName/{userId}/{name}", method = RequestMethod.GET)
     public List<Challenge> getCompletedChallengesByCategory(@PathVariable long userId, @PathVariable String name) {
-        return completedService.getCompletedChallengesByCategory(userId, name);
+        return completedService.getCompletedChallengesByCategory(userService.getUser(userId), categoryService.getIdFromName(name));
     }
 
     @RequestMapping(path = "/api/getMyCompletedByCatName/{name}", method = RequestMethod.GET)
     public List<Challenge> getCompletedChallengesByCategory(Principal principal, @PathVariable String name) {
-        return completedService.getCompletedChallengesByCategory(principal.getName(), name);
+        return completedService.getCompletedChallengesByCategory(userService.getUserByUsername(principal.getName()), categoryService.getIdFromName(name));
     }
 
 }

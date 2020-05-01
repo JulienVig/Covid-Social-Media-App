@@ -70,12 +70,12 @@ public class UserController {
 
     @RequestMapping(path = "/api/getCompleted/{userId}", method = RequestMethod.GET)
     public List<Challenge> getCompletedChallenges(@PathVariable long userId) {
-        return completedService.getCompletedChallenges(userId);
+        return completedService.getCompletedChallenges(userService.getUser(userId));
     }
 
     @RequestMapping(path = "/api/getMyCompleted", method = RequestMethod.GET)
     public List<Challenge> getCompletedChallenges(Principal principal) {
-        return completedService.getCompletedChallenges(principal.getName());
+        return completedService.getCompletedChallenges(userService.getUserByUsername(principal.getName()));
     }
 
 }

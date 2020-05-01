@@ -36,33 +36,23 @@ public class ChallengeService {
     }
 
     public Challenge getChallenge(long id) {
-        return checkChallengeExists(challengeRepository.findById(id),"id", ""+id);
+        return checkChallengeExists(challengeRepository.findById(id), "id", "" + id);
     }
 
     public Challenge getChallengeByName(String name) {
-        return checkChallengeExists(challengeRepository.findByName(name),"name", ""+name);
+        return checkChallengeExists(challengeRepository.findByName(name), "name", "" + name);
     }
 
     public List<Challenge> getChallengeByCategory(long categoryId) {
         return challengeRepository.findByCategoryId(categoryId);
     }
 
-    public List<Challenge> getChallengeByCategory(String name) {
-        return challengeRepository.findByCategoryId(categoryService.getIdFromName(name));
-    }
-
-
-
     public long numberOfChallenges() {
         return challengeRepository.count();
     }
 
-    public Long numberOfChallengesByCategoryId(long category) {
+    public Long numberOfChallengesByCategory(long category) {
         return challengeRepository.countByCategoryId(category);
-    }
-
-    public Long numberOfChallengesByCategoryName(String name) {
-        return challengeRepository.countByCategoryId((categoryService.getIdFromName(name)));
     }
 
     public List<Challenge> getNineChallenges() {
@@ -71,21 +61,22 @@ public class ChallengeService {
         return all.subList(0, Math.min(9, all.size()));
     }
 
-    public List<Boolean> getNineBoolean(String username, List<Challenge> lc){
+    public List<Boolean> getNineBoolean(String username, List<Challenge> lc) {
         List<Boolean> lb = new ArrayList<>();
         User u = userService.getUserByUsername(username);
-        List<Challenge> cc = completedService.getCompletedChallenges(username);
+        List<Challenge> cc = completedService.getCompletedChallenges(userService.getUserByUsername(username));
         // creates the lists of booleans corresponding to the given list of challenges
-        for(Challenge c : lc) {
-            lb.add(cc.contains(c)); 
+        for (Challenge c : lc) {
+            lb.add(cc.contains(c));
         }
         return lb;
     }
 
-    public List<Boolean> getChallengeBool(String username, long categoryId){
+    public List<Boolean> getChallengeBool(String username, long categoryId) {
         List<Boolean> l = new ArrayList<>();
         User u = userService.getUserByUsername(username);
-        List<Challenge> completed = completedService.getCompletedChallengesByCategory(u.getId(),categoryId);
+        List<Challenge> completed = completedService.getCompletedChallengesByCategory(
+                userService.getUserByUsername(username), categoryId);
         List<Challenge> cs = challengeRepository.findByCategoryId(categoryId);
         // creates the lists of booleans corresponding to the given list of challenges cs
         for (Challenge c : cs) {
@@ -93,9 +84,10 @@ public class ChallengeService {
         }
         return l;
     }
-    private Challenge checkChallengeExists(Optional<Challenge> oc, String name, String value){
-        if(!oc.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with "+name+" : " + value + " not found");
+
+    private Challenge checkChallengeExists(Optional<Challenge> oc, String name, String value) {
+        if (!oc.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "challenge with " + name + " : " + value + " not found");
         }
         return oc.get();
     }

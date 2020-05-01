@@ -30,23 +30,12 @@ public class CompletedService {
     private ChallengeService challengeService;
 
     public long getNumberOfCompletedChallenges(long userId){
-        return getCompletedChallenges(userId).size();
+        return completedRepository.countByUser(userService.getUser(userId));
     }
     
-    public List<Challenge> getCompletedChallenges(long userId) {
+    public List<Challenge> getCompletedChallenges(User user) {
         List<Challenge> l = new ArrayList<>();
-        User u = userService.getUser(userId);
-        List<HasCompleted> lhc = completedRepository.findByUser(u);
-        for (HasCompleted hc : lhc) {
-            l.add(hc.getChallenge());
-        }
-        return l;
-    }
-
-    public List<Challenge> getCompletedChallenges(String username) {
-        List<Challenge> l = new ArrayList<>();
-        User u = userService.getUserByUsername(username);
-        List<HasCompleted> lhc = completedRepository.findByUser(u);
+        List<HasCompleted> lhc = completedRepository.findByUser(user);
         for (HasCompleted hc : lhc) {
             l.add(hc.getChallenge());
         }
@@ -104,33 +93,15 @@ public class CompletedService {
 
     }
 
-    public List<Challenge> getCompletedChallengesByCategory(long userId, long categoryId) {
+    public List<Challenge> getCompletedChallengesByCategory(User user, long categoryId) {
         List<Challenge> l = new ArrayList<>();
-        User u = userService.getUser(userId);
-        for (HasCompleted hc : completedRepository.findByUser(u)) {
+        for (HasCompleted hc : completedRepository.findByUser(user)) {
             if (hc.getChallenge().getCategoryId() == categoryId)
                 l.add(hc.getChallenge());
         }
         return l;
     }
 
-    public List<Challenge> getCompletedChallengesByCategory(String username, long categoryId) {
-        List<Challenge> l = new ArrayList<>();
-        User u = userService.getUserByUsername(username);
-        for (HasCompleted hc : completedRepository.findByUser(u)) {
-            if (hc.getChallenge().getCategoryId() == categoryId)
-                l.add(hc.getChallenge());
-        }
-        return l;
-    }
-    
-    public List<Challenge> getCompletedChallengesByCategory(long userId, String name) {
-        return getCompletedChallengesByCategory(userId, categoryService.getIdFromName(name));
-    }
-
-    public List<Challenge> getCompletedChallengesByCategory(String username, String name) {
-        return getCompletedChallengesByCategory(username, categoryService.getIdFromName(name));
-    }
 
     /**
      * return a list of (user, comment) pairs
