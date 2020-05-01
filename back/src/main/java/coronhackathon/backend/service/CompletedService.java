@@ -6,7 +6,9 @@ import coronhackathon.backend.entity.HasCompleted;
 import coronhackathon.backend.entity.User;
 import coronhackathon.backend.repository.CompletedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -162,5 +164,27 @@ public class CompletedService {
         l.add(hc.getCommentary());
         l.add(hc.getPicture());
         return l;
+    }
+
+    public String approveCompleted(User user, Challenge challenge){
+        HasCompleted hc = checkHasCompletedExists(completedRepository.findByUserAndChallenge(user,challenge),
+                user.getId(),challenge.getId());
+        hc.setApproved(true);
+        completedRepository.save(hc);
+        return "Completed with user "+user.getUsername() +" and challenge " + challenge.getName() + " is now approved";
+    }
+
+    public String refuseCompleted(User user, Challenge challenge){
+        HasCompleted hc = checkHasCompletedExists(completedRepository.findByUserAndChallenge(user,challenge),
+                user.getId(),challenge.getId());
+        completedRepository.delete(hc);
+        return "Completed with user "+user.getUsername() +" and challenge " + challenge.getName() + " is now approved";
+    }
+
+    private HasCompleted checkHasCompletedExists(Optional<HasCompleted> ohc,long userId, long challengeId){
+        if(ohc.isPresent())
+            return ohc.get();
+        else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Completed with userId "+userId +" and challengeId " + challengeId + " not found");
     }
 }
