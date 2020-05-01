@@ -59,31 +59,6 @@ public class ChallengeController {
     }
 
     /**
-     * Returns all the challenges stored in the database
-     *
-     * @return a list that contains all the challenges stored in the database
-     */
-    @GetMapping("/api/nineChallenges")
-    public List<Challenge> nineChallenges() {
-        return challengeService.getNineChallenges();
-    }
-
-    /**
-     * Returns nine of the challenges stored in the database and if they are completed or not
-     *
-     * @return a list of nine challenges and a list of booleans (completed by the logged user or not)
-     */
-    @RequestMapping(path = "/api/nineChallengesBool", method = RequestMethod.GET)
-    public Map<String, Object> nineChallengesBool(Principal principal) {
-        HashMap<String, Object> map = new HashMap<>();
-        List<Challenge> lc = challengeService.getNineChallenges();
-        List<Boolean> lb =challengeService.getNineBoolean(principal.getName(), lc);
-        map.put("Challenge", lc);
-        map.put("Completed", lb);
-        return map;
-    }
-
-    /**
      * Returns an Optional that contains a challenge with a specified id if it exists
      * otherwise returns an empty Optional
      *

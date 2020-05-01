@@ -53,7 +53,7 @@ public class FriendsController {
      */
     @RequestMapping(path = "/api/isFriend/{user1Id}/{user2Id}", method = RequestMethod.GET)
     public boolean isFriend(@PathVariable long user1Id, @PathVariable long user2Id) {
-        return friendsService.isFriend(user1Id,user2Id);
+        return friendsService.isFriend(userService.getUser(user1Id),userService.getUser(user2Id));
     }
 
     /**
@@ -65,7 +65,7 @@ public class FriendsController {
      */
     @PostMapping("/api/friendRequest")
     public String friendRequest(Principal principal, @RequestParam String username) {
-        return friendsService.friendRequest(getCurrentUser(principal) ,username);
+        return friendsService.friendRequest(getCurrentUser(principal) ,userService.getUserByUsername(username));
     }
 
     /**
