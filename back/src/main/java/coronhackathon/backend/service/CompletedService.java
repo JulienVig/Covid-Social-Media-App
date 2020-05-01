@@ -43,7 +43,7 @@ public class CompletedService {
     }
     public List<Challenge> getCompletedAndApprovedChallenges(User user) {
         List<Challenge> l = new ArrayList<>();
-        List<HasCompleted> lhc = completedRepository.findByUserAndApproved(user, true);
+        List<HasCompleted> lhc = completedRepository.findByUserAndApprovedTrue(user);
         for (HasCompleted hc : lhc) {
             l.add(hc.getChallenge());
         }
