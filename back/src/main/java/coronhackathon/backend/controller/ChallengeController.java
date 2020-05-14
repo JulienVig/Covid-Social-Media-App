@@ -3,7 +3,6 @@ package coronhackathon.backend.controller;
 import coronhackathon.backend.DTO.UserDTO;
 import coronhackathon.backend.entity.Challenge;
 
-import coronhackathon.backend.entity.User;
 import coronhackathon.backend.service.*;
 import coronhackathon.backend.service.ChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +89,7 @@ public class ChallengeController {
      * @return the challenge with the specified id
      */
     @RequestMapping(path = "/api/getChallenge/{challengeId}", method = RequestMethod.GET)
-    public Optional<Challenge> getChallenge(@PathVariable long challengeId) {
+    public Challenge getChallenge(@PathVariable long challengeId) {
         return challengeService.getChallenge(challengeId);
     }
 
@@ -124,7 +123,7 @@ public class ChallengeController {
      * @return the challenge with the specified name
      */
     @RequestMapping(path = "/api/getChallengeByName/{name}", method = RequestMethod.GET)
-    public Optional<Challenge> getChallengeByName(@PathVariable String name) {
+    public Challenge getChallengeByName(@PathVariable String name) {
         return challengeService.getChallengeByName(name);
     }
 
@@ -161,6 +160,15 @@ public class ChallengeController {
         map.put("Challenge", challengeService.getChallengeByCategory(categoryId));
         map.put("Completed", challengeService.getChallengeBool(principal.getName(), categoryId));
         return map;
+    }
+
+    /**
+     * Returns a list with all challenges, and a list of booleans that indicate if they were validated
+     * @return a map with all the challenges and their corresponding boolean
+     */
+    @RequestMapping(path = "/api/getChallengesBool", method = RequestMethod.GET)
+    public Map<String, Object> getChallengesBool(Principal principal) {
+        return challengeService.getAllChallengesBool(principal.getName());
     }
 
     /**
