@@ -56,7 +56,7 @@ export default class ValidationMain extends React.Component {
                size = "large"
         />
         <View style={{minHeight:100}}>
-          {this.state.validated  && <AntDesign name ="checkcircle" size="50" color='#3d9d84'/>}
+          {this.state.validated && !this.state.animating && <AntDesign name ="checkcircle" size={50} color='#3d9d84'/>}
         </View>
       </View>
     );
@@ -70,7 +70,7 @@ export default class ValidationMain extends React.Component {
   componentDidMount() {
     this.isAlreadyCompleted();
     this.getPermissionAsync();
-    console.log(this.state.validated)
+    console.log(new Date())
   }
 
   isAlreadyCompleted = async () =>{
@@ -78,13 +78,14 @@ export default class ValidationMain extends React.Component {
     request({ 
       method: 'GET',
       url: "/api/getDataCompleted/"+this.props.challengeId, 
+      headers: {'Cache-Control': 'no-store'},
     }).then(function(response){
       if(response.data.length > 0){
-        console.log(response.data)
         self.setState({validated : true})
         self.setState({commentary: response.data[0]})
         if(response.data.length > 1 && response.data[1].length > 0){
           self.setState({image:{uri: baseURL + '/static/image/jpg?path=' +response.data[1]}})
+          console.log(baseURL + '/static/image/jpg?path=' +response.data[1])
         }
       }
     }).catch(function(error){
@@ -129,14 +130,13 @@ export default class ValidationMain extends React.Component {
     this.setState({animating: true })
     let bodyFormData = new FormData();
     bodyFormData.append('challengeId', this.props.challengeId);
-    bodyFormData.append('commentary',this.state.commentary);
-
+    bodyFormData.append('commentary',this.state.commentary.trim());
     if(this.state.image != null && this.state.image.base64 != null){
       let uriParts = this.state.image.uri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       fileType = ['jpg', 'png'].includes(fileType) ? fileType : 'jpg';
-      
-      bodyFormData.append('imgBase64',this.state.image.base64);
+      console.log("Post a new image")
+      bodyFormData.append('imgBase64',this.state.image.base64.replace(/(\r\n|\n|\r)/gm, "")); //Remove \n for android 
       bodyFormData.append('imgFormat', fileType); 
     } else{
       bodyFormData.append('imgBase64',"");
@@ -145,9 +145,11 @@ export default class ValidationMain extends React.Component {
     const self = this;
     request({
       method: 'post',
-      url : '/api/completeMyChallenge',
+      url : '/api/completeMyChallenge/',
       data : bodyFormData,
-      headers: {'Content-Type':'multipart/form-data'}
+      headers: {'Content-Type':'multipart/form-data',
+      'Cache-Control': 'no-store'}
+
     }).then(function(response){
       self.setState({animating: false})
       self.setState({validated: true})
@@ -157,7 +159,7 @@ export default class ValidationMain extends React.Component {
       console.log("Error while posting validation!")
       console.log(error.response.data.status)
       console.log(error.response.data.error)
-      console.log(error.response.data.message)
+      // console.log(error.response.data.message)
     })
   }
 }

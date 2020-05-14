@@ -17,10 +17,14 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 @Service
 public class CompletedService {
@@ -110,11 +114,19 @@ public class CompletedService {
             String destinationPath = "resources/myCompletedImage/hasCompleted_"
                     + Long.toString(id)
                     + "_"
-                    + Long.toString(challengeId) + "."+imgFormat;
+                    + Long.toString(challengeId) + "."+ZonedDateTime
+                    .now(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ofPattern("uuuu.MM.dd.HH.mm.ss")) + "."+imgFormat;
 
             byte[] byteImg = Base64.getDecoder().decode(imgBase64);
             BufferedImage img = ImageIO.read(new ByteArrayInputStream(byteImg));
             ImageIO.write(img, "jpg", new File("src/main/" + destinationPath));
+
+            //Remove previous image
+            File previousImage = new File("./src/main/"+hc.getPicture());
+            if(previousImage.isFile()){
+                previousImage.delete();
+            }
             hc.setPicture(destinationPath);
         }
 
@@ -169,11 +181,12 @@ public class CompletedService {
         List<List<String>> userAndComments = new ArrayList<>();
         for (HasCompleted hc : completedRepository.findByChallenge(oc.get())) {
 
-            List<String> UserAndComment = new ArrayList<String>();
-            UserAndComment.add(hc.getUser().getUsername());
-            UserAndComment.add(hc.getCommentary());
-
-            userAndComments.add(UserAndComment);
+            if(hc.getCommentary() != null && hc.getCommentary().length() > 0) {
+                List<String> UserAndComment = new ArrayList<String>();
+                UserAndComment.add(hc.getUser().getUsername());
+                UserAndComment.add(hc.getCommentary());
+                userAndComments.add(UserAndComment);
+            }
         }
 
         return userAndComments;
