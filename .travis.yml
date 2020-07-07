@@ -13,6 +13,6 @@ branches:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash ../deploy.sh 23.20.204.191
+  script: bash ../deploy.sh 18.234.142.249
   on:
     branch: continuous-deployment
