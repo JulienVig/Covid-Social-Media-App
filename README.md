@@ -2,8 +2,7 @@
 
 
 ## Overview
-Because of confinement, many people are bored at home. We offer a fun app to help them keep busy productively, learning new skills, through a list of challenges, via a very user-friendly app. 
-
+Due to Covid-19 lockdown, many people are feeling alone and bored at home. We offer a fun app to help and invite users to stay active, maintain social relationships or learning new skills through this social media mobile app. The app offers challenges to realize at home and maintain social interactions via friendship and comment systems.
 ## How to use
 
 * Install Vue Native and Expo (https://vue-native.io/docs/installation.html)
