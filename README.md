@@ -1,9 +1,20 @@
+![](./img/banner.jpg)
+
 # Consvidlatête-19
 
 
 ## Overview
-Due to Covid-19 lockdown, many people are feeling alone and bored at home. We offer a fun app to help and invite users to stay active, maintain social relationships or learning new skills through this social media mobile app. The app offers challenges to realize at home and maintain social interactions via friendship and comment systems.
-## How to use
+Due to Covid-19 lockdown, many people are feeling alone and bored at home. We offer a fun app to help and invite users to stay active, maintain social relationships or learning new skills through this social media mobile app. The app offers challenges to realize at home and maintains social interactions via friendship and comment systems.
+
+This project has been realized during the Lauzhack Hackathon 2020 from Friday 3rd April to Monday 6th April by a team of nine EPFL students. It is composed of a frontend developed in Vue Native (the experimental merge of Vue.js and React Native) and a backend implemented in the Java framework Spring. None of us had ever worked with any of the two frameworks before the hackathon.
+
+**Personal contributions:** I contributed mostly to the frontend side of the project, as I had already some experience with web development and I am interested by graphic design and user experience. More specifically, I bootstrapped the Vue Native project, setup the app navigation, implemented the friendship system, the challenge list and the challenge validation page (where one can upload an image and a comment). This project was also the opportunity to apply my software engineering knowledge: as the most experienced git user I helped setting a git routine compatible with a 9-developer team, through issues, pull requests and meetings.
+
+![](./img/challenges.png)
+![](./img/social.png)
+
+
+## Contributing
 
 * Install Vue Native and Expo (https://vue-native.io/docs/installation.html)
 * Install node.js (https://nodejs.org/en/download)
@@ -37,10 +48,3 @@ For the moment, here is an overview of the app :
 * Personal success page : There you find what you have accomplished so far and the categories you shine in.
 
 * "Who are we?" page : It shares with you a little bit more informations about us. 
-
-
-
-
-
-## Realisation
-This project has been realised during the Lauzhack Hackathon 2020 from Friday 3rd April 16h to Monday 6th April 16h. The team was composed of nine student of EPFL.
